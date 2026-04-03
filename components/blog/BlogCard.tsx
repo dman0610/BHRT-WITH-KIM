@@ -1,3 +1,5 @@
+import Link from "next/link";
+import Image from "next/image";
 import type { BlogCategory } from "@/lib/constants";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, Clock } from "lucide-react";
@@ -10,19 +12,23 @@ const CATEGORY_COLORS: Record<BlogCategory, string> = {
 };
 
 interface BlogCardProps {
+  slug: string;
   title: string;
   preview: string;
   category: BlogCategory;
   date: string;
   readTime: string;
+  image?: string;
 }
 
 export default function BlogCard({
+  slug,
   title,
   preview,
   category,
   date,
   readTime,
+  image,
 }: BlogCardProps) {
   const formattedDate = new Date(date).toLocaleDateString("en-US", {
     month: "long",
@@ -31,12 +37,22 @@ export default function BlogCard({
   });
 
   return (
-    <article className="group flex flex-col rounded-2xl bg-white shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 overflow-hidden">
-      {/* TODO: Add real article thumbnail images */}
+    <Link href={`/resources/${slug}`} className="block group">
+    <article className="flex flex-col rounded-2xl bg-white shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 overflow-hidden h-full">
       <div className="aspect-[16/9] bg-mist relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-sage/20 to-lavender/30 flex items-center justify-center">
-          <span className="font-heading text-5xl text-forest/20">{category[0]}</span>
-        </div>
+        {image ? (
+          <Image
+            src={image}
+            alt={title}
+            fill
+            className="object-cover"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          />
+        ) : (
+          <div className="absolute inset-0 bg-gradient-to-br from-sage/20 to-lavender/30 flex items-center justify-center">
+            <span className="font-heading text-5xl text-forest/20">{category[0]}</span>
+          </div>
+        )}
         <div className="absolute top-3 left-3">
           <Badge className={`${CATEGORY_COLORS[category]} text-xs font-medium px-3 py-1 rounded-full border-0`}>
             {category}
@@ -63,5 +79,6 @@ export default function BlogCard({
         </div>
       </div>
     </article>
+    </Link>
   );
 }

@@ -7,7 +7,9 @@ import {
   SERVICES,
   calculateQuizResults,
   getOverallSeverity,
+  getSymptomCallouts,
   SEVERITY_MESSAGES,
+  QUIZ_DISCLAIMER,
 } from "@/lib/constants";
 import Icon from "@/components/ui/Icon";
 import { Button } from "@/components/ui/button";
@@ -77,10 +79,12 @@ export default function QuizStepper() {
     const results = calculateQuizResults(answers);
     const severity = getOverallSeverity(answers);
     const msg = SEVERITY_MESSAGES[severity];
+    const callouts = getSymptomCallouts(answers);
     const topServices = results.slice(0, 3).map((r) => {
       const service = SERVICES.find((s) => s.id === r.serviceId);
       return { ...r, service };
     }).filter((r) => r.service);
+    const isThriving = severity === "thriving";
 
     return (
       <div className="max-w-2xl mx-auto">
@@ -97,10 +101,27 @@ export default function QuizStepper() {
           </p>
         </div>
 
+        {/* Symptom-specific callouts */}
+        {callouts.length > 0 && (
+          <div className="mb-10 space-y-3">
+            {callouts.map((callout, i) => (
+              <div
+                key={i}
+                className="flex gap-3 items-start bg-lavender/20 rounded-2xl px-5 py-4"
+              >
+                <Icon name="leaf" className="size-4 text-moss shrink-0 mt-0.5" />
+                <p className="text-sm text-clay italic leading-relaxed">{callout}</p>
+              </div>
+            ))}
+          </div>
+        )}
+
         {/* Recommended Services */}
         <div className="mb-10">
           <h3 className="font-heading text-xl font-medium text-bark mb-4 text-center">
-            Based on your responses, here&apos;s where we&apos;d start:
+            {isThriving
+              ? "Areas Kim loves to explore — even when you're thriving:"
+              : "Based on your responses, here\u2019s where we\u2019d start:"}
           </h3>
           <div className="space-y-4">
             {topServices.map(({ service }, index) => (
@@ -129,9 +150,12 @@ export default function QuizStepper() {
 
         {/* CTA */}
         <div className="text-center space-y-4">
+          <p className="text-clay text-sm leading-relaxed max-w-md mx-auto italic">
+            {msg.cta}
+          </p>
           <Link href="/contact">
             <Button className="bg-moss text-white rounded-full px-8 py-3 text-base font-medium hover:bg-forest transition-colors shadow-md">
-              Book a Consultation to Discuss Your Results
+              Book a Free Chat with Kim
             </Button>
           </Link>
           <div>
@@ -144,6 +168,11 @@ export default function QuizStepper() {
             </button>
           </div>
         </div>
+
+        {/* Disclaimer */}
+        <p className="text-xs text-clay/70 text-center max-w-xl mx-auto mt-8 pt-6 border-t border-stone/40 leading-relaxed">
+          {QUIZ_DISCLAIMER}
+        </p>
       </div>
     );
   }

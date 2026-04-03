@@ -6,7 +6,6 @@ import Image from "next/image";
 import { ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useFrameScrub } from "@/lib/useFrameScrub";
-import { useMediaQuery } from "@/lib/useMediaQuery";
 
 // ─── Helpers ────────────────────────────────────────────────
 
@@ -15,52 +14,58 @@ function remap(value: number, low: number, high: number): number {
   return Math.max(0, Math.min(1, (value - low) / (high - low)));
 }
 
-// ─── Mobile / Reduced-motion fallback ───────────────────────
+// ─── Mobile video fallback ──────────────────────────────────
 
 function MobileFallback() {
-  const video2Ref = useRef<HTMLVideoElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [phase, setPhase] = useState<1 | 2>(1);
 
   useEffect(() => {
-    const video = video2Ref.current;
+    const video = videoRef.current;
     if (!video) return;
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          video.play().catch(() => {});
-        } else {
-          video.pause();
-        }
-      },
-      { threshold: 0.3 },
-    );
+    // Swap source for the current phase
+    video.src =
+      phase === 1
+        ? "/hero/video-one-mobile.mp4"
+        : "/hero/video-two-mobile.mp4";
+    video.load();
 
-    observer.observe(video);
-    return () => observer.disconnect();
-  }, []);
+    const onEnded = () => {
+      if (phase === 1) {
+        setPhase(2);
+      } else {
+        window.dispatchEvent(new CustomEvent("hero-anim-complete"));
+      }
+    };
+
+    video.addEventListener("ended", onEnded);
+
+    // Autoplay safety — if browser blocks it, unlock the navbar immediately
+    video.play().catch(() => {
+      window.dispatchEvent(new CustomEvent("hero-anim-complete"));
+    });
+
+    return () => video.removeEventListener("ended", onEnded);
+  }, [phase]);
 
   return (
-    <>
-      {/* Hero with autoplay Video 1 */}
-      <section className="relative min-h-dvh flex items-center justify-center overflow-hidden grain-overlay">
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          poster="/hero/hero-poster.jpg"
-          className="absolute inset-0 w-full h-full object-cover"
-          preload="metadata"
-        >
-          <source src="/hero/hero-video-1.mp4" type="video/mp4" />
-        </video>
+    <section className="relative h-dvh overflow-hidden grain-overlay">
+      {/* Single video element — src swaps from video 1 → video 2 */}
+      <video
+        ref={videoRef}
+        muted
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover"
+      />
 
-        <div
-          className="absolute inset-0 bg-gradient-to-t from-bark/60 via-forest/30 to-transparent"
-          aria-hidden="true"
-        />
+      <div
+        className="absolute inset-0 bg-gradient-to-t from-bark/60 via-forest/30 to-transparent"
+        aria-hidden="true"
+      />
 
-        <div className="relative z-10 mx-auto max-w-4xl px-4 text-center">
+      <div className="relative z-10 flex h-full items-center justify-center">
+        <div className="mx-auto max-w-4xl px-4 text-center">
           <h1 className="font-heading text-5xl font-semibold leading-tight text-white sm:text-6xl md:text-7xl lg:text-[5rem]">
             From Seed to Strength
           </h1>
@@ -85,48 +90,8 @@ function MobileFallback() {
             </Link>
           </div>
         </div>
-
-        <a
-          href="#mission-mobile"
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 text-white/60 hover:text-white transition-colors animate-bounce"
-          aria-label="Scroll to learn more"
-        >
-          <ChevronDown className="size-8" />
-        </a>
-      </section>
-
-      {/* Mission heading with Video 2 background */}
-      <section
-        id="mission-mobile"
-        className="relative min-h-[60vh] flex items-center justify-center overflow-hidden"
-      >
-        <video
-          ref={video2Ref}
-          muted
-          playsInline
-          poster="/hero/hero-final-frame.jpg"
-          className="absolute inset-0 w-full h-full object-cover"
-          preload="metadata"
-        >
-          <source src="/hero/hero-video-2.mp4" type="video/mp4" />
-        </video>
-
-        <div
-          className="absolute inset-0 bg-gradient-to-t from-bark/40 via-forest/20 to-transparent"
-          aria-hidden="true"
-        />
-
-        <div className="relative z-10 text-center px-4 animate-on-scroll">
-          <h2 className="font-heading text-3xl font-semibold text-white sm:text-4xl md:text-5xl drop-shadow-lg">
-            Your Health. Your Power. Your Life.
-          </h2>
-          <p className="mt-4 text-white/90 max-w-2xl mx-auto text-lg drop-shadow-md">
-            Kim&apos;s approach is built on three pillars — because thriving
-            means more than just treating symptoms.
-          </p>
-        </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 }
 
@@ -419,16 +384,31 @@ function DesktopScrollExperience() {
 // ─── Main export ────────────────────────────────────────────
 
 export default function VideoScrollExperience() {
-  const isDesktop = useMediaQuery("(min-width: 768px) and (hover: hover)");
+  // null = not yet determined (before JS runs)
+  const [isMobile, setIsMobile] = useState<boolean | null>(null);
   const [prefersReduced, setPrefersReduced] = useState(false);
 
   useEffect(() => {
+    // Detect mobile on page load — touch capability OR narrow viewport
+    setIsMobile(window.innerWidth < 768 || "ontouchstart" in window);
     setPrefersReduced(
       window.matchMedia("(prefers-reduced-motion: reduce)").matches,
     );
   }, []);
 
+  // Gradient placeholder while JS determines the appropriate variant
+  if (isMobile === null) {
+    return (
+      <section className="relative h-dvh overflow-hidden grain-overlay">
+        <div
+          className="absolute inset-0 bg-gradient-to-br from-forest via-moss/80 to-bark"
+          aria-hidden="true"
+        />
+      </section>
+    );
+  }
+
   if (prefersReduced) return <ReducedMotionFallback />;
-  if (!isDesktop) return <MobileFallback />;
+  if (isMobile) return <MobileFallback />;
   return <DesktopScrollExperience />;
 }

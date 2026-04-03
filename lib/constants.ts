@@ -205,6 +205,7 @@ export interface QuizOption {
   value: string;
   score: number;
   serviceWeights: Record<string, number>;
+  callout?: string;
 }
 
 export interface QuizQuestion {
@@ -237,12 +238,14 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
         value: "waking",
         score: 3,
         serviceWeights: { sleep: 3, bhrt: 2, stress: 1 },
+        callout: "Frequent night waking is one of the most telling signs of hormonal fluctuation — estrogen and progesterone directly regulate your sleep architecture. This is very treatable.",
       },
       {
         label: "I rarely get more than 5 hours",
         value: "severe",
         score: 4,
         serviceWeights: { sleep: 4, bhrt: 3, "thyroid-adrenal": 2 },
+        callout: "Chronically short sleep isn't just fatigue — it disrupts cortisol, thyroid function, and your body's ability to regulate itself. This pattern deserves real attention.",
       },
     ],
   },
@@ -272,6 +275,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
           nutrition: 2,
           sleep: 2,
         },
+        callout: "Relying on caffeine to function often signals adrenal fatigue or thyroid dysfunction — both of which respond well to the right support.",
       },
       {
         label: "I'm exhausted no matter what I do",
@@ -282,6 +286,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
           bhrt: 3,
           testing: 2,
         },
+        callout: "Fatigue that doesn't resolve with rest is one of the clearest signals that your body needs more than lifestyle tweaks. This is worth a real look at your hormones and thyroid.",
       },
     ],
   },
@@ -307,12 +312,14 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
         value: "brain-fog",
         score: 3,
         serviceWeights: { bhrt: 3, nutrition: 2, "thyroid-adrenal": 2 },
+        callout: "Brain fog isn't just stress — it's often estrogen-related and very treatable. When you're losing words or your train of thought, your brain is asking for hormonal support.",
       },
       {
         label: "I feel like a completely different person",
         value: "severe",
         score: 4,
         serviceWeights: { bhrt: 4, testing: 3, stress: 2 },
+        callout: "Feeling like a stranger in your own skin is one of the most distressing aspects of hormonal imbalance — and one of the most common things Kim hears. Finding the root cause changes everything.",
       },
     ],
   },
@@ -342,12 +349,14 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
           nutrition: 3,
           testing: 2,
         },
+        callout: "Unexplained weight changes — especially around the midsection — are often tied to cortisol, insulin, or thyroid patterns rather than just diet. Testing can pinpoint exactly what's happening.",
       },
       {
         label: "Hot flashes or night sweats",
         value: "hot-flashes",
         score: 3,
         serviceWeights: { bhrt: 4, "natural-remedies": 2 },
+        callout: "Hot flashes and night sweats are hallmark estrogen fluctuation symptoms. There are both natural and bioidentical approaches that work beautifully for most women — often faster than expected.",
       },
     ],
   },
@@ -487,7 +496,9 @@ export function calculateQuizResults(
     .sort((a, b) => b.score - a.score);
 }
 
-export function getOverallSeverity(answers: Record<string, string>): string {
+export function getOverallSeverity(
+  answers: Record<string, string>
+): "thriving" | "mild" | "moderate" | "significant" | "severe" {
   let total = 0;
   let count = 0;
 
@@ -500,26 +511,64 @@ export function getOverallSeverity(answers: Record<string, string>): string {
     count++;
   }
 
-  const avg = count > 0 ? total / count : 0;
-  if (avg <= 1.5) return "mild";
-  if (avg <= 2.5) return "moderate";
-  return "significant";
+  if (count === 0) return "mild";
+  const avg = total / count;
+  if (avg === 1.0) return "thriving";
+  if (avg <= 1.8) return "mild";
+  if (avg <= 2.4) return "moderate";
+  if (avg <= 3.1) return "significant";
+  return "severe";
 }
 
-export const SEVERITY_MESSAGES: Record<string, { headline: string; body: string }> = {
+export function getSymptomCallouts(answers: Record<string, string>): string[] {
+  const callouts: string[] = [];
+  const symptomQuestions = ["sleep", "energy", "mood", "physical"];
+
+  for (const questionId of symptomQuestions) {
+    const selectedValue = answers[questionId];
+    if (!selectedValue) continue;
+    const question = QUIZ_QUESTIONS.find((q) => q.id === questionId);
+    if (!question) continue;
+    const option = question.options.find((o) => o.value === selectedValue);
+    if (option?.callout) callouts.push(option.callout);
+  }
+
+  return callouts.slice(0, 2);
+}
+
+export const SEVERITY_MESSAGES: Record<
+  string,
+  { headline: string; body: string; cta: string }
+> = {
+  thriving: {
+    headline: "You're Genuinely Thriving",
+    body: "Every marker you shared points to a body and mind working in harmony. That's not common — and it's worth protecting. Hormonal health shifts gradually, and knowing your baseline now makes it much easier to stay ahead of changes as they come.",
+    cta: "Kim loves talking with women who are feeling great — understanding where you are today makes navigating future changes so much easier. No agenda, just a conversation.",
+  },
   mild: {
-    headline: "You're On a Strong Foundation",
-    body: "Your symptoms are mild, but that doesn't mean you have to accept them. Small, targeted changes can help you feel even better and prevent future imbalances.",
+    headline: "You're in a Good Place — With Room to Optimize",
+    body: "You're doing well overall, with a few areas where you've noticed things aren't quite right. These early signals are worth paying attention to — small, targeted adjustments at this stage can make a meaningful difference in how you feel over the next few years.",
+    cta: "A short conversation with Kim can help clarify whether what you're noticing is worth addressing now or just something to keep an eye on. No pressure — she genuinely enjoys these conversations.",
   },
   moderate: {
-    headline: "Your Body Is Asking for Support",
-    body: "You're experiencing real symptoms that are affecting your daily life. The good news? These are exactly the kinds of challenges that respond well to a holistic approach.",
+    headline: "Your Body Is Sending Early Signals",
+    body: "You're experiencing real, noticeable symptoms that are affecting your daily life in small but meaningful ways. These are exactly the kinds of patterns that respond well to a thoughtful, holistic approach — and getting ahead of them now is far easier than waiting.",
+    cta: "Kim would love to walk you through what she's seeing in your responses and what your options look like. Many women leave their first conversation with more clarity than they've had in years.",
   },
   significant: {
+    headline: "Your Body Is Ready for Real Support",
+    body: "What you're experiencing is having a genuine impact on your quality of life — your sleep, energy, mood, or physical symptoms are telling you something important. This isn't just 'getting older.' These patterns have root causes, and those causes have solutions.",
+    cta: "This is exactly what Kim specializes in. She'd love to look at the full picture with you and help you understand what's actually happening and what's possible.",
+  },
+  severe: {
     headline: "You Deserve to Feel Like Yourself Again",
-    body: "What you're experiencing is significant — and it's not just 'your age.' Your body is sending clear signals that it needs targeted support. We can help you find the root causes and build a plan that works.",
+    body: "The symptoms you're describing are significant — and they're not things you should have to white-knuckle through. What you're experiencing is real, it's not inevitable, and there are targeted approaches that work. You don't have to figure this out alone.",
+    cta: "Kim hears stories like yours every day, and she's seen what's possible when the right support is in place. A conversation costs nothing and could change a great deal.",
   },
 };
+
+export const QUIZ_DISCLAIMER =
+  "This assessment is not a medical diagnosis. It is an educational starting point designed to help you identify patterns and start a conversation. The questions and insights were developed through current research in women's hormonal health and reviewed by Kim personally. Always consult a qualified healthcare provider before making changes to your health regimen.";
 
 // ─── Blog / Resources ───────────────────────────────────────
 export type BlogCategory = "Hormones" | "Nutrition" | "Lifestyle" | "Detox";
