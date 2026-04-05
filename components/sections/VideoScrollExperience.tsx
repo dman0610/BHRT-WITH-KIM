@@ -18,63 +18,142 @@ function remap(value: number, low: number, high: number): number {
 
 function MobileFallback() {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [phase, setPhase] = useState<1 | 2>(1);
+  const [phase, setPhase] = useState<"poster" | "playing" | "final">("poster");
+  const [videoIndex, setVideoIndex] = useState<1 | 2>(1);
+  const touchStartY = useRef<number>(0);
 
+  // Lock body scroll while poster/playing; unlock when final
   useEffect(() => {
+    document.body.style.overflow = phase === "final" ? "" : "hidden";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [phase]);
+
+  // Video playback — only runs in playing phase
+  useEffect(() => {
+    if (phase !== "playing") return;
     const video = videoRef.current;
     if (!video) return;
 
-    // Swap source for the current phase
     video.src =
-      phase === 1
-        ? "/hero/video-one-mobile.mp4"
-        : "/hero/video-two-mobile.mp4";
+      videoIndex === 1 ? "/hero/hero-video-1.mp4" : "/hero/hero-video-2.mp4";
     video.load();
 
     const onEnded = () => {
-      if (phase === 1) {
-        setPhase(2);
+      if (videoIndex === 1) {
+        setVideoIndex(2);
       } else {
+        setPhase("final");
         window.dispatchEvent(new CustomEvent("hero-anim-complete"));
       }
     };
 
     video.addEventListener("ended", onEnded);
 
-    // Autoplay safety — if browser blocks it, unlock the navbar immediately
+    // Autoplay blocked → skip straight to final
     video.play().catch(() => {
+      setPhase("final");
       window.dispatchEvent(new CustomEvent("hero-anim-complete"));
     });
 
     return () => video.removeEventListener("ended", onEnded);
-  }, [phase]);
+  }, [phase, videoIndex]);
 
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartY.current = e.touches[0].clientY;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (phase !== "poster") return;
+    const deltaY = touchStartY.current - e.touches[0].clientY;
+    if (deltaY > 20) setPhase("playing");
+  };
+
+  // ── Poster phase ──────────────────────────────────────────
+  if (phase === "poster") {
+    return (
+      <section
+        className="relative h-dvh overflow-hidden grain-overlay"
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+      >
+        <Image
+          src="/hero/hero-poster.jpg"
+          alt="A seed in a dramatic landscape"
+          fill
+          className="object-cover"
+          priority
+        />
+        <div
+          className="absolute inset-0 bg-gradient-to-t from-bark/60 via-forest/30 to-transparent"
+          aria-hidden="true"
+        />
+        <div className="relative z-10 flex h-full items-center justify-center">
+          <div className="mx-auto max-w-4xl px-6 text-center">
+            <h1 className="font-heading text-5xl font-semibold leading-tight text-white">
+              From Seed to Strength
+            </h1>
+            <p className="mt-6 text-lg font-light leading-relaxed text-white/90 max-w-2xl mx-auto">
+              Empowering women to reclaim health, vitality, and purpose through
+              holistic hormone support. Your body isn&apos;t broken — it&apos;s
+              asking for support.
+            </p>
+          </div>
+        </div>
+        {/* Scroll hint */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10">
+          <ChevronDown
+            className="size-8 text-white/60 animate-bounce"
+            aria-hidden="true"
+          />
+        </div>
+      </section>
+    );
+  }
+
+  // ── Playing phase ─────────────────────────────────────────
+  if (phase === "playing") {
+    return (
+      <section className="relative h-dvh overflow-hidden">
+        <video
+          ref={videoRef}
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div
+          className="absolute inset-0 bg-gradient-to-t from-bark/40 to-transparent pointer-events-none"
+          aria-hidden="true"
+        />
+      </section>
+    );
+  }
+
+  // ── Final phase ───────────────────────────────────────────
   return (
     <section className="relative h-dvh overflow-hidden grain-overlay">
-      {/* Single video element — src swaps from video 1 → video 2 */}
-      <video
-        ref={videoRef}
-        muted
-        playsInline
-        className="absolute inset-0 w-full h-full object-cover"
+      <Image
+        src="/hero/hero-final-frame.jpg"
+        alt="Hero final frame"
+        fill
+        className="object-cover"
+        priority
       />
-
       <div
         className="absolute inset-0 bg-gradient-to-t from-bark/60 via-forest/30 to-transparent"
         aria-hidden="true"
       />
-
       <div className="relative z-10 flex h-full items-center justify-center">
-        <div className="mx-auto max-w-4xl px-4 text-center">
-          <h1 className="font-heading text-5xl font-semibold leading-tight text-white sm:text-6xl md:text-7xl lg:text-[5rem]">
-            From Seed to Strength
-          </h1>
-          <p className="mt-6 text-lg font-light leading-relaxed text-white/90 max-w-2xl mx-auto sm:text-xl">
-            Empowering women to reclaim health, vitality, and purpose through
-            holistic hormone support. Your body isn&apos;t broken — it&apos;s
-            asking for support.
+        <div className="mx-auto max-w-4xl px-6 text-center">
+          <h2 className="font-heading text-4xl font-semibold leading-tight text-white">
+            Your Health. Your Power. Your Life.
+          </h2>
+          <p className="mt-4 text-lg font-light leading-relaxed text-white/90 max-w-2xl mx-auto">
+            Kim&apos;s approach is built on three pillars — because thriving
+            means more than just treating symptoms.
           </p>
-          <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+          <div className="mt-10 flex flex-col items-center gap-4">
             <Link href="/contact">
               <Button className="bg-moss text-white rounded-full px-8 py-3 text-base font-medium hover:bg-sunlight hover:text-bark transition-all duration-300 shadow-lg hover:shadow-xl">
                 Begin Your Journey
@@ -83,7 +162,7 @@ function MobileFallback() {
             <Link href="/quiz">
               <Button
                 variant="outline"
-                className="rounded-full px-8 py-3 text-base font-medium border-white/40 text-moss hover:bg-white/10 hover:border-white/60 transition-all duration-300"
+                className="rounded-full px-8 py-3 text-base font-medium border-white/40 text-white hover:bg-white/10 hover:border-white/60 transition-all duration-300"
               >
                 Take the Health Quiz
               </Button>
