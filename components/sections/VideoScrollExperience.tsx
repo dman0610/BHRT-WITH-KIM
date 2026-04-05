@@ -15,11 +15,19 @@ function remap(value: number, low: number, high: number): number {
 }
 
 // ─── Mobile video fallback ──────────────────────────────────
+//
+// All four background layers (poster, video1, video2, final-frame) stay
+// mounted at all times so nothing flashes on transition. Crossfades are
+// handled with CSS opacity transitions. Two video refs allow video2 to
+// preload silently while video1 is playing, eliminating the mid-sequence flash.
 
 function MobileFallback() {
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const video1Ref = useRef<HTMLVideoElement>(null);
+  const video2Ref = useRef<HTMLVideoElement>(null);
   const [phase, setPhase] = useState<"poster" | "playing" | "final">("poster");
   const [videoIndex, setVideoIndex] = useState<1 | 2>(1);
+  // Delay showing video1 until it has buffered enough to play without a blank frame
+  const [video1Ready, setVideo1Ready] = useState(false);
   const touchStartY = useRef<number>(0);
 
   // Lock body scroll while poster/playing; unlock when final
@@ -30,121 +38,173 @@ function MobileFallback() {
     };
   }, [phase]);
 
-  // Video playback — only runs in playing phase
+  // Watch video1 readiness so we can crossfade from poster without a black frame
+  useEffect(() => {
+    const v = video1Ref.current;
+    if (!v) return;
+    if (v.readyState >= 3) { setVideo1Ready(true); return; }
+    const onReady = () => setVideo1Ready(true);
+    v.addEventListener("canplaythrough", onReady);
+    return () => v.removeEventListener("canplaythrough", onReady);
+  }, []);
+
+  // Start video1 when phase switches to playing
   useEffect(() => {
     if (phase !== "playing") return;
-    const video = videoRef.current;
-    if (!video) return;
-
-    video.src =
-      videoIndex === 1 ? "/hero/hero-video-1.mp4" : "/hero/hero-video-2.mp4";
-    video.load();
-
-    const onEnded = () => {
-      if (videoIndex === 1) {
-        setVideoIndex(2);
-      } else {
-        setPhase("final");
-        window.dispatchEvent(new CustomEvent("hero-anim-complete"));
-      }
-    };
-
-    video.addEventListener("ended", onEnded);
-
-    // Autoplay blocked → skip straight to final
-    video.play().catch(() => {
+    const v = video1Ref.current;
+    if (!v) return;
+    v.play().catch(() => {
       setPhase("final");
       window.dispatchEvent(new CustomEvent("hero-anim-complete"));
     });
+  }, [phase]);
 
-    return () => video.removeEventListener("ended", onEnded);
-  }, [phase, videoIndex]);
+  // Wire video1 ended → switch to video2
+  useEffect(() => {
+    const v = video1Ref.current;
+    if (!v) return;
+    const onEnded = () => setVideoIndex(2);
+    v.addEventListener("ended", onEnded);
+    return () => v.removeEventListener("ended", onEnded);
+  }, []);
+
+  // When videoIndex flips to 2, start video2 (already preloaded)
+  useEffect(() => {
+    if (videoIndex !== 2 || phase !== "playing") return;
+    const v = video2Ref.current;
+    if (!v) return;
+    v.play().catch(() => {
+      setPhase("final");
+      window.dispatchEvent(new CustomEvent("hero-anim-complete"));
+    });
+  }, [videoIndex, phase]);
+
+  // Wire video2 ended → final
+  useEffect(() => {
+    const v = video2Ref.current;
+    if (!v) return;
+    const onEnded = () => {
+      setPhase("final");
+      window.dispatchEvent(new CustomEvent("hero-anim-complete"));
+    };
+    v.addEventListener("ended", onEnded);
+    return () => v.removeEventListener("ended", onEnded);
+  }, []);
 
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartY.current = e.touches[0].clientY;
   };
-
   const handleTouchMove = (e: React.TouchEvent) => {
     if (phase !== "poster") return;
     const deltaY = touchStartY.current - e.touches[0].clientY;
     if (deltaY > 20) setPhase("playing");
   };
 
-  // ── Poster phase ──────────────────────────────────────────
-  if (phase === "poster") {
-    return (
-      <section
-        className="relative h-dvh overflow-hidden grain-overlay"
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
+  // Derived opacity values — CSS transitions handle the actual crossfades
+  const showPoster = phase === "poster" || (phase === "playing" && !video1Ready);
+  const showVideo1 = phase === "playing" && video1Ready && videoIndex === 1;
+  const showVideo2 = phase === "playing" && videoIndex === 2;
+  const showFinal  = phase === "final";
+
+  return (
+    <section
+      className="relative h-dvh overflow-hidden grain-overlay"
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+    >
+      {/* ── Background layers (always mounted, opacity-crossfaded) ── */}
+
+      {/* Poster */}
+      <div
+        className="absolute inset-0 transition-opacity duration-500"
+        style={{ opacity: showPoster ? 1 : 0 }}
       >
         <Image
           src="/hero/hero-poster.jpg"
-          alt="A seed in a dramatic landscape"
+          alt=""
           fill
           className="object-cover"
           priority
         />
-        <div
-          className="absolute inset-0 bg-gradient-to-t from-bark/60 via-forest/30 to-transparent"
-          aria-hidden="true"
-        />
-        <div className="relative z-10 flex h-full items-center justify-center">
-          <div className="mx-auto max-w-4xl px-6 text-center">
-            <h1 className="font-heading text-5xl font-semibold leading-tight text-white">
-              From Seed to Strength
-            </h1>
-            <p className="mt-6 text-lg font-light leading-relaxed text-white/90 max-w-2xl mx-auto">
-              Empowering women to reclaim health, vitality, and purpose through
-              holistic hormone support. Your body isn&apos;t broken — it&apos;s
-              asking for support.
-            </p>
-          </div>
-        </div>
-        {/* Scroll hint */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10">
-          <ChevronDown
-            className="size-8 text-white/60 animate-bounce"
-            aria-hidden="true"
-          />
-        </div>
-      </section>
-    );
-  }
+      </div>
 
-  // ── Playing phase ─────────────────────────────────────────
-  if (phase === "playing") {
-    return (
-      <section className="relative h-dvh overflow-hidden">
-        <video
-          ref={videoRef}
-          muted
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-        <div
-          className="absolute inset-0 bg-gradient-to-t from-bark/40 to-transparent pointer-events-none"
-          aria-hidden="true"
-        />
-      </section>
-    );
-  }
-
-  // ── Final phase ───────────────────────────────────────────
-  return (
-    <section className="relative h-dvh overflow-hidden grain-overlay">
-      <Image
-        src="/hero/hero-final-frame.jpg"
-        alt="Hero final frame"
-        fill
-        className="object-cover"
-        priority
+      {/* Video 1 — preload="auto" so it buffers before the swipe */}
+      <video
+        ref={video1Ref}
+        muted
+        playsInline
+        preload="auto"
+        src="/hero/hero-video-1.mp4"
+        className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300"
+        style={{ opacity: showVideo1 ? 1 : 0 }}
       />
+
+      {/* Video 2 — preloads silently while video 1 plays */}
+      <video
+        ref={video2Ref}
+        muted
+        playsInline
+        preload="auto"
+        src="/hero/hero-video-2.mp4"
+        className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300"
+        style={{ opacity: showVideo2 ? 1 : 0 }}
+      />
+
+      {/* Final frame */}
       <div
-        className="absolute inset-0 bg-gradient-to-t from-bark/60 via-forest/30 to-transparent"
+        className="absolute inset-0 transition-opacity duration-500"
+        style={{ opacity: showFinal ? 1 : 0 }}
+      >
+        <Image
+          src="/hero/hero-final-frame.jpg"
+          alt=""
+          fill
+          className="object-cover"
+        />
+      </div>
+
+      {/* ── Shared gradient overlay ── */}
+      <div
+        className="absolute inset-0 bg-gradient-to-t from-bark/60 via-forest/30 to-transparent pointer-events-none"
+        style={{ zIndex: 10 }}
         aria-hidden="true"
       />
-      <div className="relative z-10 flex h-full items-center justify-center">
+
+      {/* ── Poster text (fades out when video starts) ── */}
+      <div
+        className="absolute inset-0 flex items-center justify-center transition-opacity duration-500 pointer-events-none"
+        style={{ opacity: phase === "poster" ? 1 : 0, zIndex: 20 }}
+      >
+        <div className="mx-auto max-w-4xl px-6 text-center">
+          <h1 className="font-heading text-5xl font-semibold leading-tight text-white">
+            From Seed to Strength
+          </h1>
+          <p className="mt-6 text-lg font-light leading-relaxed text-white/90 max-w-2xl mx-auto">
+            Empowering women to reclaim health, vitality, and purpose through
+            holistic hormone support. Your body isn&apos;t broken — it&apos;s
+            asking for support.
+          </p>
+        </div>
+      </div>
+
+      {/* Scroll hint chevron */}
+      <div
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 transition-opacity duration-300"
+        style={{ opacity: phase === "poster" ? 1 : 0, zIndex: 20 }}
+        aria-hidden="true"
+      >
+        <ChevronDown className="size-8 text-white/60 animate-bounce" />
+      </div>
+
+      {/* ── Final text + buttons (fades in after video 2 ends) ── */}
+      <div
+        className="absolute inset-0 flex items-center justify-center transition-opacity duration-500"
+        style={{
+          opacity: showFinal ? 1 : 0,
+          zIndex: 20,
+          pointerEvents: showFinal ? "auto" : "none",
+        }}
+      >
         <div className="mx-auto max-w-4xl px-6 text-center">
           <h2 className="font-heading text-4xl font-semibold leading-tight text-white">
             Your Health. Your Power. Your Life.
