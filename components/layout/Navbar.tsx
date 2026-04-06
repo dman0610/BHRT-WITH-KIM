@@ -63,7 +63,7 @@ export default function Navbar() {
 
       {/* Buttons layer — always visible and clickable */}
       <nav
-        className="fixed top-0 left-0 right-0 z-[20]"
+        className="fixed top-0 left-0 right-0 z-[50]"
         role="navigation"
         aria-label="Main navigation"
       >

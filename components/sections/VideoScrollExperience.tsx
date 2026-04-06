@@ -108,7 +108,7 @@ function MobileFallback() {
 
   return (
     <section
-      className="relative h-dvh overflow-hidden grain-overlay"
+      className="relative h-svh overflow-hidden grain-overlay"
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
     >
@@ -206,10 +206,10 @@ function MobileFallback() {
         }}
       >
         <div className="mx-auto max-w-4xl px-6 text-center">
-          <h2 className="font-heading text-4xl font-semibold leading-tight text-white">
+          <h2 className="font-heading text-4xl sm:text-5xl font-bold leading-tight text-stone">
             Your Health. Your Power. Your Life.
           </h2>
-          <p className="mt-4 text-lg font-light leading-relaxed text-white/90 max-w-2xl mx-auto">
+          <p className="mt-4 text-lg font-normal leading-relaxed text-stone/90 max-w-2xl mx-auto">
             Kim&apos;s approach is built on three pillars — because thriving
             means more than just treating symptoms.
           </p>
@@ -222,7 +222,7 @@ function MobileFallback() {
             <Link href="/quiz">
               <Button
                 variant="outline"
-                className="rounded-full px-8 py-3 text-base font-medium border-white/40 text-white hover:bg-white/10 hover:border-white/60 transition-all duration-300"
+                className="rounded-full px-8 py-3 text-base font-medium border-white/40 text-moss hover:bg-white/10 hover:border-white/60 transition-all duration-300"
               >
                 Take the Health Quiz
               </Button>
@@ -283,10 +283,10 @@ function ReducedMotionFallback() {
         className="relative bg-stone py-20 md:py-28 overflow-hidden"
       >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="font-heading text-3xl font-semibold text-bark sm:text-4xl md:text-5xl">
+          <h2 className="font-heading text-4xl font-bold text-bark sm:text-5xl md:text-6xl">
             Your Health. Your Power. Your Life.
           </h2>
-          <p className="mt-4 text-clay max-w-2xl mx-auto text-lg">
+          <p className="mt-4 text-bark/80 max-w-2xl mx-auto text-lg">
             Kim&apos;s approach is built on three pillars — because thriving
             means more than just treating symptoms.
           </p>
@@ -465,11 +465,11 @@ function DesktopScrollExperience() {
             }}
           >
             <div className="text-center px-4">
-              <h2 className="font-heading text-3xl font-semibold text-white sm:text-4xl md:text-5xl drop-shadow-lg">
+              <h2 className="font-heading text-4xl font-bold text-stone sm:text-5xl md:text-6xl drop-shadow-lg">
                 Your Health. Your Power. Your Life.
               </h2>
               <p
-                className="mt-4 text-white/90 max-w-2xl mx-auto text-lg drop-shadow-md"
+                className="mt-4 text-stone/95 max-w-2xl mx-auto text-lg font-normal drop-shadow-md"
                 style={{ opacity: missionSubOpacity }}
               >
                 Kim&apos;s approach is built on three pillars — because thriving

@@ -106,7 +106,6 @@ export default function ContactPage() {
               Prefer to Book Directly?
             </h2>
             <p className="mt-4 text-clay text-lg">
-              {/* TODO: Replace with real booking link (Calendly, Cal.com, etc.) */}
               Skip the form and schedule your consultation directly. Choose a time
               that works for you.
             </p>
@@ -115,6 +114,16 @@ export default function ContactPage() {
                 Schedule a Consultation
               </Button>
             </Link>
+            <p className="mt-6 text-clay text-lg">
+              Or{" "}
+              <a
+                href="sms:+18015730606"
+                className="font-medium text-forest hover:text-moss transition-colors underline underline-offset-4"
+                aria-label="Text Kim at 801-573-0606"
+              >
+                Text Kim at 801-573-0606
+              </a>
+            </p>
           </div>
         </div>
       </section>

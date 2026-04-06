@@ -51,23 +51,25 @@ export default function AboutPage() {
               <h2 className="font-heading text-3xl font-semibold text-bark sm:text-4xl mb-6">
                 My Story
               </h2>
-              {/* TODO: Replace with Kim's real personal narrative */}
               <div className="space-y-4 text-clay text-lg leading-relaxed">
                 <p>
-                  I believe women are a powerful force for good and bringing light into this
-                  world. Health is an essential component to accomplishing personal goals.
+                  I believe women are a powerful force for good. My purpose is to support women
+                  during life&apos;s changes so they can feel good, nourish relationships, have
+                  meaning and purpose in their life and continue to brighten the world.
                 </p>
                 <p>
-                  BHRT with Kim&apos;s purpose is to support women in living the life they want
-                  so they can continue to bring light and joy to others. When I saw how many
-                  women were suffering through peri-menopause and post-menopause — told it was
-                  &ldquo;just their age&rdquo; — I knew there had to be a better way.
+                  I have experienced the challenges and discomfort due to peri-menopause and
+                  after seeing several doctors, having multiple procedures and suffering for
+                  years with joint pain and insomnia, I was amazed at the difference a
+                  combination of improved lifestyle choices and hormone replacement therapy
+                  could have. Since then, I have been on a mission to educate myself so I
+                  could then help and guide other women on their own journey.
                 </p>
                 <p>
-                  That better way starts with listening. It means looking at the whole
-                  picture — your hormones, your lifestyle, your stress, your sleep, your
-                  nutrition. It means not guessing, but testing. And it means building a plan
-                  that fits your life, not a one-size-fits-all protocol.
+                  To help women navigate the challenges of fluctuating hormones it requires
+                  looking at the whole picture — your hormones, your lifestyle, your stress,
+                  your sleep, your nutrition. It means not guessing, but testing. And it means
+                  building a plan that fits your life, not a one-size-fits-all protocol.
                 </p>
               </div>
             </div>
@@ -131,13 +133,12 @@ export default function AboutPage() {
             <h2 className="font-heading text-3xl font-semibold text-bark sm:text-4xl mb-8">
               Credentials &amp; Training
             </h2>
-            {/* TODO: Replace with Kim's real credentials */}
             <div className="grid gap-4 sm:grid-cols-2">
               {[
-                "Board Certified in Hormone Health",
-                "Advanced BHRT Training & Certification",
-                "Functional Medicine Practitioner",
-                "Holistic Nutrition Specialist",
+                "Board Certified Family Nurse Practitioner",
+                "Advanced BHRT training and certification with A4M and Worldlink",
+                "Certified Diabetes Care and Education Specialist (CDCES)",
+                "Certified NAET practitioner",
               ].map((credential) => (
                 <div
                   key={credential}
@@ -147,10 +148,6 @@ export default function AboutPage() {
                 </div>
               ))}
             </div>
-            <p className="mt-6 text-sm text-clay">
-              {/* TODO: Replace with real credential details */}
-              Credentials and certifications to be updated.
-            </p>
           </div>
         </div>
       </section>

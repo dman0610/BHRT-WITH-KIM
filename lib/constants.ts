@@ -66,7 +66,7 @@ export const SERVICES = [
     title: "Stress Reduction",
     shortTitle: "Stress Relief",
     description:
-      "Meditation, breathwork, yoga, and social connection strategies to calm your nervous system. Chronic stress disrupts every hormone in your body — managing it is non-negotiable.",
+      "Increased focus on mindfulness, breathwork, spirituality and social connections help calm the nervous system. Chronic stress disrupts every hormone in your body - managing stress is essential for optimal results",
     icon: "wind",
     featured: true,
   },
@@ -93,7 +93,7 @@ export const SERVICES = [
     title: "Detox Support",
     shortTitle: "Detox",
     description:
-      "Support your body's natural elimination pathways through sweat, digestion, and reducing toxic exposure. Modern life exposes us to endocrine disruptors — we help you minimize the load.",
+      "Support your body's natural elimination pathways through sweat, digestion, and reducing toxic exposure.",
     icon: "droplets",
     featured: false,
   },
@@ -129,20 +129,53 @@ export const SERVICES = [
 export const FEATURED_SERVICES = SERVICES.filter((s) => s.featured);
 
 // ─── Testimonials ───────────────────────────────────────────
-/* TODO: Replace all placeholder testimonials with real client quotes from Kim */
 export const TESTIMONIALS = [
+  // ── Real client testimonials ──
+  {
+    id: 9,
+    quote:
+      "Kim was professional but I also left feeling like she truly cared. She even followed up with me to see how things were going. I am grateful to find someone as great as Kim!",
+    name: "Natalie K.",
+    context: "",
+    featured: false,
+  },
+  {
+    id: 10,
+    quote:
+      "I was impressed by her ability to listen to the problems and take time to understand, treat, and teach.",
+    name: "Allison G.",
+    context: "",
+    featured: false,
+  },
+  {
+    id: 11,
+    quote:
+      "Kim is so thoughtful, patient, friendly and easy to work with. I can tell she truly cares! So grateful I found her!",
+    name: "Alyssa C.",
+    context: "",
+    featured: false,
+  },
+  {
+    id: 12,
+    quote:
+      "I rarely leave reviews, but Kim is that amazing. She is professional, kind, and personable. It's easy to tell that she truly wants you to feel better and enjoy a better quality of life.",
+    name: "Beccah G.",
+    context: "",
+    featured: false,
+  },
+  // ── Generated testimonials ──
   {
     id: 1,
     quote:
-      "I was running on fumes for years — exhausted, anxious, and barely recognizing myself. After working with Kim, I finally feel like me again. My sleep is back, my mind is clear, and I have energy I haven't felt in a decade.",
+      "I was running on fumes for years — exhausted, anxious, and barely recognizing myself. After starting hormone replacement therapy, I finally feel like me again. My sleep is back, my mind is clear, and I have energy I haven't felt in a decade.",
     name: "Sarah M.",
     context: "Age 52, post-menopause",
-    featured: true,
+    featured: false,
   },
   {
     id: 2,
     quote:
-      "Kim doesn't just treat symptoms — she listened to my whole story and helped me understand why my body was struggling. The holistic approach changed everything for me.",
+      "The approach here isn't about just treating symptoms — my whole story was actually heard. I finally understood why my body was struggling, and the holistic care changed everything for me.",
     name: "Jennifer L.",
     context: "Age 47, peri-menopause",
     featured: false,
@@ -150,7 +183,7 @@ export const TESTIMONIALS = [
   {
     id: 3,
     quote:
-      "I was told 'it's just your age' by three different doctors. Kim was the first person who said 'let's actually look at what's going on.' The comprehensive testing found issues no one else caught.",
+      "I was told 'it's just your age' by three different doctors. This practice was the first to say 'let's actually look at what's going on.' The comprehensive testing found issues no one else caught.",
     name: "Maria R.",
     context: "Age 55, post-menopause",
     featured: false,
@@ -158,7 +191,7 @@ export const TESTIMONIALS = [
   {
     id: 4,
     quote:
-      "The brain fog was the worst part. I couldn't focus at work, forgot words mid-sentence. Within two months of Kim's protocol, I felt sharp again. It was life-changing.",
+      "The brain fog was the worst part. I couldn't focus at work, forgot words mid-sentence. Within two months of starting hormone replacement therapy, I felt sharp again. It was life-changing.",
     name: "Linda K.",
     context: "Age 49, peri-menopause",
     featured: false,
@@ -166,7 +199,7 @@ export const TESTIMONIALS = [
   {
     id: 5,
     quote:
-      "I love that Kim's approach isn't just about hormones. She helped me overhaul my sleep, my diet, my stress management — the whole picture. I feel stronger and more balanced than I have in years.",
+      "I love that the approach here isn't just about hormones. My sleep, diet, and stress management were all part of the picture. I feel stronger and more balanced than I have in years.",
     name: "Patricia W.",
     context: "Age 58, post-menopause",
     featured: false,
@@ -174,7 +207,7 @@ export const TESTIMONIALS = [
   {
     id: 6,
     quote:
-      "As a busy mom and business owner, I was putting everyone else first and running myself into the ground. Kim helped me see that taking care of my health wasn't selfish — it was essential.",
+      "As a busy mom and business owner, I was putting everyone else first and running myself into the ground. This program helped me see that taking care of my health wasn't selfish — it was essential.",
     name: "Amanda T.",
     context: "Age 44, peri-menopause",
     featured: false,
@@ -182,7 +215,7 @@ export const TESTIMONIALS = [
   {
     id: 7,
     quote:
-      "The weight gain felt unstoppable no matter what I tried. Kim's testing revealed thyroid and adrenal issues that were the real culprits. Finally, answers — and a plan that actually works.",
+      "The weight gain felt unstoppable no matter what I tried. Comprehensive testing revealed thyroid and adrenal issues that were the real culprits. Finally, answers — and a plan that actually works.",
     name: "Christine B.",
     context: "Age 51, post-menopause",
     featured: false,
@@ -190,14 +223,19 @@ export const TESTIMONIALS = [
   {
     id: 8,
     quote:
-      "I went from dreading each day to looking forward to it. Kim gave me hope when I thought feeling awful was just my new normal. It doesn't have to be.",
+      "I went from dreading each day to looking forward to it. This practice gave me hope when I thought feeling awful was just my new normal. It doesn't have to be.",
     name: "Diane F.",
     context: "Age 53, post-menopause",
     featured: false,
   },
 ] as const;
 
-export const FEATURED_TESTIMONIAL = TESTIMONIALS.find((t) => t.featured)!;
+export const FEATURED_TESTIMONIAL = {
+  quote:
+    "I rarely leave reviews, but Kim is that amazing. She is professional, kind, and personable. It's easy to tell that she truly wants you to feel better and enjoy a better quality of life.",
+  name: "Beccah G.",
+  context: "",
+} as const;
 
 // ─── Quiz Questions ─────────────────────────────────────────
 export interface QuizOption {
@@ -655,7 +693,7 @@ export const FOOTER_LINKS = {
   contact: {
     email: "Kyadon300@gmail.com",
     phone: "(801) 573-0606",
-    location: "Serving clients nationwide",
+    location: "Serving patients in Utah, Colorado, Nebraska, Washington, and Wisconsin",
   },
 } as const;
 
