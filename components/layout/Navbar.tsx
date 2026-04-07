@@ -56,7 +56,7 @@ export default function Navbar() {
       {/* Backdrop layer — fades in behind buttons, never affects button visibility */}
       <div
         aria-hidden="true"
-        className={`fixed top-0 left-0 right-0 z-[15] h-16 md:h-20 transition-opacity duration-300 bg-stone/95 backdrop-blur-sm shadow-sm ${
+        className={`fixed top-0 left-0 right-0 z-[25] h-16 md:h-20 transition-opacity duration-300 bg-stone/95 backdrop-blur-sm shadow-sm ${
           backdropVisible || !isHome ? "opacity-100" : "opacity-0"
         }`}
       />
