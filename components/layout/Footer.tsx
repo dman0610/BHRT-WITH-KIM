@@ -58,12 +58,19 @@ export default function Footer() {
     setStatus("loading");
 
     try {
-      const res = await fetch("/api/newsletter", {
+      const formData = new FormData();
+      formData.append("access_key", process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY ?? "");
+      formData.append("email", email.trim());
+      formData.append("subject", `Newsletter Sign-Up — BHRT with Kim`);
+      formData.append("message", `New newsletter subscriber: ${email.trim()}`);
+
+      const res = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
+        body: formData,
       });
-      if (res.ok) {
+
+      const data = await res.json();
+      if (data.success) {
         setStatus("success");
         setEmail("");
       } else {
