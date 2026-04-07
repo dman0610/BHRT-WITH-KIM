@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import ContactForm from "@/components/sections/ContactForm";
 import { FOOTER_LINKS } from "@/lib/constants";
-import { Button } from "@/components/ui/button";
 import { Mail, Phone, MapPin } from "lucide-react";
 import ScrollAnimator from "@/components/layout/ScrollAnimator";
 
@@ -106,24 +104,20 @@ export default function ContactPage() {
               Prefer to Book Directly?
             </h2>
             <p className="mt-4 text-clay text-lg">
-              Skip the form and schedule your consultation directly. Choose a time
-              that works for you.
+              Skip the form and schedule your consultation directly.
             </p>
-            <Link href="/contact" className="inline-block mt-8">
-              <Button className="bg-forest text-white rounded-full px-8 py-3 text-base font-medium hover:bg-moss transition-colors shadow-md">
-                Schedule a Consultation
-              </Button>
-            </Link>
-            <p className="mt-6 text-clay text-lg">
-              Or{" "}
+            <div className="mt-8">
               <a
                 href="sms:+18015730606"
-                className="font-medium text-forest hover:text-moss transition-colors underline underline-offset-4"
+                className="inline-flex flex-col items-center gap-1 group"
                 aria-label="Text Kim at 801-573-0606"
               >
-                Text Kim at 801-573-0606
+                <span className="text-xl font-semibold text-forest group-hover:text-moss transition-colors underline underline-offset-4">
+                  Text Kim
+                </span>
+                <span className="text-clay text-lg">801-573-0606</span>
               </a>
-            </p>
+            </div>
           </div>
         </div>
       </section>

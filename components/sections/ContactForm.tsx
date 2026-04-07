@@ -44,13 +44,25 @@ export default function ContactForm() {
     setErrorMsg("");
 
     try {
-      const res = await fetch("/api/contact", {
+      const formData = new FormData();
+      formData.append("access_key", process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY ?? "");
+      formData.append("name", form.name.trim());
+      formData.append("email", form.email.trim());
+      formData.append("phone", form.phone.trim() || "Not provided");
+      formData.append("message", form.message.trim());
+      formData.append("symptoms", form.symptoms.length > 0 ? form.symptoms.join(", ") : "None selected");
+      formData.append("preferred_contact", form.contactMethod);
+      // Subject line Kim will see in her inbox
+      formData.append("subject", `New message from ${form.name.trim()} — BHRT with Kim`);
+
+      const res = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: formData,
       });
 
-      if (res.ok) {
+      const data = await res.json();
+
+      if (data.success) {
         setStatus("success");
         setForm({
           name: "",
@@ -61,8 +73,7 @@ export default function ContactForm() {
           contactMethod: "Either",
         });
       } else {
-        const data = await res.json();
-        setErrorMsg(data.error || "Something went wrong. Please try again.");
+        setErrorMsg(data.message || "Something went wrong. Please try again.");
         setStatus("error");
       }
     } catch {

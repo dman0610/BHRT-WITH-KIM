@@ -165,7 +165,7 @@ function MobileFallback() {
 
       {/* ── Shared gradient overlay ── */}
       <div
-        className="absolute inset-0 bg-gradient-to-t from-bark/60 via-forest/30 to-transparent pointer-events-none"
+        className="absolute inset-0 pointer-events-none"
         style={{ zIndex: 10 }}
         aria-hidden="true"
       />
@@ -206,10 +206,12 @@ function MobileFallback() {
         }}
       >
         <div className="mx-auto max-w-4xl px-6 text-center">
-          <h2 className="font-heading text-4xl sm:text-5xl font-bold leading-tight text-stone">
+          <h2 className="font-heading text-4xl sm:text-5xl font-bold leading-tight text-stone
+            [text-shadow:0_2px_12px_rgba(0,0,0,0.6),0_1px_3px_rgba(0,0,0,0.8)]">
             Your Health. Your Power. Your Life.
           </h2>
-          <p className="mt-4 text-lg font-normal leading-relaxed text-stone/90 max-w-2xl mx-auto">
+          <p className="mt-4 text-lg font-normal leading-relaxed text-stone/95 max-w-2xl mx-auto
+            [text-shadow:0_1px_6px_rgba(0,0,0,0.7)]">
             Kim&apos;s approach is built on three pillars — because thriving
             means more than just treating symptoms.
           </p>
@@ -248,7 +250,7 @@ function ReducedMotionFallback() {
           priority
         />
         <div
-          className="absolute inset-0 bg-gradient-to-t from-bark/60 via-forest/30 to-transparent"
+          className="absolute inset-0 bg-gradient-to-t from-bark/70 via-bark/40 to-bark/10"
           aria-hidden="true"
         />
         <div className="relative z-10 mx-auto max-w-4xl px-4 text-center">
@@ -465,11 +467,13 @@ function DesktopScrollExperience() {
             }}
           >
             <div className="text-center px-4">
-              <h2 className="font-heading text-4xl font-bold text-stone sm:text-5xl md:text-6xl drop-shadow-lg">
+              <h2 className="font-heading text-4xl font-bold text-stone sm:text-5xl md:text-6xl leading-tight
+                [text-shadow:0_2px_16px_rgba(0,0,0,0.65),0_1px_4px_rgba(0,0,0,0.8)]">
                 Your Health. Your Power. Your Life.
               </h2>
               <p
-                className="mt-4 text-stone/95 max-w-2xl mx-auto text-lg font-normal drop-shadow-md"
+                className="mt-4 text-stone/95 max-w-2xl mx-auto text-lg font-normal
+                  [text-shadow:0_1px_8px_rgba(0,0,0,0.7)]"
                 style={{ opacity: missionSubOpacity }}
               >
                 Kim&apos;s approach is built on three pillars — because thriving
