@@ -79,7 +79,7 @@ export default function ContactPage() {
                 <ul className="space-y-3 text-clay text-sm leading-relaxed">
                   <li className="flex gap-2">
                     <span className="text-forest font-bold shrink-0">1.</span>
-                    Kim reviews your message within 1-2 business days
+                    Kim reviews messages and will contact you via text to schedule a free phone call to ask any questions.
                   </li>
                   <li className="flex gap-2">
                     <span className="text-forest font-bold shrink-0">2.</span>
@@ -97,27 +97,23 @@ export default function ContactPage() {
       </section>
 
       {/* Booking CTA */}
-      <section className="bg-mist py-16 md:py-20">
+      <section id="booking" className="bg-mist py-16 md:py-20">
         <div className="mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
           <div className="animate-on-scroll">
             <h2 className="font-heading text-3xl font-semibold text-bark sm:text-4xl">
-              Prefer to Book Directly?
+              Book Your Virtual Visit
             </h2>
             <p className="mt-4 text-clay text-lg">
-              Skip the form and schedule your consultation directly.
+              Select a time that works for you — secure online booking.
             </p>
-            <div className="mt-8">
-              <a
-                href="sms:+18015730606"
-                className="inline-flex flex-col items-center gap-1 group"
-                aria-label="Text Kim at 801-573-0606"
-              >
-                <span className="text-xl font-semibold text-forest group-hover:text-moss transition-colors underline underline-offset-4">
-                  Text Kim
-                </span>
-                <span className="text-clay text-lg">801-573-0606</span>
-              </a>
-            </div>
+            <a
+              href="https://secure.gethealthie.com/appointments/embed_appt?dietitian_id=4099018&provider_ids=%5B4099018%5D&appt_type_ids=%5B382563,382564,382565%5D&primary_color=4A9625"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block mt-8 bg-moss text-white rounded-full px-8 py-3 text-base font-medium hover:bg-forest transition-colors shadow-md"
+            >
+              Book with Kim Today
+            </a>
           </div>
         </div>
       </section>

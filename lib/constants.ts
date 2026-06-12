@@ -22,22 +22,22 @@ export const SYMPTOMS = [
 // ─── Mission Pillars ────────────────────────────────────────
 export const MISSION_PILLARS = [
   {
-    title: "Live Vibrantly",
+    title: "Balance",
     description:
-      "Reclaim the energy and vitality that lets you wake up excited about your day. Your body has the capacity to thrive — it just needs the right support.",
+      "Restore hormonal balance as the foundation for everything else. When your hormones are in sync, your body can do what it was designed to do.",
+    icon: "leaf",
+  },
+  {
+    title: "Restore",
+    description:
+      "Reclaim your energy, sleep, and mood. With the right support, you can feel like yourself again — not a diminished version of who you used to be.",
     icon: "sun",
   },
   {
-    title: "Nurture Relationships",
+    title: "Thrive",
     description:
-      "When you feel your best, you show up fully for the people you love. Balanced hormones mean steadier moods, deeper sleep, and more presence.",
+      "When you feel well, you show up fully — for your relationships, your purpose, and your goals. Women are a powerful force for good in this world.",
     icon: "heart",
-  },
-  {
-    title: "Achieve Your Goals",
-    description:
-      "Women are a powerful force for good in this world. Health is the foundation for accomplishing the personal goals that bring light and joy to others.",
-    icon: "target",
   },
 ] as const;
 
@@ -130,7 +130,6 @@ export const FEATURED_SERVICES = SERVICES.filter((s) => s.featured);
 
 // ─── Testimonials ───────────────────────────────────────────
 export const TESTIMONIALS = [
-  // ── Real client testimonials ──
   {
     id: 9,
     quote:
@@ -161,71 +160,6 @@ export const TESTIMONIALS = [
       "I rarely leave reviews, but Kim is that amazing. She is professional, kind, and personable. It's easy to tell that she truly wants you to feel better and enjoy a better quality of life.",
     name: "Beccah G.",
     context: "",
-    featured: false,
-  },
-  // ── Generated testimonials ──
-  {
-    id: 1,
-    quote:
-      "I was running on fumes for years — exhausted, anxious, and barely recognizing myself. After starting hormone replacement therapy, I finally feel like me again. My sleep is back, my mind is clear, and I have energy I haven't felt in a decade.",
-    name: "Sarah M.",
-    context: "Age 52, post-menopause",
-    featured: false,
-  },
-  {
-    id: 2,
-    quote:
-      "The approach here isn't about just treating symptoms — my whole story was actually heard. I finally understood why my body was struggling, and the holistic care changed everything for me.",
-    name: "Jennifer L.",
-    context: "Age 47, peri-menopause",
-    featured: false,
-  },
-  {
-    id: 3,
-    quote:
-      "I was told 'it's just your age' by three different doctors. This practice was the first to say 'let's actually look at what's going on.' The comprehensive testing found issues no one else caught.",
-    name: "Maria R.",
-    context: "Age 55, post-menopause",
-    featured: false,
-  },
-  {
-    id: 4,
-    quote:
-      "The brain fog was the worst part. I couldn't focus at work, forgot words mid-sentence. Within two months of starting hormone replacement therapy, I felt sharp again. It was life-changing.",
-    name: "Linda K.",
-    context: "Age 49, peri-menopause",
-    featured: false,
-  },
-  {
-    id: 5,
-    quote:
-      "I love that the approach here isn't just about hormones. My sleep, diet, and stress management were all part of the picture. I feel stronger and more balanced than I have in years.",
-    name: "Patricia W.",
-    context: "Age 58, post-menopause",
-    featured: false,
-  },
-  {
-    id: 6,
-    quote:
-      "As a busy mom and business owner, I was putting everyone else first and running myself into the ground. This program helped me see that taking care of my health wasn't selfish — it was essential.",
-    name: "Amanda T.",
-    context: "Age 44, peri-menopause",
-    featured: false,
-  },
-  {
-    id: 7,
-    quote:
-      "The weight gain felt unstoppable no matter what I tried. Comprehensive testing revealed thyroid and adrenal issues that were the real culprits. Finally, answers — and a plan that actually works.",
-    name: "Christine B.",
-    context: "Age 51, post-menopause",
-    featured: false,
-  },
-  {
-    id: 8,
-    quote:
-      "I went from dreading each day to looking forward to it. This practice gave me hope when I thought feeling awful was just my new normal. It doesn't have to be.",
-    name: "Diane F.",
-    context: "Age 53, post-menopause",
     featured: false,
   },
 ] as const;
@@ -693,7 +627,7 @@ export const FOOTER_LINKS = {
   contact: {
     email: "Kyadon300@gmail.com",
     phone: "(801) 573-0606",
-    location: "Serving patients in Utah, Colorado, Nebraska, Washington, and Wisconsin",
+    location: "Serving patients in Utah",
   },
 } as const;
 

@@ -14,25 +14,11 @@ export default function Navbar() {
   const isHome = pathname === "/";
 
   useEffect(() => {
-    if (!isHome) {
-      // Non-home pages: backdrop follows scroll threshold
-      const onScroll = () => setBackdropVisible(window.scrollY > 60);
-      window.addEventListener("scroll", onScroll, { passive: true });
-      onScroll();
-      return () => window.removeEventListener("scroll", onScroll);
-    }
-
-    // Home page: backdrop only appears after hero animation finishes
-    setBackdropVisible(false);
-    const onComplete = () => setBackdropVisible(true);
-    const onReset = () => setBackdropVisible(false);
-    window.addEventListener("hero-anim-complete", onComplete);
-    window.addEventListener("hero-anim-reset", onReset);
-    return () => {
-      window.removeEventListener("hero-anim-complete", onComplete);
-      window.removeEventListener("hero-anim-reset", onReset);
-    };
-  }, [isHome]);
+    const onScroll = () => setBackdropVisible(window.scrollY > 60);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   // Lock body scroll when mobile nav is open
   useEffect(() => {
@@ -40,8 +26,8 @@ export default function Navbar() {
     return () => { document.body.style.overflow = ""; };
   }, [mobileOpen]);
 
-  // Text color: white over animation/transparent bg, dark once backdrop shows
-  const textClass = backdropVisible || !isHome ? "text-bark" : "text-white";
+  // Home: light hero → always dark text. Other pages: white text over dark banners, dark once scrolled.
+  const textClass = backdropVisible || isHome ? "text-bark" : "text-white";
 
   return (
     <>
@@ -57,7 +43,7 @@ export default function Navbar() {
       <div
         aria-hidden="true"
         className={`fixed top-0 left-0 right-0 z-[25] h-16 md:h-20 transition-opacity duration-300 bg-stone/95 backdrop-blur-sm shadow-sm ${
-          backdropVisible || !isHome ? "opacity-100" : "opacity-0"
+          backdropVisible ? "opacity-100" : "opacity-0"
         }`}
       />
 

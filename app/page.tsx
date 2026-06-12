@@ -1,4 +1,4 @@
-import VideoScrollExperience from "@/components/sections/VideoScrollExperience";
+import HeroFlyer from "@/components/sections/HeroFlyer";
 import MissionPillars from "@/components/sections/MissionPillars";
 import SymptomBar from "@/components/sections/SymptomBar";
 import ServicePreview from "@/components/sections/ServicePreview";
@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <>
       <ScrollAnimator />
-      <VideoScrollExperience />
+      <HeroFlyer />
       <MissionPillars />
       <SymptomBar />
       <ServicePreview />

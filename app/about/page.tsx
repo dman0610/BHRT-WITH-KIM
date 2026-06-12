@@ -54,8 +54,9 @@ export default function AboutPage() {
               <div className="space-y-4 text-clay text-lg leading-relaxed">
                 <p>
                   I believe women are a powerful force for good. My purpose is to support women
-                  during life&apos;s changes so they can feel good, nourish relationships, have
-                  meaning and purpose in their life and continue to brighten the world.
+                  during life&apos;s changes so they can feel good, live the life they want to
+                  live, nourish relationships, fulfill their purpose and continue to brighten
+                  the world.
                 </p>
                 <p>
                   I have experienced the challenges and discomfort due to peri-menopause and
@@ -135,10 +136,10 @@ export default function AboutPage() {
             </h2>
             <div className="grid gap-4 sm:grid-cols-2">
               {[
-                "Board Certified Family Nurse Practitioner",
-                "Advanced BHRT training and certification with A4M and Worldlink",
+                "Board Certified Nurse Practitioner",
+                "Trained in BHRT through Worldlink Medical",
+                "Trained in Functional Medicine",
                 "Certified Diabetes Care and Education Specialist (CDCES)",
-                "Certified NAET practitioner",
               ].map((credential) => (
                 <div
                   key={credential}
