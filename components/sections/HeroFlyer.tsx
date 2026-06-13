@@ -40,7 +40,7 @@ export default function HeroFlyer() {
             <div className="relative order-first md:order-last">
               <div className="relative aspect-[4/5] rounded-3xl overflow-hidden shadow-lg max-w-xs mx-auto md:max-w-none">
                 <Image
-                  src="/kim-portrait.jpg"
+                  src="/kim-hero.jpg"
                   alt="Kim — BHRT with Kim practitioner"
                   width={600}
                   height={750}
