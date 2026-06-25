@@ -98,23 +98,31 @@ export default function ContactPage() {
 
       {/* Booking CTA */}
       <section id="booking" className="bg-mist py-16 md:py-20">
-        <div className="mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
-          <div className="animate-on-scroll">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+          <div className="animate-on-scroll text-center mb-8">
             <h2 className="font-heading text-3xl font-semibold text-bark sm:text-4xl">
               Book Your Virtual Visit
             </h2>
             <p className="mt-4 text-clay text-lg">
               Select a time that works for you — secure online booking.
             </p>
+          </div>
+          <iframe
+            src="https://secure.gethealthie.com/appointments/embed_appt?dietitian_id=4099018&provider_ids=%5B4099018%5D&appt_type_ids=%5B382563,382564,382565,529023%5D&primary_color=4A9625"
+            style={{ width: "100%", minHeight: "600px", border: 0 }}
+            title="Book an appointment with Kim"
+          />
+          <p className="mt-3 text-sm text-clay text-center">
+            Booking provided by{" "}
             <a
-              href="https://secure.gethealthie.com/appointments/embed_appt?dietitian_id=4099018&provider_ids=%5B4099018%5D&appt_type_ids=%5B382563,382564,382565%5D&primary_color=4A9625"
+              href="https://gethealthie.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block mt-8 bg-moss text-white rounded-full px-8 py-3 text-base font-medium hover:bg-forest transition-colors shadow-md"
+              className="underline hover:text-forest transition-colors"
             >
-              Book with Kim Today
+              Healthie
             </a>
-          </div>
+          </p>
         </div>
       </section>
     </>

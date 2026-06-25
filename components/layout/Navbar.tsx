@@ -81,7 +81,7 @@ export default function Navbar() {
                   </Link>
                 );
               })}
-              <Link href="/contact" className="ml-3">
+              <Link href="/contact#booking" className="ml-3">
                 <Button className="bg-moss text-white rounded-full px-5 hover:bg-forest transition-colors">
                   Book Consultation
                 </Button>
@@ -136,7 +136,7 @@ export default function Navbar() {
                 </Link>
               );
             })}
-            <Link href="/contact" className="mt-6" onClick={() => setMobileOpen(false)}>
+            <Link href="/contact#booking" className="mt-6" onClick={() => setMobileOpen(false)}>
               <Button className="w-full bg-moss text-white rounded-full py-3 hover:bg-forest transition-colors">
                 Book Consultation
               </Button>
