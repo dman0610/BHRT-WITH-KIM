@@ -61,13 +61,18 @@ export default function BlogCard({
       </div>
 
       <div className="flex flex-col flex-1 p-5 md:p-6">
-        <h3 className="font-heading text-lg font-medium text-bark leading-snug group-hover:text-forest transition-colors line-clamp-2">
+        {/*
+          h2, not h3 — on /resources these cards are the first headings under
+          the page h1, so h3 skipped a level. Visual size is set by the class,
+          not the tag.
+        */}
+        <h2 className="font-heading text-lg font-medium text-bark leading-snug group-hover:text-forest transition-colors line-clamp-2">
           {title}
-        </h3>
-        <p className="mt-2 text-clay text-sm leading-relaxed line-clamp-3 flex-1">
+        </h2>
+        <p className="mt-2 text-clay-text leading-relaxed line-clamp-3 flex-1">
           {preview}
         </p>
-        <div className="mt-4 flex items-center gap-4 text-xs text-clay/70">
+        <div className="mt-4 flex items-center gap-4 text-xs text-clay-text">
           <span className="flex items-center gap-1">
             <Calendar className="size-3" />
             {formattedDate}

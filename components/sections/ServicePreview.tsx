@@ -5,13 +5,13 @@ import { Button } from "@/components/ui/button";
 
 export default function ServicePreview() {
   return (
-    <section className="bg-stone py-20 md:py-28 section-over-video">
+    <section className="bg-stone py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16 animate-on-scroll">
           <h2 className="font-heading text-3xl font-semibold text-bark sm:text-4xl md:text-5xl">
             A Whole-Body Approach to Feeling Whole
           </h2>
-          <p className="mt-4 text-clay max-w-2xl mx-auto text-lg">
+          <p className="mt-4 text-clay-text max-w-2xl mx-auto text-lg">
             We don&apos;t just treat symptoms — we find the root causes and
             build a plan that supports your whole life.
           </p>
@@ -30,7 +30,7 @@ export default function ServicePreview() {
               <h3 className="font-heading text-xl font-medium text-bark mb-2">
                 {service.shortTitle}
               </h3>
-              <p className="text-clay text-sm leading-relaxed line-clamp-3">
+              <p className="text-clay-text text-sm leading-relaxed line-clamp-3">
                 {service.description}
               </p>
               <span className="mt-4 inline-block text-sm font-medium text-moss group-hover:text-forest transition-colors">

@@ -3,7 +3,7 @@ import { Quote } from "lucide-react";
 
 export default function TestimonialSection() {
   return (
-    <section className="bg-peach/40 py-20 md:py-28 section-over-video">
+    <section className="bg-peach/40 py-20 md:py-28">
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12 animate-on-scroll">
           <h2 className="font-heading text-3xl font-semibold text-bark sm:text-4xl">
@@ -31,7 +31,7 @@ export default function TestimonialSection() {
               </div>
               <div>
                 <p className="font-medium text-bark">{FEATURED_TESTIMONIAL.name}</p>
-                <p className="text-sm text-clay">{FEATURED_TESTIMONIAL.context}</p>
+                <p className="text-sm text-clay-text">{FEATURED_TESTIMONIAL.context}</p>
               </div>
             </footer>
           </blockquote>

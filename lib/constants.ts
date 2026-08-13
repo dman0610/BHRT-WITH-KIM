@@ -1,22 +1,46 @@
 // ─── Navigation ─────────────────────────────────────────────
+// FAQ took the slot Testimonials held. Seven items plus a CTA is already
+// crowded on mobile, and /faq answers real pre-booking questions while
+// /testimonials is four unattributed quotes. Testimonials remains reachable
+// from the footer.
 export const NAV_LINKS = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
   { label: "Services", href: "/services" },
+  // Symptom pages carry the search volume for this practice — women search
+  // their symptoms, not the treatment name. Before this they were reachable
+  // only from the footer and the homepage chips.
+  { label: "Symptoms", href: "/symptoms" },
+  { label: "FAQ", href: "/faq" },
   { label: "Resources", href: "/resources" },
-  { label: "Testimonials", href: "/testimonials" },
   { label: "Quiz", href: "/quiz" },
   { label: "Contact", href: "/contact" },
 ] as const;
 
 // ─── Symptoms ───────────────────────────────────────────────
+/**
+ * The homepage "Recognize Any of These?" chips.
+ *
+ * Every chip MUST point at the page that answers it. Until Phase 7 all six
+ * linked to `/services`, so clicking "Brain Fog" landed on a services list
+ * instead of the brain fog page — the single largest relevance leak on the
+ * site, and the reason six carefully written symptom pages went unread.
+ *
+ * Six chips, not ten. The row stays one clean line on desktop and two on a
+ * phone; the remaining topics live on /symptoms, which the section links to.
+ * "Mood Changes" covers what used to be labelled "Anxiety" because the page
+ * covers both and mood is the broader entry point.
+ *
+ * If a chip is added, it needs a real page. A chip pointing at a 404 is worse
+ * than no chip — a verification script asserts this.
+ */
 export const SYMPTOMS = [
-  { label: "Insomnia", icon: "moon" },
-  { label: "Anxiety", icon: "brain" },
-  { label: "Brain Fog", icon: "cloud" },
-  { label: "Joint Pain", icon: "bone" },
-  { label: "Fatigue", icon: "battery-low" },
-  { label: "Weight Gain", icon: "scale" },
+  { label: "Hot Flashes", icon: "flame", href: "/symptoms/hot-flashes-night-sweats" },
+  { label: "Sleep Trouble", icon: "moon", href: "/symptoms/sleep-insomnia" },
+  { label: "Fatigue", icon: "battery-low", href: "/symptoms/menopause-fatigue" },
+  { label: "Brain Fog", icon: "cloud", href: "/symptoms/brain-fog-memory" },
+  { label: "Mood Changes", icon: "brain", href: "/symptoms/mood-changes-anxiety" },
+  { label: "Weight Changes", icon: "scale", href: "/symptoms/hormonal-weight-gain" },
 ] as const;
 
 // ─── Mission Pillars ────────────────────────────────────────
@@ -66,7 +90,7 @@ export const SERVICES = [
     title: "Stress Reduction",
     shortTitle: "Stress Relief",
     description:
-      "Increased focus on mindfulness, breathwork, spirituality and social connections help calm the nervous system. Chronic stress disrupts every hormone in your body - managing stress is essential for optimal results",
+      "Increased focus on mindfulness, breathwork, spirituality and social connections help calm the nervous system. Chronic stress affects hormone balance — managing it is part of every plan we build.",
     icon: "wind",
     featured: true,
   },
@@ -75,7 +99,7 @@ export const SERVICES = [
     title: "Sleep Optimization",
     shortTitle: "Sleep",
     description:
-      "Evidence-based 8-hour sleep protocols that address the root causes of insomnia and restless nights. Quality sleep is when your body repairs, restores, and rebalances hormones.",
+      "Sleep protocols that address common causes of insomnia and restless nights. Quality sleep is when your body repairs, restores, and rebalances hormones.",
     icon: "moon",
     featured: true,
   },
@@ -136,7 +160,8 @@ export const TESTIMONIALS = [
       "Kim was professional but I also left feeling like she truly cared. She even followed up with me to see how things were going. I am grateful to find someone as great as Kim!",
     name: "Natalie K.",
     context: "",
-    featured: false,
+    // The homepage quote. See FEATURED_TESTIMONIAL below.
+    featured: true,
   },
   {
     id: 10,
@@ -164,12 +189,24 @@ export const TESTIMONIALS = [
   },
 ] as const;
 
-export const FEATURED_TESTIMONIAL = {
-  quote:
-    "I rarely leave reviews, but Kim is that amazing. She is professional, kind, and personable. It's easy to tell that she truly wants you to feel better and enjoy a better quality of life.",
-  name: "Beccah G.",
-  context: "",
-} as const;
+/**
+ * The one quote shown on the homepage.
+ *
+ * DERIVED from TESTIMONIALS rather than a second copy of the string. It was
+ * previously duplicated by hand, which meant the same quote existed in two
+ * places and could drift apart — and did appear twice to anyone visiting both
+ * `/` and `/testimonials`. Flagged in docs/00-BUSINESS-FACTS.md.
+ *
+ * `/testimonials` renders the entries where `featured` is false, so across the
+ * whole site each quote now appears exactly once. With only four testimonials
+ * that is a visible trade — but repeating one of four makes the set look
+ * thinner than it is, and real Google reviews are what replace these anyway.
+ */
+export const FEATURED_TESTIMONIAL =
+  TESTIMONIALS.find((t) => t.featured) ?? TESTIMONIALS[0];
+
+/** Everything not shown on the homepage — the /testimonials grid. */
+export const UNFEATURED_TESTIMONIALS = TESTIMONIALS.filter((t) => !t.featured);
 
 // ─── Quiz Questions ─────────────────────────────────────────
 export interface QuizOption {
@@ -210,7 +247,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
         value: "waking",
         score: 3,
         serviceWeights: { sleep: 3, bhrt: 2, stress: 1 },
-        callout: "Frequent night waking is one of the most telling signs of hormonal fluctuation — estrogen and progesterone directly regulate your sleep architecture. This is very treatable.",
+        callout: "Frequent night waking is commonly reported during perimenopause — estrogen and progesterone both play a role in regulating sleep. Sleep changes are one of the most common things women bring to a hormone evaluation.",
       },
       {
         label: "I rarely get more than 5 hours",
@@ -247,7 +284,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
           nutrition: 2,
           sleep: 2,
         },
-        callout: "Relying on caffeine to function often signals adrenal fatigue or thyroid dysfunction — both of which respond well to the right support.",
+        callout: "Persistent reliance on caffeine is often worth evaluating alongside thyroid and adrenal function, which are part of a comprehensive hormone workup.",
       },
       {
         label: "I'm exhausted no matter what I do",
@@ -284,7 +321,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
         value: "brain-fog",
         score: 3,
         serviceWeights: { bhrt: 3, nutrition: 2, "thyroid-adrenal": 2 },
-        callout: "Brain fog isn't just stress — it's often estrogen-related and very treatable. When you're losing words or your train of thought, your brain is asking for hormonal support.",
+        callout: "Cognitive changes like word-finding difficulty are commonly reported during perimenopause, and estrogen's role in cognition is an active area of research.",
       },
       {
         label: "I feel like a completely different person",
@@ -328,7 +365,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
         value: "hot-flashes",
         score: 3,
         serviceWeights: { bhrt: 4, "natural-remedies": 2 },
-        callout: "Hot flashes and night sweats are hallmark estrogen fluctuation symptoms. There are both natural and bioidentical approaches that work beautifully for most women — often faster than expected.",
+        callout: "Hot flashes and night sweats are among the most commonly reported perimenopausal symptoms, and there are both lifestyle and hormonal approaches worth discussing with a provider.",
       },
     ],
   },
@@ -525,17 +562,17 @@ export const SEVERITY_MESSAGES: Record<
   moderate: {
     headline: "Your Body Is Sending Early Signals",
     body: "You're experiencing real, noticeable symptoms that are affecting your daily life in small but meaningful ways. These are exactly the kinds of patterns that respond well to a thoughtful, holistic approach — and getting ahead of them now is far easier than waiting.",
-    cta: "Kim would love to walk you through what she's seeing in your responses and what your options look like. Many women leave their first conversation with more clarity than they've had in years.",
+    cta: "Kim would love to walk you through your responses and what your options look like. A first conversation is mostly about understanding your history and what you've been noticing.",
   },
   significant: {
     headline: "Your Body Is Ready for Real Support",
-    body: "What you're experiencing is having a genuine impact on your quality of life — your sleep, energy, mood, or physical symptoms are telling you something important. This isn't just 'getting older.' These patterns have root causes, and those causes have solutions.",
+    body: "Your answers point to patterns that are affecting your quality of life — sleep, energy, mood, or physical symptoms. Many women are told this is just 'getting older.' These patterns often have identifiable causes worth investigating.",
     cta: "This is exactly what Kim specializes in. She'd love to look at the full picture with you and help you understand what's actually happening and what's possible.",
   },
   severe: {
     headline: "You Deserve to Feel Like Yourself Again",
-    body: "The symptoms you're describing are significant — and they're not things you should have to white-knuckle through. What you're experiencing is real, it's not inevitable, and there are targeted approaches that work. You don't have to figure this out alone.",
-    cta: "Kim hears stories like yours every day, and she's seen what's possible when the right support is in place. A conversation costs nothing and could change a great deal.",
+    body: "The symptoms you're describing are significant — and they're not things you should have to white-knuckle through. What you're experiencing is real, and it's worth discussing with a provider who works in this area specifically. You don't have to figure this out alone.",
+    cta: "These are the conversations Kim has most often. A free consultation is a chance to look at the full picture together — it costs nothing.",
   },
 };
 
@@ -615,20 +652,50 @@ export const CONTACT_SYMPTOMS = [
 
 export const CONTACT_METHODS = ["Email", "Phone", "Either"] as const;
 
+/**
+ * "How did you hear about Kim?" — the attribution question.
+ *
+ * Unglamorous and self-reported, and still the most reliable attribution
+ * available to a practice this size. Bookings complete inside a cross-origin
+ * Healthie iframe that exposes no completion event, so no amount of pixel work
+ * can see them. This question is the only thing that catches phone calls,
+ * word-of-mouth referrals, the print flyer, and direct traffic — the channels
+ * that are otherwise entirely invisible.
+ *
+ * Keep the list short. A long list depresses completion and the extra
+ * granularity is not actionable at this volume. See docs/07-TRACKING.md.
+ */
+export const HEAR_ABOUT_OPTIONS = [
+  "Google search",
+  "Facebook or Instagram",
+  "Friend or family",
+  "Flyer or event",
+  "Another website",
+  "Other",
+] as const;
+
 // ─── Footer ─────────────────────────────────────────────────
+// Contact details deliberately live in lib/site.ts, not here — one source of
+// truth for every business fact. See docs/00-BUSINESS-FACTS.md.
 export const FOOTER_LINKS = {
   quickLinks: [
     { label: "About Kim", href: "/about" },
-    { label: "Services", href: "/services" },
-    { label: "Resources", href: "/resources" },
+    { label: "Services & Pricing", href: "/services" },
+    { label: "Book a Free Call", href: "/book" },
+    { label: "FAQ", href: "/faq" },
     { label: "Health Quiz", href: "/quiz" },
     { label: "Testimonials", href: "/testimonials" },
   ],
-  contact: {
-    email: "Kyadon300@gmail.com",
-    phone: "(801) 573-0606",
-    location: "Serving patients in Utah",
-  },
+  // Content pages aren't in the nav (already crowded), so the footer is their
+  // main internal-link surface. Descriptive labels, not "learn more".
+  learnLinks: [
+    { label: "Perimenopause symptoms", href: "/symptoms" },
+    { label: "What BHRT costs in Utah", href: "/bhrt-cost-utah" },
+    { label: "BHRT vs traditional HRT", href: "/bhrt-vs-hrt" },
+    { label: "Choosing a hormone provider", href: "/find-a-hormone-provider" },
+    { label: "Utah service areas", href: "/service-areas" },
+    { label: "Articles", href: "/resources" },
+  ],
 } as const;
 
 // ─── Values (About Page) ───────────────────────────────────

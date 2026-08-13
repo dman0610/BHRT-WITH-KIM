@@ -1,10 +1,7 @@
-"use client";
-
 import Link from "next/link";
 import { FOOTER_LINKS } from "@/lib/constants";
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { SITE } from "@/lib/site";
+import NewsletterForm from "@/components/layout/NewsletterForm";
 
 function BotanicalAccent() {
   return (
@@ -48,45 +45,17 @@ function BotanicalAccent() {
   );
 }
 
+/**
+ * Server component. The newsletter form is a client child so the NAP block
+ * stays in server-rendered HTML on every page — see NewsletterForm.tsx.
+ */
 export default function Footer() {
-  const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
-
-  const handleNewsletter = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email) return;
-    setStatus("loading");
-
-    try {
-      const formData = new FormData();
-      formData.append("access_key", process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY ?? "");
-      formData.append("email", email.trim());
-      formData.append("subject", `Newsletter Sign-Up — BHRT with Kim`);
-      formData.append("message", `New newsletter subscriber: ${email.trim()}`);
-
-      const res = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        body: formData,
-      });
-
-      const data = await res.json();
-      if (data.success) {
-        setStatus("success");
-        setEmail("");
-      } else {
-        setStatus("error");
-      }
-    } catch {
-      setStatus("error");
-    }
-  };
-
   return (
-    <footer className="relative bg-bark text-stone/90 overflow-hidden section-over-video">
+    <footer className="relative bg-bark text-stone/90 overflow-hidden">
       <BotanicalAccent />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid gap-12 md:grid-cols-3">
+        <div className="grid gap-12 md:grid-cols-4">
           {/* Brand / Mission */}
           <div>
             <Link href="/" className="font-heading text-2xl font-semibold text-white">
@@ -115,44 +84,86 @@ export default function Footer() {
             </ul>
           </div>
 
+          {/* Learn — the main internal-link surface for content pages */}
+          <div>
+            <h3 className="font-heading text-lg font-medium text-white mb-4">Learn</h3>
+            <ul className="space-y-2">
+              {FOOTER_LINKS.learnLinks.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="text-sm text-stone/70 hover:text-sunlight transition-colors"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
           {/* Contact + Newsletter */}
           <div>
             <h3 className="font-heading text-lg font-medium text-white mb-4">Stay Connected</h3>
-            <div className="space-y-2 text-sm text-stone/70 mb-6">
-              <p>{FOOTER_LINKS.contact.email}</p>
-              <p>{FOOTER_LINKS.contact.phone}</p>
-              <p>{FOOTER_LINKS.contact.location}</p>
+            <div className="space-y-2 text-sm text-stone/80 mb-6">
+              <p>
+                <a
+                  href={`mailto:${SITE.contact.email}`}
+                  className="underline-offset-4 transition-colors hover:text-white hover:underline"
+                >
+                  {SITE.contact.email}
+                </a>
+              </p>
+              <p>
+                <a
+                  href={`tel:${SITE.contact.phoneE164}`}
+                  className="underline-offset-4 transition-colors hover:text-white hover:underline"
+                >
+                  {SITE.contact.phone}
+                </a>
+              </p>
+              <p>{SITE.contact.serviceAreaLine}</p>
             </div>
 
-            <form onSubmit={handleNewsletter} className="flex gap-2">
-              <Input
-                type="email"
-                placeholder="Your email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                className="bg-bark border-stone/20 text-stone placeholder:text-stone/40 focus:border-sage rounded-full text-sm"
-                aria-label="Email for newsletter"
-              />
-              <Button
-                type="submit"
-                disabled={status === "loading"}
-                className="bg-moss text-white rounded-full px-4 hover:bg-forest transition-colors shrink-0 text-sm"
-              >
-                {status === "loading" ? "..." : "Join"}
-              </Button>
-            </form>
-            {status === "success" && (
-              <p className="mt-2 text-sm text-sage">Welcome! You&apos;ll hear from us soon.</p>
-            )}
-            {status === "error" && (
-              <p className="mt-2 text-sm text-error">Something went wrong. Please try again.</p>
-            )}
+            <NewsletterForm />
           </div>
         </div>
 
-        <div className="mt-12 pt-8 border-t border-stone/10 text-center text-xs text-stone/40">
-          <p>&copy; {new Date().getFullYear()} BHRT with Kim. All rights reserved.</p>
+        {/* Sitewide medical disclaimer — required on every page. */}
+        <div className="mt-12 pt-8 border-t border-stone/10 space-y-4">
+          {/*
+            Was text-xs at text-stone/50 — 12px at roughly 3.95:1 against bark,
+            which fails WCAG AA. The sitewide medical disclaimer was the least
+            readable text on every page, which is precisely backwards. See
+            docs/09-DESIGN-SYSTEM.md on opacity variants.
+          */}
+          <p className="text-sm leading-relaxed text-stone/75 max-w-3xl">
+            The content on this site is for educational purposes only and is not
+            medical advice. Using this site does not create a provider-patient
+            relationship. Always consult a qualified healthcare provider about
+            your own health.{" "}
+            <Link
+              href="/disclaimer"
+              className="underline underline-offset-2 hover:text-stone/80 transition-colors"
+            >
+              Read the full disclaimer
+            </Link>
+            .
+          </p>
+
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between text-sm text-stone/70">
+            <p>&copy; {new Date().getFullYear()} BHRT with Kim. All rights reserved.</p>
+            <nav aria-label="Legal" className="flex gap-4">
+              <Link href="/privacy" className="hover:text-stone/80 transition-colors">
+                Privacy Policy
+              </Link>
+              <Link href="/disclaimer" className="hover:text-stone/80 transition-colors">
+                Medical Disclaimer
+              </Link>
+              <Link href="/contact" className="hover:text-stone/80 transition-colors">
+                Contact
+              </Link>
+            </nav>
+          </div>
         </div>
       </div>
     </footer>

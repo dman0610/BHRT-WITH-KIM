@@ -4,8 +4,11 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, Calendar, Clock, ExternalLink } from "lucide-react";
 import { ARTICLES } from "@/lib/articles";
 import { BLOG_POSTS } from "@/lib/constants";
+import { articleSchema, breadcrumbSchema } from "@/lib/schema";
+import JsonLd from "@/components/seo/JsonLd";
 import ScrollAnimator from "@/components/layout/ScrollAnimator";
 import CTASection from "@/components/sections/CTASection";
+import AuthorByline from "@/components/sections/AuthorByline";
 
 const CATEGORY_COLORS: Record<string, string> = {
   Hormones: "bg-lavender text-forest",
@@ -18,6 +21,7 @@ type Props = {
   params: Promise<{ slug: string }>;
 };
 
+
 export async function generateStaticParams() {
   return BLOG_POSTS.map((post) => ({ slug: post.id }));
 }
@@ -27,8 +31,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const article = ARTICLES[slug];
   if (!article) return {};
   return {
-    title: `${article.title} — BHRT with Kim`,
-    description: article.intro,
+    // The short form — full headlines run to 70 chars, which produced an
+    // 86-char title tag that Google truncated mid-phrase. The full headline
+    // still renders as the page h1.
+    title: article.titleSegment,
+    description: article.metaDescription,
+    alternates: { canonical: `/resources/${slug}` },
   };
 }
 
@@ -48,6 +56,31 @@ export default async function ArticlePage({ params }: Props) {
 
   return (
     <>
+      {/*
+        `author` resolves to the practice, not to Kim — see articleSchema() in
+        lib/schema.ts. These pieces are AI-drafted and unreviewed by her, and
+        the schema has to agree with the disclosure at the foot of this page.
+      */}
+      <JsonLd
+        schema={[
+          articleSchema({
+            slug,
+            headline: article.title,
+            description: article.intro,
+            datePublished: article.date,
+            image: article.image,
+            citations: article.sources.map((s) => ({
+              title: s.title,
+              url: s.url,
+            })),
+          }),
+          breadcrumbSchema([
+            { name: "Resources", path: "/resources" },
+            { name: article.title, path: `/resources/${slug}` },
+          ]),
+        ]}
+      />
+
       <ScrollAnimator />
 
       {/* Hero */}
@@ -100,7 +133,7 @@ export default async function ArticlePage({ params }: Props) {
               [&_li]:text-bark/90 [&_li]:list-disc
               [&_strong]:text-bark [&_strong]:font-semibold
               [&_em]:italic
-              [&_blockquote]:border-l-4 [&_blockquote]:border-sage [&_blockquote]:pl-5 [&_blockquote]:py-1 [&_blockquote]:my-7 [&_blockquote]:italic [&_blockquote]:text-clay [&_blockquote]:text-lg
+              [&_blockquote]:border-l-4 [&_blockquote]:border-sage [&_blockquote]:pl-5 [&_blockquote]:py-1 [&_blockquote]:my-7 [&_blockquote]:italic [&_blockquote]:text-clay-text [&_blockquote]:text-lg
             "
             dangerouslySetInnerHTML={{ __html: article.content }}
           />
@@ -112,7 +145,7 @@ export default async function ArticlePage({ params }: Props) {
             </h2>
             <ol className="space-y-3">
               {article.sources.map((source, i) => (
-                <li key={i} className="flex gap-3 text-sm text-clay">
+                <li key={i} className="flex gap-3 text-sm text-clay-text">
                   <span className="font-semibold text-forest shrink-0">
                     {i + 1}.
                   </span>
@@ -126,7 +159,7 @@ export default async function ArticlePage({ params }: Props) {
                       {source.title}
                       <ExternalLink className="size-3 shrink-0" />
                     </a>
-                    <span className="block text-clay/70 mt-0.5">
+                    <span className="block text-clay-text mt-0.5">
                       {source.journal}
                     </span>
                   </span>
@@ -135,8 +168,24 @@ export default async function ArticlePage({ params }: Props) {
             </ol>
           </div>
 
+          {/*
+            Byline deliberately renders WITHOUT a `reviewedOn` date, so it reads
+            "About the practice" rather than "Reviewed by".
+
+            The AI-drafting disclosure below stays until Kim decides whether to
+            review and byline these articles (OPEN-QUESTIONS.md item 9).
+            Removing that line while the content is unreviewed would be
+            misattributing authorship on YMYL health content — not an option.
+
+            When she reviews: pass reviewedOn, move this above the article body,
+            and update the disclosure.
+          */}
+          <div className="mt-10 border-t border-stone-300 pt-8">
+            <AuthorByline />
+          </div>
+
           {/* Disclaimer */}
-          <p className="mt-10 text-xs text-clay/60 leading-relaxed border-t border-stone-300 pt-6">
+          <p className="mt-6 text-sm text-clay-text leading-relaxed">
             This article is for informational purposes only and does not
             constitute medical advice. Always consult a qualified healthcare
             provider before making changes to your health regimen. Content

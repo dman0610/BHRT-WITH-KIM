@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { CONTACT_SYMPTOMS, CONTACT_METHODS } from "@/lib/constants";
+import { CONTACT_SYMPTOMS, CONTACT_METHODS, HEAR_ABOUT_OPTIONS } from "@/lib/constants";
 import { CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
 
 interface FormData {
@@ -15,6 +15,7 @@ interface FormData {
   message: string;
   symptoms: string[];
   contactMethod: string;
+  hearAbout: string;
 }
 
 export default function ContactForm() {
@@ -25,6 +26,7 @@ export default function ContactForm() {
     message: "",
     symptoms: [],
     contactMethod: "Either",
+    hearAbout: "",
   });
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
@@ -52,6 +54,10 @@ export default function ContactForm() {
       formData.append("message", form.message.trim());
       formData.append("symptoms", form.symptoms.length > 0 ? form.symptoms.join(", ") : "None selected");
       formData.append("preferred_contact", form.contactMethod);
+      // Attribution. Goes to Kim's inbox only — never to an analytics or ad
+      // platform, which is why it travels with the message rather than as an
+      // event. See docs/07-TRACKING.md.
+      formData.append("heard_about_us", form.hearAbout || "Not answered");
       // Subject line Kim will see in her inbox
       formData.append("subject", `New message from ${form.name.trim()} — BHRT with Kim`);
 
@@ -71,6 +77,7 @@ export default function ContactForm() {
           message: "",
           symptoms: [],
           contactMethod: "Either",
+          hearAbout: "",
         });
       } else {
         setErrorMsg(data.message || "Something went wrong. Please try again.");
@@ -89,7 +96,7 @@ export default function ContactForm() {
         <h3 className="font-heading text-2xl font-semibold text-bark mb-2">
           Message Sent!
         </h3>
-        <p className="text-clay max-w-md mx-auto">
+        <p className="text-clay-text max-w-md mx-auto">
           Thank you for reaching out. Kim will review your message and get back to
           you within 1-2 business days. In the meantime, feel free to explore our
           resources.
@@ -141,7 +148,7 @@ export default function ContactForm() {
       {/* Phone */}
       <div>
         <Label htmlFor="phone" className="text-bark font-medium">
-          Phone <span className="text-clay text-sm">(optional)</span>
+          Phone <span className="text-clay-text text-sm">(optional)</span>
         </Label>
         <Input
           id="phone"
@@ -172,7 +179,7 @@ export default function ContactForm() {
       {/* Symptom Checklist */}
       <fieldset>
         <legend className="text-bark font-medium mb-3">
-          Are you experiencing any of these? <span className="text-clay text-sm">(optional)</span>
+          Are you experiencing any of these? <span className="text-clay-text text-sm">(optional)</span>
         </legend>
         <div className="flex flex-wrap gap-2">
           {CONTACT_SYMPTOMS.map((symptom) => {
@@ -217,6 +224,41 @@ export default function ContactForm() {
               {method}
             </button>
           ))}
+        </div>
+      </fieldset>
+
+      {/*
+        Attribution. Optional on purpose — a required field here would cost
+        more submissions than the answer is worth, and bookings complete inside
+        a Healthie iframe we cannot see into, so this self-reported answer is
+        the only signal that catches phone calls, referrals, and the flyer.
+      */}
+      <fieldset>
+        <legend className="text-bark font-medium mb-3">
+          How did you hear about Kim?{" "}
+          <span className="text-clay-text text-sm">(optional)</span>
+        </legend>
+        <div className="flex flex-wrap gap-2">
+          {HEAR_ABOUT_OPTIONS.map((option) => {
+            const selected = form.hearAbout === option;
+            return (
+              <button
+                key={option}
+                type="button"
+                onClick={() =>
+                  setForm({ ...form, hearAbout: selected ? "" : option })
+                }
+                className={`px-4 py-2 rounded-full text-sm font-medium border transition-all duration-200 ${
+                  selected
+                    ? "bg-forest text-white border-forest"
+                    : "bg-white text-bark border-stone hover:border-sage"
+                }`}
+                aria-pressed={selected}
+              >
+                {option}
+              </button>
+            );
+          })}
         </div>
       </fieldset>
 

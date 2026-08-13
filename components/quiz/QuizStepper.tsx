@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
+import { track, readUtms } from "@/lib/analytics";
 import {
   QUIZ_QUESTIONS,
   SERVICES,
@@ -14,28 +15,67 @@ import {
 import Icon from "@/components/ui/Icon";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, ArrowRight, RotateCcw } from "lucide-react";
+import EmailCaptureStep from "@/components/quiz/EmailCaptureStep";
 
 const STEP_BGS = ["bg-mist", "bg-lavender/30", "bg-peach/20", "bg-mist", "bg-lavender/30", "bg-peach/20", "bg-mist"];
+
+/**
+ * Read UTM parameters once, when the quiz mounts.
+ *
+ * Must happen on entry rather than at submit — by the time someone finishes
+ * seven questions the params may be gone from the URL. Lazy-initialised so it
+ * runs a single time; `readUtms` is SSR-guarded since this component still
+ * renders on the server. The values never affect what is rendered, so there is
+ * no hydration mismatch.
+ *
+ * Shape differs from the analytics payload on purpose: MailerLite's custom
+ * fields are `source`/`medium`/`campaign`.
+ */
+function readUtmFields() {
+  const utm = readUtms();
+  return {
+    source: utm.utm_source,
+    medium: utm.utm_medium,
+    campaign: utm.utm_campaign,
+  };
+}
 
 export default function QuizStepper() {
   const [started, setStarted] = useState(false);
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
+  const [showCapture, setShowCapture] = useState(false);
   const [showResults, setShowResults] = useState(false);
+  const [utm] = useState(readUtmFields);
+  const [startTracked, setStartTracked] = useState(false);
 
   const totalSteps = QUIZ_QUESTIONS.length;
   const currentQ = QUIZ_QUESTIONS[step];
   const progress = ((step + 1) / totalSteps) * 100;
 
+  /*
+    LandingPageView is the event Meta campaigns actually optimize against, so
+    it has to be reliable. UTM params are the only thing it carries — see the
+    allowlist in lib/analytics.ts. Nothing about the person's health is sent by
+    any event on this page, including this one.
+  */
+  useEffect(() => {
+    track("LandingPageView", readUtms());
+  }, []);
+
   const selectOption = (value: string) => {
     setAnswers((prev) => ({ ...prev, [currentQ.id]: value }));
+    if (!startTracked) {
+      setStartTracked(true);
+      track("QuizStart");
+    }
   };
 
   const goNext = () => {
     if (step < totalSteps - 1) {
       setStep(step + 1);
     } else {
-      setShowResults(true);
+      setShowCapture(true);
     }
   };
 
@@ -47,6 +87,7 @@ export default function QuizStepper() {
     setStarted(false);
     setStep(0);
     setAnswers({});
+    setShowCapture(false);
     setShowResults(false);
   };
 
@@ -60,7 +101,7 @@ export default function QuizStepper() {
         <h2 className="font-heading text-3xl font-semibold text-bark sm:text-4xl md:text-5xl">
           Where Are You on Your Wellness Journey?
         </h2>
-        <p className="mt-4 text-clay text-lg max-w-xl mx-auto leading-relaxed">
+        <p className="mt-4 text-clay-text text-lg max-w-xl mx-auto leading-relaxed">
           Take this quick assessment to discover which services may be the best
           fit for where you are right now. It only takes 2 minutes.
         </p>
@@ -70,7 +111,45 @@ export default function QuizStepper() {
         >
           Start the Quiz
         </Button>
+
+        {/*
+          Shown BEFORE the assessment, not only after the verdict. A disclaimer
+          that appears once a graded result has already been delivered is doing
+          very little work. See docs/05-CONTENT-STANDARDS.md.
+        */}
+        <p className="mx-auto mt-8 max-w-md rounded-2xl bg-mist px-5 py-4 text-clay-text leading-relaxed">
+          This is an educational tool, not a medical diagnosis. It reflects the
+          answers you give and is meant to help you start a conversation with a
+          provider.
+        </p>
       </div>
+    );
+  }
+
+  // ─── Email Capture ───────────────────────────────────────
+  // Between the last question and the results. Results follow either way.
+  if (showCapture && !showResults) {
+    return (
+      <EmailCaptureStep
+        payload={{
+          severity: getOverallSeverity(answers),
+          topServices: calculateQuizResults(answers)
+            .slice(0, 3)
+            .map((r) => r.serviceId),
+          stage: answers.stage ?? "unknown",
+          utm,
+        }}
+        /*
+          Fires whether the visitor gave an email or skipped. QuizComplete
+          carries NO parameters — that the quiz finished is not health data,
+          what they answered is, and the answers never leave this component
+          except server-side to MailerLite.
+        */
+        onDone={() => {
+          setShowResults(true);
+          track("QuizComplete");
+        }}
+      />
     );
   }
 
@@ -96,7 +175,7 @@ export default function QuizStepper() {
           <h2 className="font-heading text-3xl font-semibold text-bark sm:text-4xl">
             {msg.headline}
           </h2>
-          <p className="mt-4 text-clay text-lg leading-relaxed max-w-xl mx-auto">
+          <p className="mt-4 text-clay-text text-lg leading-relaxed max-w-xl mx-auto">
             {msg.body}
           </p>
         </div>
@@ -110,7 +189,7 @@ export default function QuizStepper() {
                 className="flex gap-3 items-start bg-lavender/20 rounded-2xl px-5 py-4"
               >
                 <Icon name="leaf" className="size-4 text-moss shrink-0 mt-0.5" />
-                <p className="text-sm text-clay italic leading-relaxed">{callout}</p>
+                <p className="text-clay-text italic leading-relaxed">{callout}</p>
               </div>
             ))}
           </div>
@@ -139,7 +218,7 @@ export default function QuizStepper() {
                   <h4 className="font-heading text-lg font-medium text-bark group-hover:text-forest transition-colors">
                     {service!.title}
                   </h4>
-                  <p className="text-clay text-sm leading-relaxed mt-1 line-clamp-2">
+                  <p className="text-clay-text leading-relaxed mt-1 line-clamp-2">
                     {service!.description}
                   </p>
                 </div>
@@ -150,18 +229,18 @@ export default function QuizStepper() {
 
         {/* CTA */}
         <div className="text-center space-y-4">
-          <p className="text-clay text-sm leading-relaxed max-w-md mx-auto italic">
+          <p className="text-clay-text text-sm leading-relaxed max-w-md mx-auto italic">
             {msg.cta}
           </p>
-          <Link href="/contact">
+          <Link href="/book">
             <Button className="bg-moss text-white rounded-full px-8 py-3 text-base font-medium hover:bg-forest transition-colors shadow-md">
-              Book a Free Chat with Kim
+              Book a Free Consultation
             </Button>
           </Link>
           <div>
             <button
               onClick={restart}
-              className="inline-flex items-center gap-2 text-sm text-clay hover:text-bark transition-colors mt-4"
+              className="inline-flex items-center gap-2 text-sm text-clay-text hover:text-bark transition-colors mt-4"
             >
               <RotateCcw className="size-4" />
               Retake Quiz
@@ -170,7 +249,7 @@ export default function QuizStepper() {
         </div>
 
         {/* Disclaimer */}
-        <p className="text-xs text-clay/70 text-center max-w-xl mx-auto mt-8 pt-6 border-t border-stone/40 leading-relaxed">
+        <p className="text-sm text-clay-text text-center max-w-xl mx-auto mt-8 pt-6 border-t border-stone/40 leading-relaxed">
           {QUIZ_DISCLAIMER}
         </p>
       </div>
@@ -185,7 +264,7 @@ export default function QuizStepper() {
     <div className="max-w-2xl mx-auto">
       {/* Progress Bar */}
       <div className="mb-8">
-        <div className="flex justify-between text-sm text-clay mb-2">
+        <div className="flex justify-between text-sm text-clay-text mb-2">
           <span>Question {step + 1} of {totalSteps}</span>
           <span>{Math.round(progress)}%</span>
         </div>
@@ -202,7 +281,7 @@ export default function QuizStepper() {
         <h2 className="font-heading text-2xl font-semibold text-bark sm:text-3xl">
           {currentQ.question}
         </h2>
-        <p className="mt-2 text-clay">{currentQ.description}</p>
+        <p className="mt-2 text-clay-text">{currentQ.description}</p>
 
         {/* Options */}
         <div className="mt-8 space-y-3">
@@ -220,7 +299,8 @@ export default function QuizStepper() {
                 }`}
                 aria-pressed={isSelected}
               >
-                <span className={`text-sm font-medium ${isSelected ? "text-forest" : "text-bark"}`}>
+                {/* The answer choices are the primary thing being read here — base size, not 14px. */}
+                <span className={`font-medium ${isSelected ? "text-forest" : "text-bark"}`}>
                   {option.label}
                 </span>
               </button>
@@ -235,7 +315,7 @@ export default function QuizStepper() {
           variant="ghost"
           onClick={goBack}
           disabled={step === 0}
-          className="text-clay hover:text-bark disabled:opacity-30"
+          className="text-clay-text hover:text-bark disabled:opacity-30"
         >
           <ArrowLeft className="size-4 mr-1" />
           Back

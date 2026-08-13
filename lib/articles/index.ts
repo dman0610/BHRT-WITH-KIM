@@ -8,6 +8,23 @@ export interface ArticleSource {
 
 export interface ArticleData {
   title: string;
+  /**
+   * Short form for the `<title>` tag. Budget is 44 characters, because the
+   * layout template appends " | BHRT with Kim" (16 of the 60-char limit).
+   *
+   * Article headlines run long — the longest is 70 characters, which produced
+   * an 86-character title tag that Google truncated mid-phrase. The headline
+   * still renders in full as the page h1; this is only the SERP label.
+   */
+  titleSegment: string;
+  /**
+   * Meta description, 140–155 characters.
+   *
+   * Written explicitly rather than derived from `intro`. The intros run from
+   * 134 to 180 characters, so no truncation rule could put all five in range —
+   * truncating fixes the long ones and can do nothing for the short ones.
+   */
+  metaDescription: string;
   category: BlogCategory;
   date: string;
   readTime: string;
@@ -21,12 +38,15 @@ export const ARTICLES: Record<string, ArticleData> = {
   "understanding-bhrt": {
     title:
       "Understanding Bioidentical Hormones: What They Are and Why They Matter",
+    titleSegment: "Understanding Bioidentical Hormones",
+    metaDescription:
+      "Bioidentical hormones are molecularly identical to the hormones the body produces naturally. What that means, and how it differs from conventional HRT.",
     category: "Hormones",
     date: "2026-03-15",
     readTime: "6 min read",
     intro:
       "Bioidentical hormones are molecularly identical to the hormones your body produces naturally. Here's what that means for your health — and why it's different from conventional HRT.",
-    image: "/images/articles/understanding-bhrt.png",
+    image: "/images/articles/understanding-bhrt.webp",
     content: `
 <h2>What Makes a Hormone "Bioidentical"?</h2>
 <p>The term <em>bioidentical</em> refers to the molecular structure of a hormone, not where it comes from. A bioidentical estradiol molecule has the exact same three-dimensional shape as the estradiol your ovaries produce. This matters because hormones work like keys fitting into locks — your cell receptors are shaped to receive specific molecular structures, and a precise fit affects how the hormone signals and how your body metabolizes it.</p>
@@ -87,12 +107,15 @@ export const ARTICLES: Record<string, ArticleData> = {
 
   "anti-inflammatory-eating": {
     title: "The Anti-Inflammatory Plate: Eating for Hormonal Balance",
+    titleSegment: "Eating for Hormonal Balance",
+    metaDescription:
+      "What women eat affects hormone levels directly. Which foods support balance during perimenopause, and which ones may be making symptoms worse.",
     category: "Nutrition",
     date: "2026-03-08",
     readTime: "5 min read",
     intro:
       "What you eat directly impacts your hormone levels. Learn which foods support balance and which ones may be making your symptoms worse.",
-    image: "/images/articles/anti-inflammatory-eating.png",
+    image: "/images/articles/anti-inflammatory-eating.webp",
     content: `
 <h2>The Gut-Hormone Connection</h2>
 <p>Your digestive system does more than absorb nutrients — it plays a direct role in how your body processes and excretes hormones. The gut microbiome contains a collection of bacteria called the estrobolome, which produces an enzyme (beta-glucuronidase) that affects estrogen recirculation. When the microbiome is disrupted — by antibiotic use, poor diet, or chronic stress — estrogen metabolism becomes imbalanced, contributing to conditions like estrogen dominance.</p>
@@ -151,12 +174,15 @@ export const ARTICLES: Record<string, ArticleData> = {
 
   "sleep-hormones": {
     title: "Why Sleep Is the Most Underrated Hormone Therapy",
+    titleSegment: "Sleep and Hormone Health",
+    metaDescription:
+      "During deep sleep the body produces and regulates key hormones. Why disrupted sleep undermines other efforts to support hormone health in midlife.",
     category: "Lifestyle",
     date: "2026-02-28",
     readTime: "7 min read",
     intro:
       "During deep sleep, your body produces and regulates key hormones. If you're not sleeping well, everything else you're doing for your health is fighting an uphill battle.",
-    image: "/images/articles/sleep-hormones.png",
+    image: "/images/articles/sleep-hormones.webp",
     content: `
 <h2>Sleep Is When Hormonal Repair Happens</h2>
 <p>Sleep is not rest in a passive sense — it is active biological maintenance. Multiple hormone systems operate on a sleep-dependent cycle, and disrupting that cycle has measurable downstream effects on everything from cortisol to thyroid function to reproductive hormones.</p>
@@ -217,12 +243,15 @@ export const ARTICLES: Record<string, ArticleData> = {
 
   "endocrine-disruptors": {
     title: "Hidden Hormone Disruptors in Your Home (And Simple Swaps)",
+    titleSegment: "Hormone Disruptors at Home",
+    metaDescription:
+      "From plastics to cleaning products, everyday household items can interfere with the endocrine system. The biggest culprits, and simple replacements.",
     category: "Detox",
     date: "2026-02-20",
     readTime: "4 min read",
     intro:
       "From plastics to cleaning products, everyday items can interfere with your endocrine system. Here are the biggest culprits and easy replacements.",
-    image: "/images/articles/endocrine-disruptors.png",
+    image: "/images/articles/endocrine-disruptors.webp",
     content: `
 <h2>What Is an Endocrine Disruptor?</h2>
 <p>An endocrine disruptor is a chemical that interferes with the body's hormone signaling — either by mimicking a hormone (particularly estrogen), blocking hormone receptors, or disrupting how hormones are synthesized and metabolized. The Endocrine Society defines them as "exogenous chemicals, or mixtures of chemicals, that interfere with any aspect of hormone action."</p>
@@ -279,12 +308,15 @@ export const ARTICLES: Record<string, ArticleData> = {
 
   "perimenopause-signs": {
     title: "7 Early Signs of Peri-Menopause You Shouldn't Ignore",
+    titleSegment: "7 Early Signs of Perimenopause",
+    metaDescription:
+      "Perimenopause can begin years before periods stop. The subtle signals the body sends when hormones start shifting, and what is worth doing about them.",
     category: "Hormones",
     date: "2026-02-12",
     readTime: "5 min read",
     intro:
       "Peri-menopause can start years before your periods stop. These are the subtle signals your body sends when hormones begin shifting — and what to do about them.",
-    image: "/images/articles/perimenopause-signs.png",
+    image: "/images/articles/perimenopause-signs.webp",
     content: `
 <h2>The Peri-Menopause Window</h2>
 <p>Peri-menopause — the transitional phase leading up to menopause — typically begins in a woman's mid-to-late forties, though it can start as early as the late thirties. Menopause is defined clinically as 12 consecutive months without a menstrual period; everything before that final period, while hormones are fluctuating, is peri-menopause.</p>

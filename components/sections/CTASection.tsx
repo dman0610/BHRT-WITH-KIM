@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 
 export default function CTASection() {
   return (
-    <section className="relative bg-forest py-20 md:py-28 overflow-hidden grain-overlay section-over-video">
+    <section className="relative bg-forest py-20 md:py-28 overflow-hidden grain-overlay">
       {/* Subtle texture pattern */}
       <div className="absolute inset-0 opacity-5" aria-hidden="true">
         <svg width="100%" height="100%">
@@ -20,14 +20,14 @@ export default function CTASection() {
             Ready to Feel Like Yourself Again?
           </h2>
           <p className="mt-6 text-lg text-white/80 max-w-2xl mx-auto leading-relaxed">
-            You don&apos;t have to accept exhaustion, brain fog, or sleepless
-            nights as your new normal. Let&apos;s find what your body needs and
-            build a plan that works for your life.
+            Many women are told that exhaustion, brain fog, and sleepless nights
+            are simply part of getting older. A conversation is a good place to
+            start finding out what else might be going on.
           </p>
           <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-            <Link href="/contact">
+            <Link href="/book">
               <Button className="bg-sunlight text-bark rounded-full px-8 py-3 text-base font-semibold hover:bg-white hover:text-forest transition-all duration-300 shadow-lg">
-                Book Your Consultation
+                Book a Free Consultation
               </Button>
             </Link>
             <Link href="/quiz">

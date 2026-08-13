@@ -2,21 +2,32 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { VALUES } from "@/lib/constants";
+import { SITE } from "@/lib/site";
+import { breadcrumbSchema } from "@/lib/schema";
+import JsonLd from "@/components/seo/JsonLd";
 import Icon from "@/components/ui/Icon";
 import { Button } from "@/components/ui/button";
-import CTASection from "@/components/sections/CTASection";
 import ScrollAnimator from "@/components/layout/ScrollAnimator";
 import { SeedMotif } from "@/components/ui/BotanicalDecor";
 
 export const metadata: Metadata = {
-  title: "About Kim — BHRT with Kim",
+  title: "Meet Kim Yadon, FNP-C",
   description:
-    "Meet Kim — a holistic hormone health practitioner empowering women to reclaim vitality through bioidentical hormone therapy and lifestyle optimization.",
+    "Kim Yadon, FNP-C is a board-certified family nurse practitioner providing bioidentical hormone therapy by virtual visit to women across Utah.",
+  alternates: { canonical: "/about" },
 };
 
 export default function AboutPage() {
   return (
     <>
+      {/*
+        The Person entity itself is emitted sitewide from the root layout and
+        linked by @id, so this page only adds its breadcrumb trail.
+      */}
+      <JsonLd
+        schema={breadcrumbSchema([{ name: "About Kim", path: "/about" }])}
+      />
+
       <ScrollAnimator />
 
       {/* Hero Banner */}
@@ -39,7 +50,7 @@ export default function AboutPage() {
             <div className="aspect-[4/5] rounded-3xl overflow-hidden">
               <Image
                 src="/kim-portrait.jpg"
-                alt="Kim — BHRT with Kim founder"
+                alt={SITE.provider.fullName}
                 width={600}
                 height={750}
                 className="w-full h-full object-cover object-top"
@@ -51,7 +62,7 @@ export default function AboutPage() {
               <h2 className="font-heading text-3xl font-semibold text-bark sm:text-4xl mb-6">
                 My Story
               </h2>
-              <div className="space-y-4 text-clay text-lg leading-relaxed">
+              <div className="space-y-4 text-clay-text text-lg leading-relaxed">
                 <p>
                   I believe women are a powerful force for good. My purpose is to support women
                   during life&apos;s changes so they can feel good, live the life they want to
@@ -85,7 +96,7 @@ export default function AboutPage() {
             <h2 className="font-heading text-3xl font-semibold text-bark sm:text-4xl">
               The Holistic Framework
             </h2>
-            <p className="mt-4 text-clay text-lg">
+            <p className="mt-4 text-clay-text text-lg">
               My approach isn&apos;t just about hormones — it&apos;s about the whole you.
             </p>
           </div>
@@ -96,7 +107,7 @@ export default function AboutPage() {
               <h3 className="font-heading text-xl font-medium text-bark mb-2">
                 Listen &amp; Test
               </h3>
-              <p className="text-clay text-sm leading-relaxed">
+              <p className="text-clay-text text-sm leading-relaxed">
                 We start by hearing your full story, then run comprehensive testing —
                 hormones, thyroid, adrenals, and screening for underlying conditions.
               </p>
@@ -106,7 +117,7 @@ export default function AboutPage() {
               <h3 className="font-heading text-xl font-medium text-bark mb-2">
                 Lifestyle First
               </h3>
-              <p className="text-clay text-sm leading-relaxed">
+              <p className="text-clay-text text-sm leading-relaxed">
                 Before reaching for any prescription, we optimize the foundations —
                 sleep, nutrition, movement, stress management, and detox support.
               </p>
@@ -116,7 +127,7 @@ export default function AboutPage() {
               <h3 className="font-heading text-xl font-medium text-bark mb-2">
                 Targeted BHRT
               </h3>
-              <p className="text-clay text-sm leading-relaxed">
+              <p className="text-clay-text text-sm leading-relaxed">
                 When indicated, bioidentical hormones provide targeted support that
                 works with your body&apos;s chemistry — not against it. Monitored and
                 adjusted to your needs.
@@ -133,13 +144,14 @@ export default function AboutPage() {
             <h2 className="font-heading text-3xl font-semibold text-bark sm:text-4xl mb-8">
               Credentials &amp; Training
             </h2>
+            <p className="text-clay-text text-lg mb-8">
+              <span className="font-medium text-bark">
+                {SITE.provider.fullName}
+              </span>{" "}
+              — {SITE.provider.jobTitle}
+            </p>
             <div className="grid gap-4 sm:grid-cols-2">
-              {[
-                "Board Certified Nurse Practitioner",
-                "Trained in BHRT through Worldlink Medical",
-                "Trained in Functional Medicine",
-                "Certified Diabetes Care and Education Specialist (CDCES)",
-              ].map((credential) => (
+              {SITE.provider.credentials.map((credential) => (
                 <div
                   key={credential}
                   className="p-4 rounded-xl bg-white text-bark font-medium"
@@ -173,7 +185,7 @@ export default function AboutPage() {
                 <h3 className="font-heading text-xl font-medium text-bark mb-2">
                   {value.title}
                 </h3>
-                <p className="text-clay text-sm leading-relaxed">{value.description}</p>
+                <p className="text-clay-text text-sm leading-relaxed">{value.description}</p>
               </div>
             ))}
           </div>
@@ -187,13 +199,13 @@ export default function AboutPage() {
             <h2 className="font-heading text-3xl font-semibold text-bark sm:text-4xl">
               Ready to Start Your Journey?
             </h2>
-            <p className="mt-4 text-clay text-lg max-w-xl mx-auto">
+            <p className="mt-4 text-clay-text text-lg max-w-xl mx-auto">
               I&apos;d love to hear your story and explore how we can work together
               to help you feel like yourself again.
             </p>
-            <Link href="/contact" className="inline-block mt-8">
+            <Link href="/book" className="inline-block mt-8">
               <Button className="bg-moss text-white rounded-full px-8 py-3 text-base font-medium hover:bg-forest transition-colors shadow-md">
-                Book a Consultation
+                Book a Free Consultation
               </Button>
             </Link>
           </div>

@@ -40,7 +40,7 @@ export default function TestimonialCard({
           </div>
           <div>
             <p className="font-medium text-bark text-sm">{name}</p>
-            <p className="text-xs text-clay">{context}</p>
+            <p className="text-xs text-clay-text">{context}</p>
           </div>
         </footer>
       </blockquote>

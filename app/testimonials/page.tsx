@@ -1,14 +1,17 @@
 import type { Metadata } from "next";
-import { TESTIMONIALS } from "@/lib/constants";
+import { UNFEATURED_TESTIMONIALS } from "@/lib/constants";
 import TestimonialCard from "@/components/sections/TestimonialCard";
 import CTASection from "@/components/sections/CTASection";
 import ScrollAnimator from "@/components/layout/ScrollAnimator";
 import { FernCurl } from "@/components/ui/BotanicalDecor";
 
 export const metadata: Metadata = {
-  title: "Testimonials — BHRT with Kim",
+  title: "Client Experiences",
+  // "Real stories of transformation" removed — an implied transformation claim.
+  // See docs/05-CONTENT-STANDARDS.md.
   description:
-    "Hear from women who reclaimed their vitality through holistic hormone health support with Kim. Real stories of transformation.",
+    "What women have said about working with Kim Yadon, FNP-C on hormone health in Utah, in their own words. Virtual bioidentical hormone therapy statewide.",
+  alternates: { canonical: "/testimonials" },
 };
 
 export default function TestimonialsPage() {
@@ -34,7 +37,7 @@ export default function TestimonialsPage() {
         <FernCurl className="absolute top-12 left-4 w-20 h-20 text-sage opacity-[0.06] hidden md:block" />
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {TESTIMONIALS.map((testimonial, index) => (
+            {UNFEATURED_TESTIMONIALS.map((testimonial, index) => (
               <div
                 key={testimonial.id}
                 className={`animate-on-scroll stagger-${(index % 3) + 1}`}

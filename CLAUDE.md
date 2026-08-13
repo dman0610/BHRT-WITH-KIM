@@ -1,1 +1,3 @@
 @AGENTS.md
+@docs/00-BUSINESS-FACTS.md
+@docs/05-CONTENT-STANDARDS.md

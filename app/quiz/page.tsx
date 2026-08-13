@@ -3,9 +3,10 @@ import QuizStepper from "@/components/quiz/QuizStepper";
 import ScrollAnimator from "@/components/layout/ScrollAnimator";
 
 export const metadata: Metadata = {
-  title: "Health Assessment Quiz — BHRT with Kim",
+  title: "Free Hormone Symptom Quiz",
   description:
-    "Take our free wellness assessment to discover which holistic hormone health services are right for you. Only takes 2 minutes.",
+    "A free 2-minute educational assessment covering sleep, energy, mood, and physical symptoms commonly reported during perimenopause. Not a diagnosis.",
+  alternates: { canonical: "/quiz" },
 };
 
 export default function QuizPage() {

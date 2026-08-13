@@ -5,7 +5,7 @@ import {
   Moon,
   Brain,
   Cloud,
-  Bone,
+  Flame,
   BatteryLow,
   Scale,
   Leaf,
@@ -29,7 +29,7 @@ const iconMap: Record<string, React.ComponentType<LucideProps>> = {
   moon: Moon,
   brain: Brain,
   cloud: Cloud,
-  bone: Bone,
+  flame: Flame,
   "battery-low": BatteryLow,
   scale: Scale,
   leaf: Leaf,
@@ -51,6 +51,17 @@ interface IconProps extends LucideProps {
 
 export default function Icon({ name, ...props }: IconProps) {
   const IconComponent = iconMap[name];
-  if (!IconComponent) return null;
+  if (!IconComponent) {
+    /*
+      Rendering nothing is the right production behaviour — a missing icon must
+      never break a page. But it is silent, and a typo'd or unmapped name
+      passes lint and build cleanly while shipping a chip with no icon. This
+      warning is how that gets noticed in development instead of in production.
+    */
+    if (process.env.NODE_ENV === "development") {
+      console.warn(`[Icon] no icon mapped for "${name}" — add it to iconMap.`);
+    }
+    return null;
+  }
   return <IconComponent {...props} />;
 }

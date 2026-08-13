@@ -1,13 +1,16 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import ContactForm from "@/components/sections/ContactForm";
-import { FOOTER_LINKS } from "@/lib/constants";
+import { Button } from "@/components/ui/button";
+import { SITE } from "@/lib/site";
 import { Mail, Phone, MapPin } from "lucide-react";
 import ScrollAnimator from "@/components/layout/ScrollAnimator";
 
 export const metadata: Metadata = {
-  title: "Contact — BHRT with Kim",
+  title: "Contact & Book a Virtual Visit",
   description:
-    "Ready to start your journey? Reach out to Kim for a consultation about holistic hormone health and bioidentical hormone therapy.",
+    "Contact Kim Yadon, FNP-C about bioidentical hormone therapy in Utah, or book a free 15-minute phone consultation. All visits are virtual, statewide.",
+  alternates: { canonical: "/contact" },
 };
 
 export default function ContactPage() {
@@ -47,26 +50,37 @@ export default function ContactPage() {
                   Get in Touch
                 </h3>
                 <div className="space-y-4">
-                  {/* TODO: Replace with Kim's real contact info */}
                   <div className="flex items-start gap-3">
                     <Mail className="size-5 text-forest mt-0.5 shrink-0" />
                     <div>
                       <p className="text-sm font-medium text-bark">Email</p>
-                      <p className="text-clay">{FOOTER_LINKS.contact.email}</p>
+                      <a
+                        href={`mailto:${SITE.contact.email}`}
+                        className="text-clay-text underline-offset-4 hover:text-forest hover:underline transition-colors break-all"
+                      >
+                        {SITE.contact.email}
+                      </a>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <Phone className="size-5 text-forest mt-0.5 shrink-0" />
                     <div>
                       <p className="text-sm font-medium text-bark">Phone</p>
-                      <p className="text-clay">{FOOTER_LINKS.contact.phone}</p>
+                      <a
+                        href={`tel:${SITE.contact.phoneE164}`}
+                        className="text-clay-text underline-offset-4 hover:text-forest hover:underline transition-colors"
+                      >
+                        {SITE.contact.phone}
+                      </a>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <MapPin className="size-5 text-forest mt-0.5 shrink-0" />
                     <div>
                       <p className="text-sm font-medium text-bark">Location</p>
-                      <p className="text-clay">{FOOTER_LINKS.contact.location}</p>
+                      <p className="text-clay-text">
+                        {SITE.contact.serviceAreaLine}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -76,53 +90,66 @@ export default function ContactPage() {
                 <h3 className="font-heading text-xl font-medium text-bark mb-3">
                   What to Expect
                 </h3>
-                <ul className="space-y-3 text-clay text-sm leading-relaxed">
+                <ul className="space-y-3 text-clay-text leading-relaxed">
                   <li className="flex gap-2">
                     <span className="text-forest font-bold shrink-0">1.</span>
-                    Kim reviews messages and will contact you via text to schedule a free phone call to ask any questions.
+                    A free phone consultation to talk through what you&apos;ve
+                    been experiencing and ask questions
                   </li>
                   <li className="flex gap-2">
                     <span className="text-forest font-bold shrink-0">2.</span>
-                    A brief discovery call to understand your needs
+                    A lab order at no charge, if testing makes sense as a next
+                    step
                   </li>
                   <li className="flex gap-2">
                     <span className="text-forest font-bold shrink-0">3.</span>
-                    A personalized plan tailored to your health goals
+                    A follow-up visit to review results and build a plan
+                    together
                   </li>
                 </ul>
+                <Link
+                  href="/book"
+                  className="mt-5 inline-block rounded-full bg-moss px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-forest"
+                >
+                  Book a Free Consultation
+                </Link>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Booking CTA */}
+      {/*
+        Booking lives on /book (free consultation) and /book/<slug> for paid
+        offerings. This anchor is kept so existing /contact#booking links from
+        older pages, print material, and search results still land somewhere
+        sensible rather than 404ing mid-page.
+      */}
       <section id="booking" className="bg-mist py-16 md:py-20">
-        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          <div className="animate-on-scroll text-center mb-8">
+        <div className="mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
+          <div className="animate-on-scroll">
             <h2 className="font-heading text-3xl font-semibold text-bark sm:text-4xl">
               Book Your Virtual Visit
             </h2>
-            <p className="mt-4 text-clay text-lg">
-              Select a time that works for you — secure online booking.
+            <p className="mt-4 text-clay-text text-lg leading-relaxed">
+              Start with a free phone consultation — no cost, and a chance to
+              ask questions before deciding on anything.
+            </p>
+            <Link href="/book" className="inline-block mt-8">
+              <Button className="bg-moss text-white rounded-full px-8 py-3 text-base font-medium hover:bg-forest transition-colors shadow-md">
+                Book a Free Consultation
+              </Button>
+            </Link>
+            <p className="mt-6 text-sm text-clay-text">
+              Already know what you need?{" "}
+              <Link
+                href="/services"
+                className="text-forest underline underline-offset-4 hover:text-moss transition-colors font-medium"
+              >
+                View packages and pricing
+              </Link>
             </p>
           </div>
-          <iframe
-            src="https://secure.gethealthie.com/appointments/embed_appt?dietitian_id=4099018&provider_ids=%5B4099018%5D&appt_type_ids=%5B382563,382564,382565,529023%5D&primary_color=4A9625"
-            style={{ width: "100%", minHeight: "600px", border: 0 }}
-            title="Book an appointment with Kim"
-          />
-          <p className="mt-3 text-sm text-clay text-center">
-            Booking provided by{" "}
-            <a
-              href="https://gethealthie.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline hover:text-forest transition-colors"
-            >
-              Healthie
-            </a>
-          </p>
         </div>
       </section>
     </>
