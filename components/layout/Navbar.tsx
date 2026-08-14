@@ -7,14 +7,43 @@ import { NAV_LINKS } from "@/lib/constants";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
+/**
+ * Site header.
+ *
+ * ─────────────────────────────────────────────────────────────────────────
+ * THE BACKDROP IS ALWAYS ON. DO NOT MAKE IT CONDITIONAL AGAIN.
+ * ─────────────────────────────────────────────────────────────────────────
+ *
+ * This previously floated transparently over the hero and chose its text
+ * colour at render time:
+ *
+ *     const isHome = pathname === "/";
+ *     const textClass = backdropVisible || isHome ? "text-bark" : "text-white";
+ *
+ * That shipped white links on the cream homepage in production, where they
+ * were invisible. `usePathname()` HAS NO VALUE IN VERCEL'S SERVER RENDER, so
+ * `isHome` was false in the prerendered HTML — while resolving correctly in a
+ * local build, which is why it never showed up before launch. The giveaway was
+ * the active-link underline missing from "Home" on the live page.
+ *
+ * The lesson is not "fix isHome". It is that ANY design where contrast depends
+ * on knowing the route, the scroll position, or hydration has an unsafe state,
+ * and sooner or later it ships. A permanent backdrop has exactly one state:
+ * bark on stone, 11.24:1, AA at every size, identical with JavaScript off.
+ *
+ * Scroll now only deepens the shadow. Nothing about legibility depends on it.
+ */
 export default function Navbar() {
-  const [backdropVisible, setBackdropVisible] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  /*
+    Kept ONLY for the active-link underline, which is decorative. If it is
+    momentarily wrong before hydration nobody is harmed — unlike contrast.
+  */
   const pathname = usePathname();
-  const isHome = pathname === "/";
 
   useEffect(() => {
-    const onScroll = () => setBackdropVisible(window.scrollY > 60);
+    const onScroll = () => setScrolled(window.scrollY > 60);
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
     return () => window.removeEventListener("scroll", onScroll);
@@ -26,8 +55,8 @@ export default function Navbar() {
     return () => { document.body.style.overflow = ""; };
   }, [mobileOpen]);
 
-  // Home: light hero → always dark text. Other pages: white text over dark banners, dark once scrolled.
-  const textClass = backdropVisible || isHome ? "text-bark" : "text-white";
+  // One state, always safe. See the note above before changing this.
+  const textClass = "text-bark";
 
   return (
     <>
@@ -39,11 +68,14 @@ export default function Navbar() {
         Skip to content
       </a>
 
-      {/* Backdrop layer — fades in behind buttons, never affects button visibility */}
+      {/*
+        Always rendered and always opaque. Scroll only deepens the shadow —
+        legibility never depends on it, on JavaScript, or on the route.
+      */}
       <div
         aria-hidden="true"
-        className={`fixed top-0 left-0 right-0 z-[25] h-16 md:h-20 transition-opacity duration-300 bg-stone/95 backdrop-blur-sm shadow-sm ${
-          backdropVisible ? "opacity-100" : "opacity-0"
+        className={`fixed top-0 left-0 right-0 z-[25] h-16 md:h-20 bg-stone/95 backdrop-blur-sm transition-shadow duration-300 ${
+          scrolled ? "shadow-md" : "shadow-sm"
         }`}
       />
 

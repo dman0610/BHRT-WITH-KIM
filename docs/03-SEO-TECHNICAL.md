@@ -138,6 +138,14 @@ Use stable `@id` values so entities link rather than duplicate. This is what let
 | `/service-areas` | `Service` (state-wide), `BreadcrumbList` | ✅ |
 | `/service-areas/*` | `MedicalWebPage`, `FAQPage`, `BreadcrumbList`, `Service` with **City** `areaServed` | ✅ |
 
+### Rich Results Test will not show you `Person` — that is not a defect
+
+RRT only reports **rich-result-eligible** types: Breadcrumbs, FAQ, Local businesses, Organization, and so on. `Person`, `ProfilePage` and `MedicalWebPage` are none of those, so they will never appear in its output no matter how correct they are.
+
+A verification pass on 2026-08-14 read "No Person entity detected on any page" and treated it as a bug. It wasn't — `Person` was live on all 39 pages with name, `FNP-C`, jobTitle, all four credentials and `worksFor` → `#practice`. **Check the rendered HTML, or `npm run verify`, before believing that tool about a non-rich type.**
+
+What *did* come out of it: `/about` now emits `ProfilePage` with `mainEntity` → `#kim`, so Kim is the declared subject of her own page rather than a free-floating node, and `Person` carries an `image`.
+
 **Article `author` is the practice, not Kim — deliberately.** These pieces were AI-drafted and Kim has not reviewed them. Naming a credentialed clinician as author of content she hasn't read is misattribution on health content, and it would spend entity trust dishonestly. When she reviews them, three things change together: `author` → `#kim` plus `reviewedBy`, `reviewedOn` passed to `<AuthorByline />`, and the AI-drafting disclosure updated. Never one without the others. `dateModified` is omitted rather than defaulted to the publish date — a fabricated freshness signal is worse than none.
 
 **Geo pages emit `Service`, not a second `MedicalBusiness`.** Repeating the business entity per city — each one with a different `areaServed` — would present five entities where there is one, which is exactly the pattern that gets a service-area business flagged. `localServiceSchema()` scopes a single service to a `City` and links `provider` back to the one `#practice` `@id`. Still no `address`: naming a city Kim serves is not a claim of premises there.
@@ -148,7 +156,20 @@ The three sitewide entities are emitted once from the root layout rather than pe
 
 Built by `medicalBusinessSchema()`. Carries name, url, description (the entity statement), telephone, email, `medicalSpecialty: "Endocrine"`, `areaServed` (Utah + both focus counties), `availableService`, `employee`/`founder` → `#kim`, and a `ReserveAction` pointing at `/book`.
 
-**No `address` property.** `areaServed` without `streetAddress` is valid schema for a service-area business, not a degraded version of it.
+**No `streetAddress`, ever — but the `address` object stays.** ⚠️ **Corrected 2026-08-14.** This previously read "no `address` property" outright, which was over-broad and cost the entity a signal for no benefit: Rich Results Test flags the omission, and locality/region/country are exactly what a service-area business *should* publish.
+
+The line is the **street**, not the address object:
+
+```
+address: { "@type": "PostalAddress",
+           addressLocality: "South Jordan",
+           addressRegion:   "UT",
+           addressCountry:  "US" }
+```
+
+The street stays unpublished because Kim works from home — it is a Google Business Profile suspension trigger and a citation that propagates to scraper directories and cannot be retracted. Nothing is lost by withholding it: Google still uses the registered GBP address for proximity. `npm run verify` fails the build if `streetAddress` ever appears.
+
+**`MedicalBusiness` also carries `image`** (Kim's portrait), added the same day — RRT flagged it as a missing optional.
 
 ### Person
 

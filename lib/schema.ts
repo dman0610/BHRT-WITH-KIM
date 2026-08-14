@@ -8,8 +8,15 @@
  * Two standing prohibitions (see docs/03-SEO-TECHNICAL.md):
  *   1. No Review or AggregateRating. The site testimonials have no verifiable
  *      source or date, and self-serving review markup is a manual-action risk.
- *   2. No `address`. Kim works from home; areaServed without streetAddress is
- *      valid schema for a service-area business, not a degraded version of it.
+ *   2. NO `streetAddress`, ever. Kim works from home, and a published street
+ *      address is both a Google Business Profile suspension trigger and a
+ *      citation that propagates to scraper directories and cannot be retracted.
+ *
+ * Note the second rule was previously written as "no `address`" outright. That
+ * was over-broad: locality, region and country are exactly what a service-area
+ * business should publish, and Rich Results Test flags their absence. The line
+ * is the STREET, not the address object. `npm run verify` fails the build if
+ * `streetAddress` ever appears.
  */
 
 import { SITE } from "./site";
@@ -31,9 +38,22 @@ export function medicalBusinessSchema() {
     description: SITE.entityStatement,
     telephone: SITE.contact.phone,
     email: SITE.contact.email,
+    image: `${SITE.url}/kim-portrait.jpg`,
     medicalSpecialty: "Endocrine",
     priceRange: "$$",
-    // Service-area business: no streetAddress by design.
+    /*
+      Locality, region and country only — deliberately NO streetAddress.
+      This is the correct shape for a service-area business: Google still uses
+      the registered Google Business Profile address for proximity, so nothing
+      is lost by withholding the street, and publishing Kim's home address
+      would be both a suspension trigger and irretrievable once scraped.
+    */
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: SITE.contact.city,
+      addressRegion: "UT",
+      addressCountry: "US",
+    },
     areaServed: [
       { "@type": "State", name: "Utah" },
       ...SITE.focusCounties.map((name) => ({
@@ -94,6 +114,31 @@ export function webSiteSchema() {
     description: SITE.entityStatement,
     publisher: { "@id": ID.practice },
     inLanguage: "en-US",
+  };
+}
+
+/**
+ * ProfilePage for /about, declaring Kim as the subject of her own page.
+ *
+ * The `Person` entity is already emitted sitewide from the root layout, but as
+ * a free-floating node — nothing says which page is *about* her. `mainEntity`
+ * makes that explicit, which is what ties a named, credentialed individual to
+ * the subject matter for both Google's quality systems and AI retrieval.
+ *
+ * Worth knowing: Rich Results Test will not report `Person` or `ProfilePage`,
+ * because neither is a rich-result-eligible type. Absence from that tool is not
+ * evidence the markup is missing — check the rendered HTML instead.
+ */
+export function profilePageSchema() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ProfilePage",
+    name: `${SITE.provider.fullName} — ${SITE.provider.jobTitle}`,
+    url: `${SITE.url}/about`,
+    inLanguage: "en-US",
+    mainEntity: { "@id": ID.person },
+    about: { "@id": ID.person },
+    publisher: { "@id": ID.practice },
   };
 }
 

@@ -120,6 +120,25 @@ All `text-clay` and `text-clay/N` usages were migrated to `text-clay-text`.
 
 ## New components
 
+### Header — the backdrop is always on. Do not make it conditional again.
+
+**Fixed 2026-08-14, after it shipped broken.** The header used to float transparently over the hero and pick its text colour at render time:
+
+```ts
+const isHome = pathname === "/";
+const textClass = backdropVisible || isHome ? "text-bark" : "text-white";
+```
+
+In production that rendered **white links on the cream homepage** — invisible on a cold load. `usePathname()` has no value in Vercel's server render, so `isHome` was false in the prerendered HTML, while resolving correctly in a local build. That gap is why it survived to launch. The tell was the active-link underline missing from "Home" on the live page but present locally.
+
+The fix is not "make `isHome` work". It is that **any design where contrast depends on the route, the scroll position, or hydration has an unsafe state, and eventually it ships.** The backdrop is now permanent and links are always `text-bark` — 11.24:1 on stone, AA at every size, identical with JavaScript disabled. Scroll only deepens the shadow.
+
+`usePathname()` is still used for the active-link underline. That is decorative; being briefly wrong before hydration harms nobody, unlike contrast.
+
+`npm run verify` now asserts every page renders `text-bark` nav links pre-hydration, and that the backdrop never starts at `opacity-0`.
+
+---
+
 ### Climbing side vines — added 2026-08-11
 
 [components/ui/SideVines.tsx](../components/ui/SideVines.tsx). A vine running the full page height in the gutters either side of the 1280px content column, from a soft fade at the top down to the bottom edge. Desktop only (`xl` and up), decorative, `aria-hidden`, `pointer-events-none`.

@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { VALUES } from "@/lib/constants";
 import { SITE } from "@/lib/site";
-import { breadcrumbSchema } from "@/lib/schema";
+import { breadcrumbSchema, profilePageSchema } from "@/lib/schema";
 import JsonLd from "@/components/seo/JsonLd";
 import Icon from "@/components/ui/Icon";
 import { Button } from "@/components/ui/button";
@@ -24,8 +24,15 @@ export default function AboutPage() {
         The Person entity itself is emitted sitewide from the root layout and
         linked by @id, so this page only adds its breadcrumb trail.
       */}
+      {/*
+        ProfilePage declares Kim the subject of this page. The Person entity
+        itself comes from the root layout; this is what connects the two.
+      */}
       <JsonLd
-        schema={breadcrumbSchema([{ name: "About Kim", path: "/about" }])}
+        schema={[
+          profilePageSchema(),
+          breadcrumbSchema([{ name: "About Kim", path: "/about" }]),
+        ]}
       />
 
       <ScrollAnimator />

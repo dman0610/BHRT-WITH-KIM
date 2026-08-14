@@ -345,6 +345,65 @@ section("Homepage symptom chips");
   }
 }
 
+// ── 6b. nav contrast at first paint ────────────────────────────────────────
+section("Nav contrast (pre-hydration)");
+{
+  /*
+    The header shipped white links on the cream homepage in production because
+    its colour depended on `usePathname()`, which HAS NO VALUE in Vercel's
+    server render. It resolved correctly in local builds, so nothing caught it
+    before launch — this check is that missing net.
+
+    Assert on the PRERENDERED html, which is what a visitor sees before
+    hydration and all a JS-disabled visitor ever sees.
+  */
+  let checked = 0;
+  for (const route of pages) {
+    const s = html.get(route);
+    const navLinks = [
+      ...s.matchAll(/class="relative px-3 py-2 text-sm font-medium transition-colors ([a-z-]+)/g),
+    ].map((m) => m[1]);
+    if (navLinks.length === 0) continue;
+    checked++;
+    for (const cls of new Set(navLinks)) {
+      if (cls !== "text-bark")
+        fail(route, `nav link renders "${cls}" pre-hydration — must be text-bark`);
+    }
+    // The backdrop must not be conditionally transparent.
+    if (/z-\[25\][^"]*opacity-0/.test(s))
+      fail(route, "nav backdrop starts transparent — contrast depends on scroll again");
+  }
+  console.log(`  ${checked} pages render nav links dark-on-cream before hydration`);
+}
+
+// ── 6c. clinical titles ────────────────────────────────────────────────────
+section("Clinical titles");
+{
+  /*
+    Kim is a nurse practitioner. "Dr.", "MD", "physician" or "doctor" attached
+    to her name would be a false credential claim about a licensed provider —
+    the single most damaging thing this site could publish.
+
+    Matches only titles bound TO HER. "physician-patient relationship" in the
+    disclaimer and "primary care doctor" describing a patient's other clinicians
+    are correct usage and must not trip this.
+  */
+  const FORBIDDEN_TITLE = [
+    /\bDr\.?\s+Kim\b/i,
+    /\bKim\s+Yadon,?\s*(MD|M\.D\.|DO|PhD)\b/i,
+    /Kim[^.]{0,40}\bis a (physician|doctor|medical doctor)\b/i,
+    /\b(our|your)\s+(physician|doctor)\s+Kim\b/i,
+  ];
+  for (const route of pages) {
+    const text = prose(html.get(route));
+    for (const re of FORBIDDEN_TITLE) {
+      const m = text.match(re);
+      if (m) fail(route, `clinical title attached to Kim: "${m[0]}"`);
+    }
+  }
+  console.log(`  ${pages.length} pages — no physician/doctor/Dr./MD title on Kim`);
+}
+
 // ── 8b. decorative side vines ──────────────────────────────────────────────
 section("Decorative side vines");
 {
