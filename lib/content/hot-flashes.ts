@@ -55,7 +55,7 @@ export const hotFlashes: ContentPage = {
       paragraphs: [
         "Bioidentical hormone replacement therapy uses hormones structurally identical to those the body produces, and hormone therapy in general is one of the recognised approaches discussed for vasomotor symptoms.",
         "Whether it is appropriate for any individual depends on their health history, their symptoms, and their lab work — that determination belongs to a licensed provider after an evaluation, not to a website. Some medical histories make hormone therapy unsuitable. Both The Menopause Society and the Endocrine Society publish clinical guidance that is worth reading alongside a provider conversation.",
-        "Kim Yadon, FNP-C works through history and comprehensive testing first — hormones, thyroid, and adrenal function, plus screening for underlying conditions — and addresses foundations like sleep, nutrition, movement and stress before considering a prescription.",
+        "Kim Yadon, FNP-C works through history and comprehensive testing across hormones and thyroid function — and addresses foundations like sleep, nutrition, movement and stress before considering a prescription.",
       ],
     },
     {
@@ -91,7 +91,12 @@ export const hotFlashes: ContentPage = {
     {
       question: "How does a virtual consultation handle testing?",
       answer:
-        "Testing runs through LabCorp, which operates patient service centers across the country. The patient receives an email with the lab order, schedules an appointment with LabCorp, and goes to a nearby location for the draw. There is no need to travel to an office. Lab costs vary by panel and are billed separately by the laboratory.",
+        /*
+          Reworded — this answer was verbatim identical to one on /faq, which
+          owns the process question. Same facts, framed for someone reading
+          about hot flashes specifically.
+        */
+        "Bloodwork is the only in-person step, and it happens at a LabCorp patient service center the patient picks. For hot flashes the panel typically covers sex hormones and thyroid function, since thyroid problems can produce similar temperature symptoms. The order arrives by email, appointments are booked directly with LabCorp, and lab fees are billed by the laboratory.",
     },
     {
       question: "Who does Kim Yadon see?",
@@ -121,6 +126,6 @@ export const hotFlashes: ContentPage = {
     { label: "Sleep and insomnia", href: "/symptoms/sleep-insomnia" },
     { label: "What BHRT costs", href: "/bhrt-cost-utah" },
     { label: "Bioidentical hormone therapy", href: "/services#bhrt" },
-    { label: "All FAQs", href: "/faq" },
+    { label: "Understanding bioidentical hormones", href: "/resources/understanding-bhrt" },
   ],
 };

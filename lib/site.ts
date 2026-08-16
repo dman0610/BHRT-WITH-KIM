@@ -24,11 +24,27 @@ export const OFFERINGS = {
     slug: "", // lives at /book — the primary CTA target
     label: "Free Phone Consultation",
     /**
+     * Price in USD, or `null` where none is documented.
+     *
+     * `null` means NOT PUBLISHED, not free. The follow-up visit has no
+     * documented price in docs/00-BUSINESS-FACTS.md, so its page emits a
+     * Service with no Offer rather than an inferred figure — a wrong price in
+     * schema is quoted back by AI assistants and is worse than no price.
+     */
+    price: 0,
+    /**
      * Always state the 15 minutes. Unqualified, "free consultation" reads as a
      * full visit, and someone arriving expecting an hour of medical guidance
      * has a bad first experience before they've paid anything.
      */
     durationMinutes: 15,
+    /** What the visit covers. Documented facts only — see docs/00-BUSINESS-FACTS.md. */
+    includes: [
+      "About 15 minutes by phone with Kim Yadon, FNP-C",
+      "A chance to ask questions and describe what has been going on",
+      "Working out whether this is the right fit, with no obligation",
+      "A lab order at no charge if testing is the sensible next step",
+    ],
     blurb:
       "A free 15-minute phone call to ask questions, see whether working together is a fit, and start a lab order if testing makes sense.",
     metaDescription:
@@ -38,7 +54,10 @@ export const OFFERINGS = {
     id: "258961",
     slug: "initial-consultation",
     label: "Initial Consultation",
+    price: 200,
     durationMinutes: 60,
+    /** What the visit covers. Documented facts only — see docs/00-BUSINESS-FACTS.md. */
+    includes: ["A full hour with Kim Yadon, FNP-C","Your history, symptoms, and what has already been tried","A decision on what testing makes sense for your picture","Lab orders sent through LabCorp — you choose the location","Prescriptions, where appropriate, to any compounding pharmacy you choose"],
     blurb:
       "A full hour with Kim to go through your history, symptoms, and what testing makes sense.",
     /*
@@ -53,7 +72,11 @@ export const OFFERINGS = {
     id: "258962",
     slug: "follow-up",
     label: "Follow-Up Visit",
+    // No documented price — see the note on freeConsult.price.
+    price: null,
     durationMinutes: null,
+    /** What the visit covers. Documented facts only — see docs/00-BUSINESS-FACTS.md. */
+    includes: ["Review of your lab results together, not sent without explanation","Adjustments to your plan based on results and how you feel","Typically every 3 months, or sooner if something needs attention"],
     blurb: "Ongoing visits to review labs and adjust your plan.",
     metaDescription:
       "Ongoing visits with Kim Yadon, FNP-C to review lab results and adjust your plan. Typically every 3 months, by virtual visit for women across Utah.",
@@ -62,11 +85,14 @@ export const OFFERINGS = {
     id: "258966",
     slug: "comprehensive-package",
     label: "Comprehensive Package",
+    price: 950,
     durationMinutes: null,
+    /** What the visit covers. Documented facts only — see docs/00-BUSINESS-FACTS.md. */
+    includes: ["Five visits across roughly twelve months, one every three months","Two personal coaching sessions focused on nutrition and exercise","Two mindset coaching sessions","Everything included in a per-visit consultation","A better rate than booking five visits individually"],
     blurb:
       "Five visits over twelve months, one every three months, plus coaching sessions.",
     metaDescription:
-      "Five visits over twelve months, one every three months, plus coaching sessions. $1,500 with Kim Yadon, FNP-C, by virtual visit for women across Utah.",
+      "Five visits over twelve months, one every three months, plus coaching sessions. $950 with Kim Yadon, FNP-C, by virtual visit for women across Utah.",
   },
 } as const;
 
@@ -128,7 +154,36 @@ export const SITE = {
       "Thyroid health",
       "Functional medicine",
     ],
+
+    /**
+     * Public professional identifiers, confirmed by Kim 2026-08-12.
+     *
+     * Both are public records — NPI via the NPPES registry, the licence via
+     * Utah's Division of Professional Licensing — so publishing them exposes
+     * nothing private. They are the most valuable entity signal available:
+     * a checkable identifier is what lets health directories list her and what
+     * gives an AI system something it can verify rather than take on trust.
+     *
+     * ⚠️ The licence TYPE is APRN. That is not a post-nominal and must never be
+     * rendered as one. "Kim Yadon, FNP-C" remains the only authorized form —
+     * `npm run verify` fails the build if APRN ever attaches to her name.
+     */
+    npi: "1316718968",
+    licenseState: "Utah",
+    licenseType: "APRN",
+    licenseNumber: "308855-4405",
   },
+
+  /**
+   * Date Kim personally reviewed the educational content — the 5 resource
+   * articles, the 10 symptom pages and the /symptoms hub.
+   *
+   * Read from here by every page that shows "Reviewed by", so all 16 carry one
+   * date. Only move this forward when she has ACTUALLY re-read them: it is a
+   * claim about a named clinician on health content, and the whole value of
+   * the signal is that it is true.
+   */
+  contentReviewedOn: "2026-08-16",
 
   contact: {
     phone: "(801) 573-0606",
@@ -155,6 +210,34 @@ export const SITE = {
     state: "Utah",
     areaServed: "Utah",
     serviceAreaLine: "Serving patients in Utah",
+
+    /**
+     * Confirmed by Kim 2026-08-12, with an important qualification in her own
+     * words: "These hours are not when I have appointments, but people can
+     * reach me Monday - Friday 9 am to 5 pm."
+     *
+     * So this is REACHABILITY, not availability. Copy must never present it as
+     * appointment slots — someone who books expecting a 4:30pm Friday visit
+     * because the site implied it has a bad first experience before paying
+     * anything. Appointment times live in the booking calendar.
+     */
+    hours: {
+      label: "Monday–Friday, 9am–5pm",
+      note: "These are the hours Kim can be reached. Appointment times are shown when you book.",
+      /** For schema. Days are schema.org DayOfWeek short forms. */
+      days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      opens: "09:00",
+      closes: "17:00",
+    },
+
+    /**
+     * Confirmed by Kim 2026-08-12: "no cash pay only."
+     *
+     * This was a top-three pre-booking question that the site could not answer
+     * for weeks. Saying it plainly is better than silence — someone who needs
+     * insurance finds out now rather than after a consultation.
+     */
+    insurance: "Cash pay only — insurance is not accepted.",
   },
 
   /**

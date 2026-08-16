@@ -137,6 +137,41 @@ Use stable `@id` values so entities link rather than duplicate. This is what let
 | `/symptoms/*`, guides | `MedicalWebPage`, `FAQPage`, `BreadcrumbList`, author ref | ✅ |
 | `/service-areas` | `Service` (state-wide), `BreadcrumbList` | ✅ |
 | `/service-areas/*` | `MedicalWebPage`, `FAQPage`, `BreadcrumbList`, `Service` with **City** `areaServed` | ✅ |
+| `/quiz` | `MedicalWebPage`, `FAQPage`, `BreadcrumbList` | ✅ |
+| `/book`, `/book/*` | `Service` + `Offer`, `BreadcrumbList` | ✅ |
+| `/contact` | `ContactPage`, `BreadcrumbList` | ✅ |
+| `/resources` | `CollectionPage`, `BreadcrumbList` | ✅ |
+| `/testimonials` | `BreadcrumbList` only — **never `Review`/`AggregateRating`** | ✅ |
+
+**Nine pages previously carried only the sitewide entity graph** — including the booking pages, which have prices. That describes the business but says nothing about the page. `npm run verify` now fails the build if any page but the homepage lacks page-level schema; the homepage is exempt because `WebSite` + `MedicalBusiness` + `Person` is the correct shape for a root.
+
+**Follow-up visit `Offer` is deliberately absent.** No price is documented for it in `00-BUSINESS-FACTS.md`, so `OFFERINGS.followUp.price` is `null` and the schema omits the offer rather than inferring $200 from the per-visit rate. A wrong price gets quoted back by AI assistants; that is worse than no price.
+
+### One question, one page — FAQ answers must not repeat across URLs
+
+Google serves one page per query. The same question answered on two URLs splits the signal and can suppress both, and for AI retrieval it produces two competing passages where one authoritative one would do.
+
+**Four pairs had drifted in before this was measured** — the lab-cost question on `/faq` and `/bhrt-cost-utah`, a GSM definition on two symptom pages, a boilerplate "available across Utah" on two more, and a LabCorp answer duplicated verbatim. None was visible without checking.
+
+Each question now has a canonical home, and the other page either reframes to a genuinely different angle or points across in prose. `npm run verify` fails the build on any repeated question **or** answer text, which is what makes this hold as pages get added.
+
+### `dateModified` — now honest, previously omitted
+
+`Article` and `MedicalWebPage` deliberately shipped without `dateModified` because there was no real modification date, and a fabricated freshness signal is worse than none.
+
+That changed on 2026-08-16: Kim's corrections removed and rewrote whole passages, so the review date is a genuine modification. All three date signals — `dateModified`, `lastReviewed`, and the sitemap — read from `SITE.contentReviewedOn`, so they cannot disagree.
+
+### `Person.sameAs` → the NPI registry
+
+`https://npiregistry.cms.hhs.gov/provider-view/1316718968` — verified live.
+
+`identifier` states the NPI; `sameAs` points at the government record holding it. That is the difference between a claim on a website and a claim a retrieval system can resolve against an authoritative source, and it is the strongest entity-disambiguation signal available for a single practitioner.
+
+### Sitemap `lastModified` must never come from `new Date()`
+
+It did until 2026-08-16, which stamped every URL with the build time and told Google all 39 pages changed on every deploy — including deploys that touched one CSS class. **A date that always moves is a signal search engines learn to discount**, so the field ends up worth nothing exactly when it matters.
+
+Dates now come from content: `SITE.contentReviewedOn` for reviewed pages, each article's own publication date (or the review date, whichever is later), and a hand-maintained `CONTENT_UPDATED` constant for static pages. `npm run verify` fails the build if `new Date()` reappears in `app/sitemap.ts`.
 
 ### Rich Results Test will not show you `Person` — that is not a defect
 

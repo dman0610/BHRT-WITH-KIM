@@ -54,7 +54,7 @@ export const southJordan: GeoPage = {
     {
       heading: "What does hormone care cost here?",
       paragraphs: [
-        "The introductory phone consultation is free. A full initial consultation is $200, and a comprehensive package of five visits across roughly a year is $1,500.",
+        "The introductory phone consultation is free. A full initial consultation is $200, and a comprehensive package of five visits across roughly a year is $950.",
         "Health and mindset coaching is available as an add-on at $75 per session. Medications and lab fees are not included in any option and are billed separately. Follow-up visits are typically every 3 months, or sooner if needed.",
       ],
     },
@@ -110,6 +110,6 @@ export const southJordan: GeoPage = {
     { label: "Hot flashes and night sweats", href: "/symptoms/hot-flashes-night-sweats" },
     { label: "What BHRT costs in Utah", href: "/bhrt-cost-utah" },
     { label: "Choosing a hormone provider", href: "/find-a-hormone-provider" },
-    { label: "All service areas", href: "/service-areas" },
+    { label: "BHRT in Sandy", href: "/service-areas/sandy" },
   ],
 };

@@ -5,6 +5,8 @@ import { SITE, OFFERINGS, PAID_OFFERINGS, type OfferingKey } from "@/lib/site";
 import BookingEmbed from "@/components/sections/BookingEmbed";
 import HowCareWorks from "@/components/sections/HowCareWorks";
 import ScrollAnimator from "@/components/layout/ScrollAnimator";
+import JsonLd from "@/components/seo/JsonLd";
+import { breadcrumbSchema, serviceSchema } from "@/lib/schema";
 
 type Props = { params: Promise<{ offering: string }> };
 
@@ -36,10 +38,30 @@ export default async function BookOfferingPage({ params }: Props) {
   const key = resolveOffering((await params).offering);
   if (!key) notFound();
 
-  const { label, blurb, durationMinutes } = OFFERINGS[key];
+  const { label, blurb, durationMinutes, price, slug, includes } = OFFERINGS[key];
 
   return (
     <>
+      {/*
+        `price` is null for the follow-up visit, which has no documented figure
+        — serviceSchema omits the Offer entirely rather than inferring one from
+        the $200 per-visit rate. A wrong price in schema gets quoted back by AI
+        assistants, which is worse than no price at all.
+      */}
+      <JsonLd
+        schema={[
+          serviceSchema({
+            name: label,
+            description: blurb,
+            ...(price !== null && { price }),
+            path: `/book/${slug}`,
+          }),
+          breadcrumbSchema([
+            { name: "Book a Consultation", path: "/book" },
+            { name: label, path: `/book/${slug}` },
+          ]),
+        ]}
+      />
       <ScrollAnimator />
 
       <section className="bg-forest pt-32 pb-16 md:pt-40 md:pb-20">
@@ -58,8 +80,41 @@ export default async function BookOfferingPage({ params }: Props) {
         </div>
       </section>
 
+      {/*
+        Every line here traces to docs/00-BUSINESS-FACTS.md. These pages are
+        the commercial end of the funnel and carried almost no server-rendered
+        content — a hero, a shared process block and an iframe — which made
+        them thin for search and near-invisible to AI retrieval.
+      */}
       <section className="bg-stone py-12 md:py-16">
-        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-3xl space-y-10 px-4 sm:px-6 lg:px-8">
+          <div className="animate-on-scroll">
+            <h2 className="mb-4 font-heading text-2xl font-semibold text-bark sm:text-3xl">
+              What this visit covers
+            </h2>
+            <ul className="space-y-2">
+              {includes.map((item) => (
+                <li key={item} className="flex gap-3 leading-relaxed text-clay-text">
+                  <span className="shrink-0 font-bold text-forest">✓</span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+            <p className="mt-5 leading-relaxed text-clay-text">
+              {price !== null && (
+                <>
+                  This visit is{" "}
+                  <span className="font-medium text-bark">
+                    {price === 0 ? "free" : `$${price.toLocaleString()}`}
+                  </span>
+                  .{" "}
+                </>
+              )}
+              {SITE.labDisclosure} Medications are paid for at the pharmacy you
+              choose. {SITE.contact.insurance}
+            </p>
+          </div>
+
           <div className="animate-on-scroll">
             <HowCareWorks />
           </div>

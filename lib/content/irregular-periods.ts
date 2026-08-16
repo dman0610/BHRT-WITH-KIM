@@ -68,7 +68,7 @@ export const irregularPeriods: ContentPage = {
       heading: "What does an evaluation cover?",
       paragraphs: [
         "It starts with a detailed history of the bleeding pattern itself, alongside comprehensive testing.",
-        "Kim Yadon, FNP-C works through history and testing across hormones, thyroid, and adrenal function, plus screening for underlying conditions — thyroid dysfunction in particular can affect cycles directly. Where the pattern suggests abnormal bleeding rather than expected transitional change, the appropriate next step involves gynecologic assessment, which may include a physical examination or imaging that a virtual consultation cannot provide. Being told clearly when to see someone in person is part of good care, not a limitation of it.",
+        "Kim Yadon, FNP-C works through history and testing across hormones and thyroid function — thyroid dysfunction in particular can affect cycles directly. Where the pattern suggests abnormal bleeding rather than expected transitional change, the appropriate next step involves gynecologic assessment, which may include a physical examination or imaging that a virtual consultation cannot provide. Being told clearly when to see someone in person is part of good care, not a limitation of it.",
         "Tracking dates, flow, and any spotting between periods for a few cycles before an appointment makes that conversation considerably more useful.",
       ],
     },
@@ -128,6 +128,6 @@ export const irregularPeriods: ContentPage = {
     { label: "Hot flashes and night sweats", href: "/symptoms/hot-flashes-night-sweats" },
     { label: "Vaginal dryness and discomfort", href: "/symptoms/vaginal-dryness" },
     { label: "Comprehensive testing", href: "/services#testing" },
-    { label: "All symptom topics", href: "/symptoms" },
+    { label: "7 early signs of perimenopause", href: "/resources/perimenopause-signs" },
   ],
 };

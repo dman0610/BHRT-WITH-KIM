@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ExternalLink } from "lucide-react";
 import type { ContentPage } from "@/lib/content/types";
-import { OFFERINGS } from "@/lib/site";
+import { OFFERINGS, SITE } from "@/lib/site";
 import { breadcrumbSchema, faqSchema, medicalWebPageSchema } from "@/lib/schema";
 import JsonLd from "@/components/seo/JsonLd";
 import HowCareWorks from "@/components/sections/HowCareWorks";
@@ -161,7 +161,8 @@ export default function ContentPageLayout({
           )}
 
           <div className="animate-on-scroll space-y-4">
-            <AuthorByline />
+            {/* Kim read and corrected this content — see SITE.contentReviewedOn. */}
+            <AuthorByline reviewedOn={SITE.contentReviewedOn} />
             <p className="text-sm text-clay-text leading-relaxed">
               This page is general education, not medical advice, and reading it
               does not create a provider-patient relationship. What is

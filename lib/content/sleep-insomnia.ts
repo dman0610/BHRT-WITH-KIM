@@ -50,7 +50,7 @@ export const sleepInsomnia: ContentPage = {
       heading: "What does a hormone evaluation cover?",
       paragraphs: [
         "A hormone evaluation looks at the wider picture rather than sex hormones alone, because several systems influence sleep.",
-        "Kim Yadon, FNP-C works through full history and comprehensive testing — hormones, thyroid, and adrenal function, plus screening for underlying conditions — before considering any prescription. Foundations such as sleep timing, nutrition, movement, and stress management are addressed first. Where bioidentical hormone therapy is indicated by that picture, it is monitored and adjusted rather than set once.",
+        "Kim Yadon, FNP-C works through full history and comprehensive testing across hormones and thyroid function — before considering any prescription. Foundations such as sleep timing, nutrition, movement, and stress management are addressed first. Where bioidentical hormone therapy is indicated by that picture, it is monitored and adjusted rather than set once.",
         "Whether hormone therapy is appropriate for any individual is a clinical decision made after evaluation. Some medical histories make it unsuitable.",
       ],
     },
@@ -117,6 +117,6 @@ export const sleepInsomnia: ContentPage = {
     { label: "Hot flashes & night sweats", href: "/symptoms/hot-flashes-night-sweats" },
     { label: "Sleep optimization", href: "/services#sleep" },
     { label: "What BHRT costs", href: "/bhrt-cost-utah" },
-    { label: "All FAQs", href: "/faq" },
+    { label: "Sleep and hormone health", href: "/resources/sleep-hormones" },
   ],
 };

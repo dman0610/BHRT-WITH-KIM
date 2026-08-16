@@ -52,13 +52,10 @@ export const ARTICLES: Record<string, ArticleData> = {
 <p>The term <em>bioidentical</em> refers to the molecular structure of a hormone, not where it comes from. A bioidentical estradiol molecule has the exact same three-dimensional shape as the estradiol your ovaries produce. This matters because hormones work like keys fitting into locks — your cell receptors are shaped to receive specific molecular structures, and a precise fit affects how the hormone signals and how your body metabolizes it.</p>
 <p>Conventional hormone replacement therapy (HRT), by contrast, has historically used hormones that are structurally different from your own. Conjugated equine estrogens (derived from pregnant mare urine) and medroxyprogesterone acetate are functional analogs, not molecular matches. They bind to your receptors but trigger slightly different downstream effects.</p>
 
-<h2>FDA-Approved vs. Compounded Bioidenticals</h2>
-<p>There is an important distinction to understand here. Several FDA-approved hormone therapies — including estradiol patches, gels, and micronized progesterone (Prometrium) — are bioidentical. They have been through rigorous clinical testing for safety, potency, and consistency.</p>
-<p>Compounded bioidentical hormones are custom-mixed by a compounding pharmacy, often in forms like troches or creams, and are not FDA-approved as finished products. The North American Menopause Society (NAMS) acknowledges their potential value for patients who cannot tolerate standard preparations but notes that batch-to-batch variability and the absence of clinical outcome data are valid concerns.</p>
 <blockquote>A qualified practitioner tailors bioidentical therapy to your specific hormone levels, symptoms, and health history — not to a one-size-fits-all protocol.</blockquote>
 
 <h2>How Bioidentical Progesterone Differs from Synthetic Progestins</h2>
-<p>One of the most clinically meaningful distinctions is between micronized progesterone and synthetic progestins. The Women's Health Initiative (WHI) trial, which raised alarm about HRT in 2002, used a combination of conjugated equine estrogen and medroxyprogesterone acetate. Subsequent re-analyses of the data and separate European studies found that when natural progesterone is used alongside estradiol, the breast tissue and cardiovascular risk profile appears more favorable.</p>
+<p>One of the most clinically meaningful distinctions is between micronized progesterone and synthetic progestins. The Women's Health Initiative (WHI) trial, which raised alarm about HRT in 2002, used a combination of conjugated equine estrogen and medroxyprogesterone acetate. Subsequent re-analyses of the data and separate European studies found that when bioidentical progesterone is used alongside bioidentical estradiol, the breast tissue and cardiovascular risk profile appears more favorable.</p>
 <p>The KEEPS trial (Kronos Early Estrogen Prevention Study) and the E3N cohort study from France both found different risk associations for bioidentical progesterone compared to synthetic progestins — a distinction the original WHI data could not make because it did not use bioidentical hormones.</p>
 
 <h2>Who May Benefit</h2>
@@ -71,10 +68,10 @@ export const ARTICLES: Record<string, ArticleData> = {
   <li>Vaginal dryness and urogenital changes</li>
   <li>Loss of bone density</li>
 </ul>
-<p>Candidacy depends on individual health history. Women with certain hormone-sensitive cancers, uncontrolled cardiovascular disease, or active blood clots are typically not candidates. A thorough intake, baseline labs, and an ongoing monitoring plan are essential components of responsible BHRT practice.</p>
+<p>Candidacy depends on individual health history, and bioidentical hormone therapy is not appropriate for everyone. A thorough intake, baseline labs, and an ongoing monitoring plan are essential components of responsible BHRT practice, and whether it is a fit for you is a decision to make with a provider who knows your full picture.</p>
 
 <h2>What to Expect from a Well-Managed Protocol</h2>
-<p>A properly managed bioidentical hormone protocol begins with comprehensive baseline labs — typically including estradiol, progesterone, testosterone, DHEA-S, cortisol, and thyroid markers. Dosing is individualized based on lab values and symptom patterns, and levels are re-checked at regular intervals to ensure you are within a therapeutic range, not just on a standard dose.</p>
+<p>A properly managed bioidentical hormone protocol begins with comprehensive baseline labs — typically including estradiol, progesterone, testosterone, DHEA-S, and thyroid markers. Dosing is individualized based on lab values and symptom patterns, and levels are re-checked at regular intervals to ensure you are within a therapeutic range, not just on a standard dose.</p>
 <p>Symptom improvement is gradual. Most patients begin to notice meaningful changes within four to twelve weeks as hormone levels stabilize. The goal is not to restore the hormone levels of a 25-year-old — it is to find a level where your symptoms resolve and your long-term health markers (bone density, cardiovascular indicators, cognitive function) are supported.</p>
     `.trim(),
     sources: [
@@ -188,10 +185,7 @@ export const ARTICLES: Record<string, ArticleData> = {
 <p>Sleep is not rest in a passive sense — it is active biological maintenance. Multiple hormone systems operate on a sleep-dependent cycle, and disrupting that cycle has measurable downstream effects on everything from cortisol to thyroid function to reproductive hormones.</p>
 <p>Growth hormone (GH) is secreted in its largest daily pulse during the first ninety minutes of deep, slow-wave sleep. GH is not just about muscle mass — it supports tissue repair, fat metabolism, immune function, and cognitive restoration. Poor sleep suppresses GH release, and this effect accumulates over time.</p>
 
-<h2>Cortisol and the Sleep-Wake Axis</h2>
-<p>Cortisol follows a diurnal rhythm: it rises sharply in the early morning (the cortisol awakening response), peaks around 8–9 AM, then declines steadily through the day, reaching its lowest point around midnight. This rhythm exists to prepare your body for waking and to regulate energy, immune activity, and metabolic function throughout the day.</p>
-<p>Poor sleep disrupts this rhythm. Studies using cortisol saliva testing show that sleep restriction — even a few nights of less than six hours — flattens the cortisol curve, delays the morning rise, and elevates evening cortisol. Elevated evening cortisol directly suppresses melatonin production (which requires cortisol to be low), creating a feedback loop that makes both sleep and hormonal regulation harder.</p>
-<blockquote>In peri-menopause, when the HPA axis is already under additional strain from fluctuating ovarian hormones, disrupted sleep accelerates the hormonal dysregulation that is already underway.</blockquote>
+<blockquote>In peri-menopause, when the body is already under additional strain from fluctuating ovarian hormones, disrupted sleep accelerates the hormonal dysregulation that is already underway.</blockquote>
 
 <h2>Estrogen, Progesterone, and Sleep Architecture</h2>
 <p>Estrogen and progesterone have direct neurological effects on sleep quality. Progesterone is a natural GABA-agonist — it promotes calm, reduces anxiety, and supports sleep onset. As progesterone declines in peri-menopause (often before estrogen does), many women notice increasing difficulty falling asleep, waking in the night, and lighter, less restorative sleep — even before hot flashes begin.</p>
@@ -199,19 +193,18 @@ export const ARTICLES: Record<string, ArticleData> = {
 
 <h2>Melatonin: More Than a Sleep Aid</h2>
 <p>Melatonin is primarily known as a sleep signal, but it is also an antioxidant with roles in immune regulation and reproductive health. Melatonin production naturally declines with age, and this decline is accelerated by light exposure at night (particularly blue-spectrum light from screens), irregular sleep schedules, and chronic stress.</p>
-<p>Low-dose melatonin (0.5–1 mg) is evidence-supported for improving sleep onset time and resetting circadian rhythm in older adults. Higher doses (3–10 mg, commonly sold) provide no additional benefit for most people and may cause morning grogginess by exceeding physiological signaling levels.</p>
 
 <h2>Practical Sleep Hygiene for Hormonal Health</h2>
 <ul>
-  <li><strong>Consistent sleep and wake times</strong> — even on weekends — are the single most powerful circadian anchor. Irregular schedules are a primary driver of cortisol rhythm disruption.</li>
-  <li><strong>Light exposure in the first hour of the day</strong> (natural sunlight, or a 10,000-lux light box in winter) sets the cortisol awakening response and primes melatonin production 14–16 hours later.</li>
+  <li><strong>Consistent sleep and wake times</strong> — even on weekends — are the single most powerful circadian anchor. Irregular schedules are a primary driver of circadian rhythm disruption.</li>
+  <li><strong>Light exposure in the first hour of the day</strong> (natural sunlight, or a 10,000-lux light box in winter) anchors the body clock and primes melatonin production 14–16 hours later.</li>
   <li><strong>Eliminate blue light 90 minutes before bed.</strong> Screens suppress melatonin onset even at low brightness.</li>
   <li><strong>Cool sleeping environment.</strong> Core body temperature must drop to initiate and maintain deep sleep. Women experiencing hot flashes may benefit from cooling mattress technology (such as Chili Sleep or Ooler systems, which have clinical data supporting their use in menopause-related sleep disruption).</li>
   <li><strong>Alcohol and sleep:</strong> Alcohol induces sleep onset but fragments the second half of the night by suppressing REM sleep and elevating body temperature. It is not a sleep aid for women with hormonal sleep disruption.</li>
 </ul>
 
 <h2>When Sleep Problems Persist Despite Good Hygiene</h2>
-<p>If sleep problems persist despite consistent sleep hygiene, this is often a signal that the underlying hormonal cause needs to be addressed directly. Progesterone deficiency, untreated thyroid dysfunction, cortisol dysregulation, and blood sugar instability at night are all treatable conditions that sleep hygiene alone will not resolve. Comprehensive lab testing that includes an evening cortisol, a thyroid panel, and reproductive hormones is a reasonable starting point when sleep disruption is significant and chronic.</p>
+<p>If sleep problems persist despite consistent sleep hygiene, this is often a signal that the underlying hormonal cause needs to be addressed directly. Progesterone deficiency, untreated thyroid dysfunction, and blood sugar instability at night are all treatable conditions that sleep hygiene alone will not resolve. Comprehensive lab testing that includes a thyroid panel and reproductive hormones is a reasonable starting point when sleep disruption is significant and chronic.</p>
     `.trim(),
     sources: [
       {

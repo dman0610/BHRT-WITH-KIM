@@ -29,7 +29,7 @@ export const findAHormoneProvider: ContentPage = {
       heading: "Does the provider test before prescribing?",
       paragraphs: [
         "A provider who prescribes hormones without baseline testing and a full history is skipping the step that determines whether treatment is appropriate at all.",
-        "Comprehensive assessment generally means more than sex hormones alone — thyroid and adrenal function overlap heavily with menopausal symptoms, and several non-hormonal conditions produce the same complaints. Testing also establishes a baseline for whether a plan is working, without which adjustment becomes guesswork.",
+        "Comprehensive assessment generally means more than sex hormones alone — thyroid function overlaps heavily with menopausal symptoms, and several non-hormonal conditions produce the same complaints. Testing also establishes a baseline for whether a plan is working, without which adjustment becomes guesswork.",
       ],
     },
     {

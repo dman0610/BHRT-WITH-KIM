@@ -116,7 +116,7 @@ export default function AboutPage() {
               </h3>
               <p className="text-clay-text text-sm leading-relaxed">
                 We start by hearing your full story, then run comprehensive testing —
-                hormones, thyroid, adrenals, and screening for underlying conditions.
+                hormones and thyroid function.
               </p>
             </div>
             <div className="text-center p-8 rounded-2xl bg-lavender/30">

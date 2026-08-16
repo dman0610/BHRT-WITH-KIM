@@ -74,7 +74,7 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
       {
         question: "What happens before a prescription is written?",
         answer:
-          "Kim's stated approach is to start with history and comprehensive testing — hormones, thyroid, adrenal function, and screening for underlying conditions — then address foundations like sleep, nutrition, movement, stress, and detox support. Bioidentical hormones are considered when indicated by that picture, not as an automatic first step, and any plan is monitored and adjusted over time.",
+          "Kim's stated approach is to start with history and comprehensive testing across hormones and thyroid function — then address foundations like sleep, nutrition, movement, stress, and detox support. Bioidentical hormones are considered when indicated by that picture, not as an automatic first step, and any plan is monitored and adjusted over time.",
       },
     ],
   },
@@ -82,13 +82,30 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
     title: "Cost and logistics",
     items: [
       {
-        question: "How much does it cost?",
+        /*
+          Confirmed by Kim 2026-08-12. This was a top-three pre-booking question
+          the site could not answer for weeks — silence sent people to a free
+          consultation only to discover it there.
+        */
+        question: "Do you take insurance?",
         answer:
-          "A single visit is $200. The comprehensive package is $1,500 and covers five visits, one every three months, plus two nutrition and exercise coaching sessions and two mindset coaching sessions. Health and mindset coaching can also be added to a single visit for $75 per session. Medications and laboratory fees are not included in either option.",
+          "No. This is a cash-pay practice, so visits are paid for directly rather than billed to insurance. A single visit is $200 and the comprehensive package is $950. Laboratory fees are billed separately by the lab, and prescriptions are paid for at the pharmacy you choose. Some patients use an HSA or FSA — check with your plan administrator.",
       },
       {
-        question: "Are lab costs included in the price?",
-        answer: `No. Laboratory fees are not included in any package and are billed separately by the laboratory. ${SITE.labDisclosure} A lab order can be provided at no charge during a consultation, but the testing itself is a separate cost paid to the lab.`,
+        question: "How much does it cost?",
+        answer:
+          "A single visit is $200. The comprehensive package is $950 and covers five visits, one every three months, plus two nutrition and exercise coaching sessions and two mindset coaching sessions. Health and mindset coaching can also be added to a single visit for $75 per session. Medications and laboratory fees are not included in either option.",
+      },
+      {
+        /*
+          Reframed from "Are lab costs included in the price?" — that exact
+          question also lives on /bhrt-cost-utah, which owns cost queries.
+          Two pages answering one question split the signal and can suppress
+          both. This angle complements it instead of competing.
+        */
+        question: "What is not included in the price?",
+        answer:
+          "Three things. Laboratory fees are billed separately by the laboratory — a lab order can be provided at no charge during a consultation, but the testing itself is paid to the lab and varies by panel. Medications are paid for at whichever compounding pharmacy you choose. Coaching sessions beyond those in the comprehensive package are $75 each.",
       },
       {
         question: "Are medications included?",

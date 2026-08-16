@@ -55,7 +55,7 @@ export const draper: GeoPage = {
     {
       heading: "What does it cost?",
       paragraphs: [
-        "The introductory phone consultation is free. A full initial consultation is $200 for about 60 minutes, and a comprehensive package covering five visits over roughly a year is $1,500.",
+        "The introductory phone consultation is free. A full initial consultation is $200 for about 60 minutes, and a comprehensive package covering five visits over roughly a year is $950.",
         "Coaching sessions are available as an add-on at $75 each. Medications and lab fees are not included in any option and are billed separately.",
       ],
     },
@@ -65,7 +65,7 @@ export const draper: GeoPage = {
     {
       question: "How many appointments does a first year involve?",
       answer:
-        "About five. A free 15-minute phone consultation, a 60-minute initial consultation once lab results are back, and follow-up visits typically every 3 months after that. The comprehensive package is built around exactly that cadence — five visits across roughly a year for $1,500.",
+        "About five. A free 15-minute phone consultation, a 60-minute initial consultation once lab results are back, and follow-up visits typically every 3 months after that. The comprehensive package is built around exactly that cadence — five visits across roughly a year for $950.",
     },
     {
       question: "What times are appointments available?",

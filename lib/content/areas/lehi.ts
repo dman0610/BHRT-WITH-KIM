@@ -55,7 +55,7 @@ export const lehi: GeoPage = {
     {
       heading: "What does it cost?",
       paragraphs: [
-        "The introductory phone consultation is free. A full initial consultation is $200 for about 60 minutes, and a comprehensive package covering five visits over roughly a year is $1,500.",
+        "The introductory phone consultation is free. A full initial consultation is $200 for about 60 minutes, and a comprehensive package covering five visits over roughly a year is $950.",
         "Health and mindset coaching is available as an add-on at $75 per session. Medications and lab fees are not included in any option and are billed separately.",
       ],
     },

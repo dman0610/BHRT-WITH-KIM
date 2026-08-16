@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { ARTICLES } from "@/lib/articles";
 import ArticleGrid, { type ArticleSummary } from "@/components/blog/ArticleGrid";
+import JsonLd from "@/components/seo/JsonLd";
+import { breadcrumbSchema, typedPageSchema } from "@/lib/schema";
 
 export const metadata: Metadata = {
   title: "Hormone Health Resources",
@@ -29,6 +31,19 @@ const ALL_POSTS: ArticleSummary[] = Object.entries(ARTICLES).map(
 export default function ResourcesPage() {
   return (
     <>
+      <JsonLd
+        schema={[
+          typedPageSchema({
+            type: "CollectionPage",
+            name: "Hormone Health Resources",
+            description:
+              "Researched articles on hormone health, nutrition, sleep, and perimenopause, reviewed by Kim Yadon, FNP-C.",
+            path: "/resources",
+          }),
+          breadcrumbSchema([{ name: "Resources", path: "/resources" }]),
+        ]}
+      />
+
       {/* Hero Banner */}
       <section className="bg-forest pt-32 pb-20 md:pt-40 md:pb-28">
         <div className="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">

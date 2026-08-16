@@ -19,6 +19,9 @@ Last updated: 2026-08-10 · Owner: Dallin
 | **6** | Tracking, local, launch | 🟡 Code done, blocked on deployment + accounts |
 | **7** | Symptom coverage + internal linking | ✅ Complete — 10 symptom pages, chips fixed |
 | **8** | Full build audit | ✅ Complete — `npm run verify` green |
+| **9** | Kim's answers + clinical-scope corrections | ✅ Complete — 6 unknowns closed, 16 pages reviewed |
+| **10** | Final SEO / AI-readiness pass | ✅ Complete — 19 verify sections green |
+| **11** | Final SEO / GEO sweep | ✅ Complete — 20 verify sections green |
 
 **Nothing has been deployed.** The production site still advertises labs as included in both pricing tiers — the live inaccuracy this project started with. The ordered fix-it procedure is [11-LAUNCH.md](11-LAUNCH.md).
 
@@ -364,6 +367,117 @@ Completed 2026-08-11. Read-only audit against the **built output**, not against 
 - [x] **Deleted `app/api/contact/` and `app/api/newsletter/`.** Neither had a caller — `ContactForm` and `NewsletterForm` both post directly to Web3Forms from the browser. They shipped as live serverless endpoints that only logged to the console, carried stale `TODO: integrate Resend` notes for a provider never adopted, and one held the commented-out `kim@bhrtwithkim.com` example that [00-BUSINESS-FACTS.md](00-BUSINESS-FACTS.md) flags as a proposal rather than a real address. Route count 49 → 47. `app/api/quiz-capture/` stays; it is genuinely used.
 
 **The audit checked pages, schema, links and copy — it never checked whether API routes were reachable.** Worth naming as a gap in the audit rather than a new defect. If `scripts/verify.mjs` grows again, an "every route handler has a caller" check is the obvious addition.
+
+---
+
+---
+
+## Phase 9 — Kim's answers and clinical-scope corrections ✅
+
+Completed 2026-08-16, from Kim's replies of 2026-08-12 and 2026-08-15.
+
+### Six unknowns closed
+Hours (Mon–Fri 9–5, **reachability not appointments**) · insurance (**cash pay only**) · credentials confirmed complete · **NPI 1316718968** · **Utah APRN #308855-4405** · legal entity (**NAET with Kim LLC**, deliberately unpublished) · article review (**yes**).
+
+NPI and licence are now published on `/about` and in `Person.identifier`. Both are public records and independently checkable — the strongest entity signal available, blocked for weeks.
+
+### Pricing corrected — $1,500 → $950
+Kim caught it: 5 visits at $200 is $1,000, so the package cost more than buying the visits. À-la-carte value is $1,300 including 4 coaching sessions; $950 is a 27% discount and survives the promo stack at $712. The figure lived in **8 files**.
+
+### Clinical scope narrowed — and it reached much further than it looked
+- [x] Adrenal assessment removed — *"I need to learn more about adrenal health"*
+- [x] Mold and Lyme testing removed — *"I don't do that yet"*
+- [x] Broad "screening for underlying conditions" removed
+
+**Kim named two places. The phrasing existed in ~15 pages** — 37 occurrences of "adrenal", 16 of "underlying conditions" — because it was propagated when the content engine was built. A partial fix would have left the site contradicting its own Services page with 50+ stale claims about a licensed provider's scope.
+
+**41 replacements across 18 files.** Service id `thyroid-adrenal` → `thyroid`, which also required updating the quiz's `serviceWeights` keys — missing those would have silently broken every quiz result recommending it.
+
+### Article corrections — all 7 applied verbatim
+FDA-approved vs compounded section removed · "natural" → "bioidentical" progesterone/estradiol · contraindication list removed · cortisol removed from baseline labs · cortisol/sleep-wake section removed · melatonin dosing paragraph removed · evening cortisol removed from lab testing.
+
+Two judgement calls, both flagged rather than silently made:
+- **The contraindication sentence is gone at Kim's instruction**, but the general line — *"not appropriate for everyone… a decision to make with a provider who knows your full picture"* — was kept, so the page still signals suitability without listing conditions.
+- **`/bhrt-vs-hrt` was deliberately left alone.** It covers FDA approval status more prominently, and a comparison page that omits it would be materially misleading. Kim's note was about the article. If she wants that page changed she should ask directly.
+- Two sleep-hygiene bullets referencing "the cortisol awakening response" were rephrased — the deletion would otherwise have left dangling references to a concept the article no longer explains.
+
+### Review sign-off — the E-E-A-T unlock
+- [x] **16 pages** carry `Reviewed by Kim Yadon, FNP-C` with a date: 5 articles, 10 symptom pages, the `/symptoms` hub
+- [x] `reviewedBy` → `#kim` and `lastReviewed` in both `Article` and `MedicalWebPage` schema
+- [x] **`author` stays the practice.** She reviewed; she did not write. The markup keeps those claims separate.
+- [x] AI-drafting disclosure rewritten to name the reviewer — more accurate, not less
+
+### Three new guards
+`npm run verify` is now 16 sections. Added: **scope of practice** (no adrenal/underlying-conditions/mold/Lyme claim in page copy, with the `lib/analytics.ts` tripwire exempt), **price consistency** (no stale `$1,500`, in copy or `Offer` schema), and **APRN never as a post-nominal** on Kim's name.
+
+The scope guard immediately earned itself: the sweep shortened two service-area FAQ answers below the 40-word floor, which the build caught before it shipped.
+
+**Verified:** lint, `tsc`, build clean at 47 routes; all 16 verify sections passing; 133 FAQ answers.
+
+---
+
+---
+
+## Phase 10 — Final SEO / AI-readiness pass ✅
+
+Completed 2026-08-16. Audited the built output; **most of it was already right** — 39 pages with zero duplicate titles or descriptions, correct self-referential canonicals, no orphan pages, no missing alt text, no heading skips. Five real gaps.
+
+### `/quiz` was 109 words — and it is the ad landing page
+Everything meaningful lived inside a client component, so the page the original spec names as the paid-traffic destination was invisible to search and to AI.
+
+- [x] **109 → 842 words** server-rendered: what the assessment covers, what the results mean and don't, red-flag guidance, `HowCareWorks`, and a 5-question FAQ with schema
+- [x] `MedicalWebPage` + `FAQPage` + `BreadcrumbList`
+
+Second person is permitted on this page specifically — the assessment is opt-in and the reader is answering about themselves — but the copy still stops short of telling anyone what they have.
+
+### Nine pages had no page-level schema
+- [x] `/book` and all three offering pages gain `Service` + `Offer` with real prices. **`/services` carried `Offer` markup while the actual booking pages carried none.**
+- [x] `/contact` → `ContactPage`, `/resources` → `CollectionPage`, `/testimonials` → breadcrumb only
+- [x] Booking pages gained a "What this visit covers" block from documented facts — 209 → 277–308 words
+
+**The follow-up visit has no `Offer`** and that is deliberate: no price is documented for it, so `price` is `null` and the schema omits it rather than inferring $200. A wrong price gets quoted back by AI assistants.
+
+### Three more
+- [x] **`Person.sameAs` → the NPI registry** (verified live). Turns a name on a website into a claim resolvable against a government record.
+- [x] **Sitemap dates no longer come from `new Date()`** — it was telling Google all 39 pages changed on every deploy, which is a signal search engines learn to ignore. Flagged in the docs since Phase 2, never fixed until now.
+- [x] **Internal linking: weakly-linked pages 10 → 1.** All five articles and four city pages had a single inbound link. Symptom pages now link to the article covering the same ground, and neighbouring cities cross-link. The one remaining is `/book/follow-up`, correctly reachable only from `/book`.
+
+### Three new guards — 19 sections total
+**Page-level schema** on every page but the homepage · **content depth** floor of 250 words · **sitemap date honesty**.
+
+The depth guard immediately found six more pages under the floor. Three were genuinely thin and got real content; three — `/contact`, `/resources`, `/testimonials` — are **explicitly exempt by function**. Thin content means little value *relative to purpose*; a short contact page is not thin, a 50-word ad landing page was. Padding a testimonials page holding three real quotes would have been worse than the word count.
+
+**Verified:** lint, `tsc`, build clean at 47 routes; 19/19 verify sections; 138 FAQ answers across 21 pages.
+
+---
+
+---
+
+## Phase 11 — Final SEO / GEO sweep ✅
+
+Completed 2026-08-16. Covered the categories `npm run verify` did not yet reach: cannibalisation, freshness, head tags, live redirect behaviour.
+
+**Live infrastructure needed nothing** — `http→https` 308, `www→apex` 307, trailing-slash 308, HSTS `max-age=63072000`, all four security headers live, entity statement identical across `lib/site.ts` / schema / `/llms.txt`, no H1 overlap.
+
+### Four duplicate FAQ Q&As — the real find
+Google serves one page per query; the same question on two URLs splits the signal and can suppress both. Four pairs had drifted in and none was visible without measuring: the lab-cost question on `/faq` and `/bhrt-cost-utah`, a GSM definition on two symptom pages, a boilerplate "available across Utah" on two more, and a LabCorp answer duplicated verbatim.
+
+Fixed by **differentiating, not deleting** — each question now has a canonical home and the other page reframes to a genuinely different angle. **138 distinct questions, zero duplicate question or answer text.**
+
+### `dateModified` — omitted before, honest now
+Deliberately absent while there was no real modification date. Kim's corrections removed and rewrote whole passages, so the review date is a genuine modification. `dateModified`, `lastReviewed` and the sitemap all read from `SITE.contentReviewedOn` and cannot disagree.
+
+### Mobile and share polish
+`manifest.ts`, `themeColor`, and a generated `apple-icon.tsx`. The manifest uses `display: "browser"` on purpose — a standalone shell hides the address bar, and on a healthcare site the visible domain is how someone confirms they are on the real site rather than a lookalike.
+
+### One more guard — 20 sections
+**FAQ uniqueness**: no question or answer text may appear on more than one page. This is the check that would have caught all four, and the one most likely to regress as pages are added.
+
+It also caught a bug I introduced the same day: `apple-icon` is an extensionless generated route, so the link checker read it as a broken page link on all 39 pages. Fixed in the checker, not by removing the icon.
+
+**Verified:** lint, `tsc`, build clean at 49 routes; 20/20 verify sections; 138 FAQ answers.
+
+**Deliberately not done:** `SearchAction` (no site search — false schema), `geo` coordinates (would require the home address), `speakable` (news publishers only), `hreflang` (single locale), a homepage FAQ (would duplicate `/faq`, the exact problem just fixed).
 
 ---
 

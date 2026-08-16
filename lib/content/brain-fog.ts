@@ -61,7 +61,7 @@ export const brainFog: ContentPage = {
       heading: "What does an evaluation involve?",
       paragraphs: [
         "An evaluation starts by establishing what is contributing, which means history and comprehensive testing rather than a prescription.",
-        "That covers the pattern of symptoms, sleep quality, stress, nutrition, and testing across hormones, thyroid, and adrenal function, plus screening for underlying conditions. Kim Yadon, FNP-C addresses foundations such as sleep and stress management before considering hormone therapy, and where it is indicated it forms one part of a plan rather than the whole of it.",
+        "That covers the pattern of symptoms, sleep quality, stress, nutrition, and testing across hormones and thyroid function. Kim Yadon, FNP-C addresses foundations such as sleep and stress management before considering hormone therapy, and where it is indicated it forms one part of a plan rather than the whole of it.",
         "Whether hormone therapy is appropriate for any individual is decided after evaluation. Some medical histories make it unsuitable.",
       ],
     },
@@ -86,7 +86,7 @@ export const brainFog: ContentPage = {
     {
       question: "What tests would be involved?",
       answer:
-        "A comprehensive workup generally covers sex hormones, thyroid function, and adrenal function, alongside screening for deficiencies such as B12, vitamin D, and iron that can affect cognition. Which panels are ordered depends on history and presentation. Testing runs through LabCorp and is billed separately; costs vary by panel.",
+        "A comprehensive workup generally covers sex hormones and thyroid function, alongside screening for deficiencies such as B12, vitamin D, and iron that can affect cognition. Which panels are ordered depends on history and presentation. Testing runs through LabCorp and is billed separately; costs vary by panel.",
     },
     {
       question: "Does hormone therapy improve memory?",
@@ -94,9 +94,14 @@ export const brainFog: ContentPage = {
         "The relationship between hormone therapy and cognition is an area of ongoing research rather than a settled question, and hormone therapy is not prescribed as a treatment for memory. Whether it is appropriate for any individual depends on their full clinical picture and history, and it is not suitable for everyone.",
     },
     {
-      question: "Are visits available across Utah?",
+      /*
+        Was "Are visits available across Utah?" — identical wording sat on
+        /symptoms/sleep-insomnia too. Boilerplate repeated across pages
+        competes with itself; this one is specific to cognitive symptoms.
+      */
+      question: "When should memory changes be checked by a doctor?",
       answer:
-        "Yes. All visits with Kim Yadon, FNP-C are virtual, so patients anywhere in Utah can be seen without travelling to an office. The practice is based in South Jordan and concentrated in Salt Lake County and Utah County, but virtual visits reach the whole state. Laboratory work is handled at a LabCorp location near the patient.",
+        "Cognitive changes that are progressive rather than fluctuating, that interfere with familiar daily tasks, or that others notice before you do are worth assessing in their own right rather than attributing to the transition. The same applies to memory changes appearing alongside confusion or difficulty with routine activities. Perimenopausal brain fog typically comes and goes with sleep and stress.",
     },
   ],
 
@@ -121,6 +126,6 @@ export const brainFog: ContentPage = {
     { label: "Sleep and insomnia", href: "/symptoms/sleep-insomnia" },
     { label: "Menopause fatigue", href: "/symptoms/menopause-fatigue" },
     { label: "Comprehensive testing", href: "/services#testing" },
-    { label: "All FAQs", href: "/faq" },
+    { label: "Hormone disruptors at home", href: "/resources/endocrine-disruptors" },
   ],
 };

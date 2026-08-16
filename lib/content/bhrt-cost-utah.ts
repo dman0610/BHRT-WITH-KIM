@@ -14,10 +14,10 @@ export const bhrtCostUtah: ContentPage = {
   slug: "bhrt-cost-utah",
   titleSegment: "What BHRT Costs in Utah",
   description:
-    "What bioidentical hormone therapy costs with Kim Yadon, FNP-C in Utah: $200 per visit, $1,500 for the comprehensive package, and what labs add.",
+    "What bioidentical hormone therapy costs with Kim Yadon, FNP-C in Utah: $200 per visit, $950 for the comprehensive package, and what labs add.",
   h1: "What Does Bioidentical Hormone Therapy Cost in Utah?",
   intro:
-    "At BHRT with Kim, a single visit is $200 and the comprehensive package is $1,500 for five visits over roughly twelve months. Laboratory testing and any medications are billed separately and are not included in either price. The first phone consultation is free.",
+    "At BHRT with Kim, a single visit is $200 and the comprehensive package is $950 for five visits over roughly twelve months. Laboratory testing and any medications are billed separately and are not included in either price. The first phone consultation is free.",
 
   sections: [
     {
@@ -29,7 +29,7 @@ export const bhrtCostUtah: ContentPage = {
       bullets: [
         "Free phone consultation — $0, about 15 minutes",
         "Initial consultation — $200, about 60 minutes",
-        "Comprehensive package — $1,500 for 5 visits, one every 3 months, including 2 nutrition and exercise coaching sessions and 2 mindset coaching sessions",
+        "Comprehensive package — $950 for 5 visits, one every 3 months, including 2 nutrition and exercise coaching sessions and 2 mindset coaching sessions",
         "Health and mindset coaching, added to a single visit — $75 per session",
       ],
     },
@@ -45,7 +45,7 @@ export const bhrtCostUtah: ContentPage = {
       heading: "Why does BHRT usually cost more than a regular office visit?",
       paragraphs: [
         "Hormone consultations tend to run longer and involve more testing than a standard primary care appointment, which is the main driver of the difference.",
-        "A first visit here is about an hour. That covers full history, current symptoms, and deciding what testing makes sense — rather than the ten to fifteen minutes a typical primary care slot allows. Comprehensive hormone panels also cost more than routine bloodwork, since they cover thyroid and adrenal function alongside sex hormones.",
+        "A first visit here is about an hour. That covers full history, current symptoms, and deciding what testing makes sense — rather than the ten to fifteen minutes a typical primary care slot allows. Comprehensive hormone panels also cost more than routine bloodwork, since they cover thyroid function alongside sex hormones.",
       ],
     },
     {
@@ -68,7 +68,7 @@ export const bhrtCostUtah: ContentPage = {
     {
       question: "How much is a BHRT consultation in Utah?",
       answer:
-        "At BHRT with Kim, a single visit is $200 and runs about 60 minutes. A comprehensive package covering five visits over roughly twelve months is $1,500 and includes four coaching sessions. A free 15-minute phone consultation is available first, at no cost and with no obligation. Medications and laboratory fees are separate from both options.",
+        "At BHRT with Kim, a single visit is $200 and runs about 60 minutes. A comprehensive package covering five visits over roughly twelve months is $950 and includes four coaching sessions. A free 15-minute phone consultation is available first, at no cost and with no obligation. Medications and laboratory fees are separate from both options.",
     },
     {
       question: "Are lab costs included in the price?",
@@ -83,7 +83,7 @@ export const bhrtCostUtah: ContentPage = {
     {
       question: "What is the difference between the per-visit and package pricing?",
       answer:
-        "Per-visit is $200 each time, suiting someone who wants to start without a longer commitment. The $1,500 comprehensive package covers five visits scheduled every three months, plus two nutrition and exercise coaching sessions and two mindset coaching sessions. The package works out lower per visit and matches the follow-up rhythm hormone care usually needs.",
+        "Per-visit is $200 each time, suiting someone who wants to start without a longer commitment. The $950 comprehensive package covers five visits scheduled every three months, plus two nutrition and exercise coaching sessions and two mindset coaching sessions. The package works out lower per visit and matches the follow-up rhythm hormone care usually needs.",
     },
     {
       question: "Do prices differ depending on where in Utah someone lives?",

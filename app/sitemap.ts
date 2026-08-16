@@ -9,9 +9,31 @@ import { ARTICLES } from "@/lib/articles";
  *
  * `priority` is a weak hint at best — don't over-tune it. Honest `lastModified`
  * matters more, and only if it's actually honest.
+ *
+ * ─────────────────────────────────────────────────────────────────────────
+ * NEVER USE `new Date()` HERE.
+ * ─────────────────────────────────────────────────────────────────────────
+ *
+ * This previously stamped every URL with the build time, which told Google all
+ * 39 pages changed on every deploy — including deploys that touched a single
+ * CSS class. A date that always moves is a signal search engines learn to
+ * discount, so the field ends up worth nothing precisely when you need it.
+ *
+ * Dates now come from the content itself: the clinician review date for
+ * reviewed pages, each article's own publication date, and a fixed constant
+ * for pages whose content is stable. Move CONTENT_UPDATED by hand when
+ * something on those pages actually changes.
+ *
+ * `npm run verify` fails the build if `new Date()` reappears in this file.
  */
+
+/** Bump by hand when static page copy genuinely changes. */
+const CONTENT_UPDATED = "2026-08-16";
+
 export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date();
+  const stable = new Date(`${CONTENT_UPDATED}T00:00:00Z`);
+  /* Symptom, guide and geo pages all carry Kim's review date. */
+  const reviewed = new Date(`${SITE.contentReviewedOn}T00:00:00Z`);
 
   const staticRoutes: Array<{
     path: string;
@@ -36,32 +58,38 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     ...staticRoutes.map(({ path, priority, changeFrequency }) => ({
       url: `${SITE.url}${path}`,
-      lastModified: now,
+      lastModified: stable,
       changeFrequency,
       priority,
     })),
     ...PAID_OFFERINGS.map((offering) => ({
       url: `${SITE.url}/book/${offering.slug}`,
-      lastModified: now,
+      lastModified: stable,
       changeFrequency: "monthly" as const,
       priority: 0.7,
     })),
     // Symptom pages carry the search volume; guides carry the booking intent.
     ...[...SYMPTOM_PAGES, ...GUIDE_PAGES].map((page) => ({
       url: `${SITE.url}/${page.slug}`,
-      lastModified: now,
+      lastModified: reviewed,
       changeFrequency: "monthly" as const,
       priority: 0.8,
     })),
     ...SERVICE_AREA_PAGES.map((page) => ({
       url: `${SITE.url}/${page.slug}`,
-      lastModified: now,
+      lastModified: reviewed,
       changeFrequency: "monthly" as const,
       priority: 0.7,
     })),
-    ...Object.keys(ARTICLES).map((slug) => ({
+    /*
+      Articles use the LATER of their publication date and Kim's review date —
+      she read and corrected them, which is a genuine modification, but a
+      pre-review article should not claim a date it did not earn.
+    */
+    ...Object.entries(ARTICLES).map(([slug, article]) => ({
       url: `${SITE.url}/resources/${slug}`,
-      lastModified: now,
+      lastModified:
+        new Date(article.date) > reviewed ? new Date(article.date) : reviewed,
       changeFrequency: "monthly" as const,
       priority: 0.6,
     })),

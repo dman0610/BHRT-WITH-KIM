@@ -29,7 +29,7 @@ Three rules, in priority order:
 | Domain | `bhrtwithkim.com` | Verified |
 | Provider name | **Kim Yadon** | Verified 2026-08-06 |
 | Post-nominal | **FNP-C** | Verified 2026-08-06 |
-| Legal business entity | — | **UNKNOWN** |
+| Legal business entity | **NAET with Kim LLC** | Verified 2026-08-12 — **not for publication.** See below |
 | Specialty | Bioidentical hormone replacement therapy (BHRT) for women in perimenopause and postmenopause | Verified |
 | Visit format | Virtual consultations | Verified |
 | Service area | Utah | Verified |
@@ -88,7 +88,10 @@ NAP (Name, Address, Phone) must match the Google Business Profile **character fo
 | City | **South Jordan** | Verified 2026-08-07 — **GBP proximity anchor only, not for publication as an address** |
 | State | Utah | Verified |
 | Service area line | `Serving patients in Utah` | Verified — [lib/constants.ts:630](../lib/constants.ts#L630) |
-| Business hours | — | **UNKNOWN** |
+| Business hours | **Monday–Friday, 9am–5pm** | Verified 2026-08-12 — **reachability, not appointment slots.** See below |
+| Insurance | **Cash pay only — not accepted** | Verified 2026-08-12 |
+| NPI | **1316718968** | Verified 2026-08-12 — public via NPPES |
+| Utah licence | **APRN #308855-4405** | Verified 2026-08-12 — public via Utah DOPL |
 
 ### Service area
 
@@ -218,7 +221,10 @@ Nine services, defined at [lib/constants.ts:45-127](../lib/constants.ts#L45-L127
 - **Medications and lab fees not included**
 
 **Option 2 — Comprehensive Package**
-- $1,500 · 5 visits, one every 3 months, BHRT-focused
+- **$950** · 5 visits, one every 3 months, BHRT-focused
+  - ⚠️ **Was $1,500 until 2026-08-16.** Kim caught the error herself: *"5 visits at $200 is $1000. The comprehensive package should be a better deal, but it's $1500."* The package was priced above buying the visits individually.
+  - À-la-carte value is $1,300 — 5 visits ($1,000) plus 4 coaching sessions ($300). At $950 that is a 27% discount, and it survives the 25% promo stack at $712.
+  - **`npm run verify` fails the build if `$1,500` reappears anywhere.** The figure lived in eight files; a stale one is a published price the practice does not honour.
 - Everything in Option 1, plus:
 - 2 personal coaching sessions (nutrition & exercise)
 - 2 mindset coaching sessions
@@ -337,17 +343,74 @@ This drives two decisions: symptom pages carry the search volume, and mobile LCP
 
 ---
 
+## Kim's answers — 2026-08-12
+
+Six long-standing unknowns closed in one reply. Detail on the three with consequences:
+
+### Hours are reachability, not availability
+
+Kim's words: *"These hours are not when I have appointments, but people can reach me Monday - Friday 9 am to 5 pm."*
+
+**Site copy must never present these as bookable slots.** Someone who books expecting a 4:30pm Friday visit because the site implied it has a bad first experience before paying anything — the same expectation-mismatch problem as the free consultation's 15 minutes. `/contact` states the caveat in prose; schema has no way to express it, so the prose is the safeguard.
+
+### NPI and licence — published on purpose
+
+- **NPI 1316718968** — public via the NPPES registry
+- **Utah APRN licence #308855-4405** — public via Utah DOPL
+
+Both are public records, so publishing exposes nothing private, and a checkable identifier is worth more to entity trust than any adjective. They also unblock health-directory listings, which have been waiting on this.
+
+⚠️ **APRN is the licence CATEGORY, not a post-nominal.** `Kim Yadon, FNP-C` remains the only authorized rendering. `npm run verify` fails the build if `Kim Yadon, APRN` ever appears.
+
+### The LLC is "NAET with Kim" — and that is fine
+
+Kim asked whether this causes problems. **No, provided the LLC name stays off the public site.**
+
+Google wants the name customers actually encounter, which is "BHRT with Kim". A GBP listing does not need to match the LLC. Publishing "NAET with Kim" would fracture the entity across directories and undo the NAP consistency work — two names for one practice is exactly what suppresses local ranking and AI citation confidence.
+
+So: **do not add `legalName` to schema, and do not surface it in any copy.** It becomes relevant in two places only — the CAN-SPAM footer when email launches, and the Lehi city licence she plans to switch to "BHRT with Kim".
+
+### Content review
+
+She read the resource articles on 2026-08-12 and 2026-08-15 and sent corrections that removed or rewrote several passages. **16 pages now carry `Reviewed by Kim Yadon, FNP-C`** — 5 articles, 10 symptom pages, the `/symptoms` hub — with `reviewedBy` → `#kim` in schema.
+
+`author` stays the practice. She reviewed; she did not write. Review and authorship are different claims and the markup keeps them different. The date lives in `SITE.contentReviewedOn` — **only move it when she has actually re-read.**
+
+---
+
+## Scope of practice — narrowed 2026-08-12
+
+Kim removed three things she does not currently offer:
+
+| Removed | Her reason |
+|---|---|
+| Adrenal assessment | "I need to learn more about adrenal health" |
+| Mold and Lyme testing | "I don't do that yet" |
+| Broad screening for underlying conditions | Removed from the prescription answer |
+
+**This reached much further than the two places she named.** The phrase "hormones, thyroid, and adrenal function, plus screening for underlying conditions" had been propagated into ~15 pages when the content engine was built — 37 occurrences of "adrenal", 16 of "underlying conditions". Fixing only the Services card and one FAQ would have left the site contradicting itself, with 50+ stale claims about a licensed provider's scope.
+
+**41 replacements across 18 files.** Everything now reads *"comprehensive testing across hormones and thyroid function."* The service id changed `thyroid-adrenal` → `thyroid`, which also required updating the quiz's `serviceWeights` keys — miss those and quiz results silently stop resolving.
+
+`npm run verify` now fails on any `adrenal`, `underlying conditions`, `mold` or `Lyme` claim in page copy. The `adrenal` entry in `lib/analytics.ts` is exempt — that is the health-vocabulary tripwire, not a claim.
+
+---
+
 ## Unknowns
 
-Blocking items live in [OPEN-QUESTIONS.md](OPEN-QUESTIONS.md). Summary of every gap named above:
+Blocking items live in [OPEN-QUESTIONS.md](OPEN-QUESTIONS.md). Most of this list closed on 2026-08-12.
 
-- Utah license number and NPI
-- Whether the four published credentials are the complete list
-- Years in practice
-- Legal business entity name
-- Business hours
-- Whether insurance is accepted
-- Google Business Profile ownership and access
-- Testimonial provenance
+**Answered:**
+- ✅ Utah licence number and NPI — published, see above
+- ✅ Credentials are complete — Kim confirmed all four, no additions
+- ✅ Legal business entity — NAET with Kim LLC, deliberately unpublished
+- ✅ Business hours — Mon–Fri 9am–5pm, reachability only
+- ✅ Insurance — cash pay only
+- ✅ Article review — done, 16 pages carry her name
+
+**Still open:**
+- Years in practice — never asked; low value, and absence costs nothing
+- Google Business Profile ownership and access — **now the largest remaining blocker.** Hours, insurance and the service-area configuration are all ready to go the moment access exists
+- Testimonial provenance — the four quotes stay unmarked as `Review` schema regardless
 
 Until answered, each is simply absent from the site. Absence is correct; approximation is not.

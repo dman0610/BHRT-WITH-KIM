@@ -4,6 +4,8 @@ import { SITE, PAID_OFFERINGS, OFFERINGS } from "@/lib/site";
 import BookingEmbed from "@/components/sections/BookingEmbed";
 import HowCareWorks from "@/components/sections/HowCareWorks";
 import ScrollAnimator from "@/components/layout/ScrollAnimator";
+import JsonLd from "@/components/seo/JsonLd";
+import { breadcrumbSchema, serviceSchema } from "@/lib/schema";
 
 export const metadata: Metadata = {
   title: "Book a Free 15-Minute Consultation",
@@ -15,6 +17,23 @@ export const metadata: Metadata = {
 export default function BookPage() {
   return (
     <>
+      {/*
+        The free consultation priced at 0 — an explicit zero is a stronger,
+        more quotable signal than omitting the price, and it is the practice's
+        primary CTA. /services carried Offer markup while the actual booking
+        pages carried none.
+      */}
+      <JsonLd
+        schema={[
+          serviceSchema({
+            name: OFFERINGS.freeConsult.label,
+            description: OFFERINGS.freeConsult.blurb,
+            price: 0,
+            path: "/book",
+          }),
+          breadcrumbSchema([{ name: "Book a Consultation", path: "/book" }]),
+        ]}
+      />
       <ScrollAnimator />
 
       {/* Hero */}

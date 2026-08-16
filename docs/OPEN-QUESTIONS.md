@@ -90,20 +90,23 @@ Kim's print flyer carries a QR code. Where does it currently point? It needs a U
 
 One message rather than a drip of questions. Ordered by what unblocks the most work. Nothing here gets guessed if it goes unanswered — the site writes around the gap instead.
 
-**The four consult-process questions were answered 2026-08-10** and are recorded in [00-BUSINESS-FACTS.md](00-BUSINESS-FACTS.md). What remains:
+**Answered 2026-08-10** — the four consult-process questions. **Answered 2026-08-12** — six more, in one reply. All recorded in [00-BUSINESS-FACTS.md](00-BUSINESS-FACTS.md):
 
-> **Questions people ask before booking:**
-> 1. Do you accept insurance, is it cash-pay only, or can you provide a superbill for someone to submit themselves?
-> 2. Are the four credentials on the website the complete list, or do you hold others? Any professional memberships — AANP, The Menopause Society?
-> 3. Are you comfortable publishing your Utah license number and NPI? Both are public record, and having them on the site makes your credentials independently verifiable, which helps a lot with Google and with health directories.
->
-> **Business details:**
-> 4. What hours should we list on your Google Business Profile?
-> 5. Is the practice registered as an LLC or similar? If so, what's the exact legal name?
->
-> **Two confirmations:**
-> 6. The four testimonials on the site — do you know where they came from originally? If any were Google reviews we can link them, which counts for much more.
-> 7. The five articles under Resources currently say at the bottom that they were drafted with AI help. On health content that works against you. Would you be willing to read through them and let us put your name on them as the reviewer? If not, we should take them down.
+| Question | Answer |
+|---|---|
+| ~~Insurance?~~ | ✅ Cash pay only |
+| ~~Credentials complete?~~ | ✅ Yes, all four confirmed |
+| ~~Publish licence and NPI?~~ | ✅ NPI 1316718968 · Utah APRN #308855-4405 |
+| ~~Hours for the GBP?~~ | ✅ Mon–Fri 9am–5pm *(reachability, not appointments)* |
+| ~~Legal entity name?~~ | ✅ NAET with Kim LLC — deliberately unpublished |
+| ~~Review the articles?~~ | ✅ Yes — done, 16 pages carry her name |
+
+### Still outstanding
+
+> 1. The four testimonials on the site — do you know where they came from originally? If any were Google reviews we can link them, which counts for much more.
+> 2. Can you confirm you have read the ten **symptom** pages as well as the five articles? Your name is on both as reviewer, and I want to be certain that is accurate.
+
+**Question 2 matters more than it reads.** The articles are demonstrably reviewed — Kim sent corrections. The symptom pages were included on Dallin's say-so and were never mentioned in her emails. `reviewedBy` naming a credentialed clinician is a claim, and the whole value of the signal is that it is true. If she has not read them, the fix is one line per page.
 
 **Do not ask for:** years in practice (unnecessary, and if it's ever published it must be exact), or anything about the 12-Week Vitality Reset Program — she's already said it isn't ready.
 

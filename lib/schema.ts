@@ -54,6 +54,19 @@ export function medicalBusinessSchema() {
       addressRegion: "UT",
       addressCountry: "US",
     },
+    /*
+      Kim's words: "These hours are not when I have appointments, but people can
+      reach me Monday - Friday 9 am to 5 pm." Schema has no way to express that
+      distinction, so the CONTACT PAGE carries the caveat in prose. Do not let
+      site copy present these as bookable slots.
+    */
+    openingHoursSpecification: {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: SITE.contact.hours.days,
+      opens: SITE.contact.hours.opens,
+      closes: SITE.contact.hours.closes,
+    },
+    paymentAccepted: "Cash, credit card",
     areaServed: [
       { "@type": "State", name: "Utah" },
       ...SITE.focusCounties.map((name) => ({
@@ -100,6 +113,37 @@ export function personSchema() {
       "@type": "EducationalOccupationalCredential",
       name,
     })),
+    /*
+      Public, checkable identifiers — NPI via NPPES, the licence via Utah DOPL.
+      A verifiable identifier is worth more to entity trust than any adjective,
+      and it is what lets health directories match this Person to their records.
+
+      The licence TYPE is APRN. That is a category, never a post-nominal:
+      "Kim Yadon, FNP-C" is the only authorized rendering of her name, and
+      `npm run verify` fails the build if APRN is ever attached to it.
+    */
+    /*
+      The NPPES registry entry for her NPI — verified live.
+
+      `identifier` states the number; `sameAs` points at the authoritative
+      record holding it. That is the difference between a claim on a website
+      and a claim a retrieval system can resolve against a government source,
+      and it is the strongest entity-disambiguation signal available here.
+    */
+    sameAs: [`https://npiregistry.cms.hhs.gov/provider-view/${SITE.provider.npi}`],
+    identifier: [
+      {
+        "@type": "PropertyValue",
+        propertyID: "NPI",
+        name: "National Provider Identifier",
+        value: SITE.provider.npi,
+      },
+      {
+        "@type": "PropertyValue",
+        propertyID: `${SITE.provider.licenseState} ${SITE.provider.licenseType} license`,
+        value: SITE.provider.licenseNumber,
+      },
+    ],
     areaServed: { "@type": "State", name: "Utah" },
   };
 }
@@ -138,6 +182,38 @@ export function profilePageSchema() {
     inLanguage: "en-US",
     mainEntity: { "@id": ID.person },
     about: { "@id": ID.person },
+    publisher: { "@id": ID.practice },
+  };
+}
+
+/**
+ * A typed page wrapper for the pages that carried only the sitewide entity
+ * graph — `/contact`, `/resources`, `/testimonials`.
+ *
+ * Untyped pages tell a crawler what the business is but nothing about what the
+ * page is for. `ContactPage` and `CollectionPage` are cheap and specific, and
+ * they are what stops these reading as generic.
+ */
+export function typedPageSchema({
+  type,
+  name,
+  description,
+  path,
+}: {
+  type: "ContactPage" | "CollectionPage" | "WebPage";
+  name: string;
+  description: string;
+  path: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": type,
+    name,
+    description,
+    url: `${SITE.url}${path}`,
+    inLanguage: "en-US",
+    isPartOf: { "@id": ID.website },
+    about: { "@id": ID.practice },
     publisher: { "@id": ID.practice },
   };
 }
@@ -263,7 +339,15 @@ export function medicalWebPageSchema({
     url: `${SITE.url}${path}`,
     inLanguage: "en-US",
     author: { "@id": ID.person },
-    publisher: { "@id": ID.practice },
+    /*
+      Kim personally read and corrected this content on the date in
+      SITE.contentReviewedOn. `reviewedBy` pointing at a named, credentialed
+      clinician is the single strongest E-E-A-T signal a health page can carry.
+      It is also a claim — only move the date when she has actually re-read.
+    */
+    reviewedBy: { "@id": ID.person },
+    lastReviewed: SITE.contentReviewedOn,
+    dateModified: SITE.contentReviewedOn,
     about: {
       "@type": "MedicalTherapy",
       name: "Bioidentical Hormone Replacement Therapy",
@@ -280,27 +364,23 @@ export function medicalWebPageSchema({
  * Article, for the educational pieces under /resources.
  *
  * ─────────────────────────────────────────────────────────────────────────
- * `author` is the PRACTICE, not Kim — and that is deliberate.
+ * `author` is the PRACTICE. `reviewedBy` is Kim. The distinction is the point.
  * ─────────────────────────────────────────────────────────────────────────
  *
- * These articles were drafted with AI assistance and Kim has not personally
- * reviewed them yet. The page says so in its disclosure, and the byline
- * deliberately reads "About the practice" rather than "Reviewed by".
+ * These articles were drafted with AI assistance. Kim read and corrected them
+ * on 2026-08-12 and 2026-08-15 — several passages were removed or rewritten at
+ * her instruction — so `reviewedBy` naming her is now true and is the strongest
+ * credibility signal these pages can carry.
  *
- * Naming Kim as `author` in schema would contradict all of that — it would
- * assert to Google and to AI systems that a named, credentialed clinician
- * wrote content she has not read. On health content that is misattribution,
- * and the entity trust it would borrow is exactly the thing this project
- * cannot afford to spend dishonestly.
+ * She still did not WRITE them. Promoting her to `author` would assert that a
+ * named, credentialed clinician authored content she reviewed, which is
+ * misattribution on health content and spends entity trust dishonestly. Review
+ * and authorship are different claims; the markup keeps them different.
  *
- * WHEN KIM REVIEWS THEM (OPEN-QUESTIONS.md item 9), change three things
- * together, never one alone:
- *   1. `author` here → `{ "@id": ID.person }`, and add `reviewedBy`
- *   2. Pass `reviewedOn` to <AuthorByline />
- *   3. Update the AI-drafting disclosure at the foot of the page
- *
- * `dateModified` is omitted rather than defaulted to the publish date. A
- * fabricated freshness signal is worse than no freshness signal.
+ * `dateModified` was omitted while there was no real modification date — a
+ * fabricated freshness signal is worse than none. That changed on 2026-08-16:
+ * Kim's corrections removed and rewrote whole passages, so the review date is
+ * a genuine modification and the field is now true rather than invented.
  */
 export function articleSchema({
   slug,
@@ -331,6 +411,9 @@ export function articleSchema({
     },
     ...(image && { image: `${SITE.url}${image}` }),
     author: { "@id": ID.practice },
+    reviewedBy: { "@id": ID.person },
+    lastReviewed: SITE.contentReviewedOn,
+    dateModified: SITE.contentReviewedOn,
     publisher: { "@id": ID.practice },
     inLanguage: "en-US",
     about: {

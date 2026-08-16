@@ -75,7 +75,7 @@ export const jointPain: ContentPage = {
       heading: "What does an evaluation cover?",
       paragraphs: [
         "It covers the alternatives as well as the hormonal picture, because ruling things out is most of the value here.",
-        "Kim Yadon, FNP-C works through history and comprehensive testing across hormones, thyroid, and adrenal function, plus screening for underlying conditions — thyroid dysfunction and vitamin D deficiency both cause joint and muscle aches and both are straightforward to test for. Where the picture suggests inflammatory arthritis, the appropriate step is assessment by a provider who diagnoses and treats it, and that referral is the right outcome rather than a failure of the consultation.",
+        "Kim Yadon, FNP-C works through history and comprehensive testing across hormones and thyroid function — thyroid dysfunction and vitamin D deficiency both cause joint and muscle aches and both are straightforward to test for. Where the picture suggests inflammatory arthritis, the appropriate step is assessment by a provider who diagnoses and treats it, and that referral is the right outcome rather than a failure of the consultation.",
         "Strength training also matters here, since muscle supporting a joint reduces the load on it. That is one of the few factors in this list that responds directly to a specific action.",
       ],
     },

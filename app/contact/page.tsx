@@ -3,8 +3,10 @@ import Link from "next/link";
 import ContactForm from "@/components/sections/ContactForm";
 import { Button } from "@/components/ui/button";
 import { SITE } from "@/lib/site";
-import { Mail, Phone, MapPin } from "lucide-react";
+import { Mail, Phone, MapPin, Clock } from "lucide-react";
 import ScrollAnimator from "@/components/layout/ScrollAnimator";
+import JsonLd from "@/components/seo/JsonLd";
+import { breadcrumbSchema, typedPageSchema } from "@/lib/schema";
 
 export const metadata: Metadata = {
   title: "Contact & Book a Virtual Visit",
@@ -16,6 +18,18 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <>
+      <JsonLd
+        schema={[
+          typedPageSchema({
+            type: "ContactPage",
+            name: "Contact BHRT with Kim",
+            description:
+              "Contact Kim Yadon, FNP-C about bioidentical hormone therapy in Utah, or book a free 15-minute phone consultation.",
+            path: "/contact",
+          }),
+          breadcrumbSchema([{ name: "Contact", path: "/contact" }]),
+        ]}
+      />
       <ScrollAnimator />
 
       {/* Hero Banner */}
@@ -80,6 +94,22 @@ export default function ContactPage() {
                       <p className="text-sm font-medium text-bark">Location</p>
                       <p className="text-clay-text">
                         {SITE.contact.serviceAreaLine}
+                      </p>
+                    </div>
+                  </div>
+                  {/*
+                    The caveat is not optional. Kim was explicit that these are
+                    reachability hours, not appointment slots — someone who
+                    books expecting a 4:30pm Friday visit because the site
+                    implied it has a bad first experience before paying.
+                  */}
+                  <div className="flex items-start gap-3">
+                    <Clock className="size-5 text-forest mt-0.5 shrink-0" />
+                    <div>
+                      <p className="text-sm font-medium text-bark">Hours</p>
+                      <p className="text-clay-text">{SITE.contact.hours.label}</p>
+                      <p className="mt-0.5 text-sm text-clay-text">
+                        {SITE.contact.hours.note}
                       </p>
                     </div>
                   </div>

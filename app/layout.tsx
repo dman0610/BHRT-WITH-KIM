@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Source_Sans_3 } from "next/font/google";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
@@ -36,6 +36,15 @@ const HOME_TITLE = "Bioidentical Hormone Therapy in Utah | BHRT with Kim";
 const HOME_DESCRIPTION =
   "Kim Yadon, FNP-C provides bioidentical hormone replacement therapy by " +
   "virtual visit to women across Utah. Free phone consultation. Pricing published.";
+
+/**
+ * Separate from `metadata` — Next requires viewport and themeColor in their
+ * own export. `themeColor` tints the browser chrome on mobile, which is the
+ * first impression for most of this audience.
+ */
+export const viewport: Viewport = {
+  themeColor: "#2D5A3D", // forest
+};
 
 export const metadata: Metadata = {
   /**

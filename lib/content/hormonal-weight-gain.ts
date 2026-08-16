@@ -66,7 +66,7 @@ export const hormonalWeightGain: ContentPage = {
       heading: "What does an evaluation cover?",
       paragraphs: [
         "An evaluation looks at the contributing factors rather than treating weight as a single problem with a single cause.",
-        "Kim Yadon, FNP-C works through history and comprehensive testing — hormones, thyroid, and adrenal function, plus screening for underlying conditions — and addresses foundations including sleep, nutrition, movement, and stress. Strength training in particular matters for the muscle-mass component, which is one of the few factors here that responds directly to a specific intervention.",
+        "Kim Yadon, FNP-C works through history and comprehensive testing across hormones and thyroid function — and addresses foundations including sleep, nutrition, movement, and stress. Strength training in particular matters for the muscle-mass component, which is one of the few factors here that responds directly to a specific intervention.",
       ],
     },
   ],
@@ -100,7 +100,7 @@ export const hormonalWeightGain: ContentPage = {
     {
       question: "What does a first consultation cost?",
       answer:
-        "The introductory phone consultation with Kim Yadon, FNP-C is free and runs about 15 minutes. A full initial consultation is $200 and about 60 minutes. A comprehensive package covering five visits over roughly a year is $1,500. Medications and laboratory fees are billed separately and are not included in either option.",
+        "The introductory phone consultation with Kim Yadon, FNP-C is free and runs about 15 minutes. A full initial consultation is $200 and about 60 minutes. A comprehensive package covering five visits over roughly a year is $950. Medications and laboratory fees are billed separately and are not included in either option.",
     },
   ],
 
@@ -125,6 +125,6 @@ export const hormonalWeightGain: ContentPage = {
     { label: "Sleep and insomnia", href: "/symptoms/sleep-insomnia" },
     { label: "Nutrition & hydration", href: "/services#nutrition" },
     { label: "Exercise & movement", href: "/services#exercise" },
-    { label: "All FAQs", href: "/faq" },
+    { label: "Eating for hormonal balance", href: "/resources/anti-inflammatory-eating" },
   ],
 };

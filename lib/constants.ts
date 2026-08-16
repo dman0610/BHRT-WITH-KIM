@@ -131,11 +131,12 @@ export const SERVICES = [
     featured: false,
   },
   {
-    id: "thyroid-adrenal",
-    title: "Thyroid & Adrenal Health",
-    shortTitle: "Thyroid & Adrenal",
+    id: "thyroid",
+    title: "Thyroid Assessment",
+    shortTitle: "Thyroid",
     description:
-      "Deep functional testing and assessment of thyroid and adrenal function — two systems that profoundly impact energy, weight, mood, and hormonal balance.",
+      // Kim 2026-08-12: adrenal removed — "I need to learn more about adrenal health."
+      "Assessment of thyroid function — a system that profoundly impacts energy, weight, mood, and hormonal balance, and one whose symptoms overlap heavily with perimenopause.",
     icon: "activity",
     featured: false,
   },
@@ -144,7 +145,8 @@ export const SERVICES = [
     title: "Comprehensive Testing",
     shortTitle: "Testing",
     description:
-      "Thorough diagnostic work that goes beyond standard panels — ruling out mold exposure, Lyme disease, and other underlying conditions that mimic or worsen hormonal symptoms.",
+      // Kim 2026-08-12: mold and Lyme removed — "I don't do that yet."
+      "Comprehensive hormone and thyroid panels, so decisions rest on what your levels actually show rather than on symptoms alone.",
     icon: "microscope",
     featured: false,
   },
@@ -253,7 +255,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
         label: "I rarely get more than 5 hours",
         value: "severe",
         score: 4,
-        serviceWeights: { sleep: 4, bhrt: 3, "thyroid-adrenal": 2 },
+        serviceWeights: { sleep: 4, bhrt: 3, "thyroid": 2 },
         callout: "Chronically short sleep isn't just fatigue — it disrupts cortisol, thyroid function, and your body's ability to regulate itself. This pattern deserves real attention.",
       },
     ],
@@ -273,25 +275,25 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
         label: "I crash in the afternoon",
         value: "afternoon-crash",
         score: 2,
-        serviceWeights: { nutrition: 3, "thyroid-adrenal": 2, exercise: 1 },
+        serviceWeights: { nutrition: 3, "thyroid": 2, exercise: 1 },
       },
       {
         label: "I need caffeine just to function",
         value: "caffeine-dependent",
         score: 3,
         serviceWeights: {
-          "thyroid-adrenal": 3,
+          "thyroid": 3,
           nutrition: 2,
           sleep: 2,
         },
-        callout: "Persistent reliance on caffeine is often worth evaluating alongside thyroid and adrenal function, which are part of a comprehensive hormone workup.",
+        callout: "Persistent reliance on caffeine is often worth evaluating alongside thyroid function, which is part of a comprehensive hormone workup.",
       },
       {
         label: "I'm exhausted no matter what I do",
         value: "exhausted",
         score: 4,
         serviceWeights: {
-          "thyroid-adrenal": 4,
+          "thyroid": 4,
           bhrt: 3,
           testing: 2,
         },
@@ -320,7 +322,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
         label: "Brain fog — I forget words and lose focus",
         value: "brain-fog",
         score: 3,
-        serviceWeights: { bhrt: 3, nutrition: 2, "thyroid-adrenal": 2 },
+        serviceWeights: { bhrt: 3, nutrition: 2, "thyroid": 2 },
         callout: "Cognitive changes like word-finding difficulty are commonly reported during perimenopause, and estrogen's role in cognition is an active area of research.",
       },
       {
@@ -354,7 +356,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
         value: "weight",
         score: 3,
         serviceWeights: {
-          "thyroid-adrenal": 3,
+          "thyroid": 3,
           nutrition: 3,
           testing: 2,
         },
@@ -430,7 +432,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
         label: "Comprehensive testing to find what's really going on",
         value: "testing",
         score: 0,
-        serviceWeights: { testing: 5, "thyroid-adrenal": 3 },
+        serviceWeights: { testing: 5, "thyroid": 3 },
       },
       {
         label: "All of the above — I want a full plan",

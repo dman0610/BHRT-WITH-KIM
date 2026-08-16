@@ -43,14 +43,14 @@ export const menopauseFatigue: ContentPage = {
       heading: "How is thyroid function connected?",
       paragraphs: [
         "Thyroid conditions become more common with age and share several symptoms with perimenopause, which makes them easy to mistake for one another.",
-        "Fatigue, weight change, temperature sensitivity, hair changes, and low mood appear on both lists. Because the overlap is so substantial, thyroid assessment is a routine part of a comprehensive hormone workup rather than an optional extra. Kim's stated approach includes thyroid and adrenal function alongside sex hormones for this reason.",
+        "Fatigue, weight change, temperature sensitivity, hair changes, and low mood appear on both lists. Because the overlap is so substantial, thyroid assessment is a routine part of a comprehensive hormone workup rather than an optional extra. Kim's stated approach includes thyroid function alongside sex hormones for this reason.",
       ],
     },
     {
       heading: "What does an evaluation actually look at?",
       paragraphs: [
         "A hormone evaluation for fatigue starts with history and comprehensive testing rather than with a prescription.",
-        "That means going through the pattern of the tiredness — whether it is present on waking, builds through the day, or follows poor nights — alongside sleep quality, stress load, nutrition, and movement. Testing covers hormones, thyroid, and adrenal function, plus screening for underlying conditions. Where bioidentical hormone therapy is indicated by that picture, it is one part of a plan rather than the whole of it.",
+        "That means going through the pattern of the tiredness — whether it is present on waking, builds through the day, or follows poor nights — alongside sleep quality, stress load, nutrition, and movement. Testing covers hormones and thyroid function. Where bioidentical hormone therapy is indicated by that picture, it is one part of a plan rather than the whole of it.",
         "Whether hormone therapy is appropriate for any individual is a clinical decision made after evaluation. Some medical histories make it unsuitable.",
       ],
     },
@@ -77,7 +77,7 @@ export const menopauseFatigue: ContentPage = {
     {
       question: "What tests are typically involved?",
       answer:
-        "A comprehensive hormone workup generally covers sex hormones, thyroid function, and adrenal function, plus screening for underlying conditions that produce similar symptoms. Exactly which panels are ordered depends on history and presentation. Testing runs through LabCorp and is billed separately by the laboratory; costs vary by panel.",
+        "A comprehensive hormone workup generally covers sex hormones and thyroid function that produce similar symptoms. Exactly which panels are ordered depends on history and presentation. Testing runs through LabCorp and is billed separately by the laboratory; costs vary by panel.",
     },
     {
       question: "Could thyroid problems be mistaken for menopause?",
@@ -115,8 +115,8 @@ export const menopauseFatigue: ContentPage = {
 
   related: [
     { label: "Sleep and insomnia", href: "/symptoms/sleep-insomnia" },
-    { label: "Thyroid & adrenal health", href: "/services#thyroid-adrenal" },
+    { label: "Thyroid assessment", href: "/services#thyroid" },
     { label: "Comprehensive testing", href: "/services#testing" },
-    { label: "All FAQs", href: "/faq" },
+    { label: "Joint pain and stiffness", href: "/symptoms/joint-pain" },
   ],
 };

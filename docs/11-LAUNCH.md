@@ -41,20 +41,48 @@ Nothing else in this file works until the code is live. Analytics has nothing to
 Do this the same day, before publicising anything. A near-zero baseline is a *good* baseline — it makes the delta unambiguous. Skipping it makes every later result arguable.
 
 - [ ] Google Search Console — add the property, verify via the Vercel DNS you already control
-- [ ] Submit `https://bhrtwithkim.com/sitemap.xml` (35 URLs)
+- [ ] Submit `https://bhrtwithkim.com/sitemap.xml` (39 URLs)
 - [ ] Record indexed page count (expect ~0)
 - [ ] Record impressions and clicks (expect ~0 — **write it down anyway**)
 - [ ] Record current Google review count and GBP views/searches/actions
 - [ ] Run the five AI test prompts from [04-AI-VISIBILITY.md](04-AI-VISIBILITY.md) and paste the answers verbatim into a dated note
 - [ ] Confirm Vercel Analytics is receiving pageviews
 
-The AI prompt baseline is the one people skip and later regret. It is the only evidence of the before-state for the entity-visibility work, and it cannot be reconstructed after the fact.
+### Why this one is genuinely irreversible
+
+Everything else on this list can be done later at no cost. **This cannot**, and the reason is specific rather than general good practice.
+
+**Search Console only shows data from the day you verify.** It does not backfill. Verify in November and the first data point is November — every impression, every query, every indexing event before that is gone permanently. Since Search Console is the only place that shows *what people searched before clicking*, and that is what tells you which of the 39 pages to invest in next, a late start costs months of the single most useful signal available.
+
+**The AI prompts cannot be recovered at all.** Ask ChatGPT, Gemini, Perplexity and Claude:
+
+> *"Who provides bioidentical hormone therapy in Utah?"*
+> *"Where can I get BHRT near Salt Lake City?"*
+> *"What does bioidentical hormone therapy cost in Utah?"*
+> *"How do I find a hormone provider who does virtual visits?"*
+> *"Is there a nurse practitioner in Utah who specialises in perimenopause?"*
+
+Paste the answers **verbatim**, with the date and which model. Today they will almost certainly not mention Kim. That "no" is the entire point — it is the only proof the entity work moved anything, and there is no archive to reconstruct it from. These systems change weekly; the answer you get in three months tells you nothing without today's for comparison.
+
+Ten minutes now buys a before-and-after you cannot otherwise ever have.
 
 ---
 
 ## Step 3 — Google Business Profile
 
-The highest-leverage local work, and independent of everything else. Full rationale in [08-LOCAL-GBP.md](08-LOCAL-GBP.md).
+**This is now the largest remaining lever, and it is worth being precise about why.**
+
+The website competes for people *typing a search*. The Google Business Profile competes for the map pack — the three results with stars and a Call button that sit above every blue link on a phone. For "hormone doctor near me", "BHRT South Jordan", "menopause specialist Utah", **the map pack is most of the visible screen**, and no amount of on-page work reaches it. It is a separate ranking system with separate inputs.
+
+Three things make it the biggest lever available right now:
+
+1. **It is the only channel the site cannot influence.** Everything else in this project — 39 pages, schema, the entity graph — feeds organic and AI results. None of it feeds the map pack. That runs on the listing's completeness, proximity to the searcher, and reviews.
+2. **Everything it needs is already built and waiting.** Hours (Mon–Fri 9–5), insurance (cash pay), the service-area configuration, the canonical description, the NAP that matches the site character-for-character. It has been blocked on access, not on work.
+3. **It is where reviews live** — and real Google reviews are what replace the four unattributed testimonials as the trust signal. Reviews feed the map pack, appear in AI answers about local providers, and are the one asset a competitor cannot copy.
+
+A complete listing with ten genuine reviews will out-perform the entire on-site build for "near me" queries in Salt Lake County. Not because the site is weak, but because those queries are answered by a different system.
+
+Full procedure in [08-LOCAL-GBP.md](08-LOCAL-GBP.md).
 
 - [ ] Confirm ownership of the existing listing
 - [ ] **Hide the street address; enable service-area mode.** Kim works from home. Hiding costs no ranking — Google still uses the registered address for proximity — and a public home address on a service-area business is one of the most-reported suspension triggers.

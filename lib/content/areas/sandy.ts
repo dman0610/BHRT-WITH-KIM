@@ -64,7 +64,7 @@ export const sandy: GeoPage = {
     {
       heading: "What does it cost?",
       paragraphs: [
-        "The introductory phone consultation is free. A full initial consultation is $200 for about 60 minutes, and a comprehensive package covering five visits over roughly a year is $1,500.",
+        "The introductory phone consultation is free. A full initial consultation is $200 for about 60 minutes, and a comprehensive package covering five visits over roughly a year is $950.",
         "Health and mindset coaching is available as an add-on at $75 per session. Medications and lab fees are not included in any option.",
       ],
     },
@@ -89,7 +89,7 @@ export const sandy: GeoPage = {
     {
       question: "Is thyroid function part of a hormone evaluation?",
       answer:
-        "Thyroid and adrenal assessment is a standard part of a comprehensive workup here, alongside sex hormones and screening for underlying conditions. Thyroid dysfunction shares several symptoms with perimenopause, including fatigue and temperature sensitivity, which makes evaluating both together more informative than either alone.",
+        "Yes. Thyroid assessment is a standard part of a comprehensive workup here, alongside sex hormones, rather than an optional extra. Thyroid dysfunction shares several symptoms with perimenopause, including fatigue, weight change and temperature sensitivity, which makes evaluating both together considerably more informative than looking at either one alone.",
     },
     {
       question: "How long is the wait between the first call and treatment?",
@@ -120,6 +120,6 @@ export const sandy: GeoPage = {
     { label: "Weight changes around menopause", href: "/symptoms/hormonal-weight-gain" },
     { label: "Hot flashes and night sweats", href: "/symptoms/hot-flashes-night-sweats" },
     { label: "Common questions about BHRT", href: "/faq" },
-    { label: "All service areas", href: "/service-areas" },
+    { label: "BHRT in Salt Lake City", href: "/service-areas/salt-lake-city" },
   ],
 };

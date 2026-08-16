@@ -4,6 +4,8 @@ import TestimonialCard from "@/components/sections/TestimonialCard";
 import CTASection from "@/components/sections/CTASection";
 import ScrollAnimator from "@/components/layout/ScrollAnimator";
 import { FernCurl } from "@/components/ui/BotanicalDecor";
+import JsonLd from "@/components/seo/JsonLd";
+import { breadcrumbSchema } from "@/lib/schema";
 
 export const metadata: Metadata = {
   title: "Client Experiences",
@@ -17,6 +19,15 @@ export const metadata: Metadata = {
 export default function TestimonialsPage() {
   return (
     <>
+      {/*
+        Breadcrumb ONLY. No Review or AggregateRating markup, ever — these
+        quotes have no verifiable source or date, and self-serving review
+        schema is a manual-action risk. `npm run verify` fails the build if
+        either type appears. See docs/03-SEO-TECHNICAL.md.
+      */}
+      <JsonLd
+        schema={breadcrumbSchema([{ name: "Client Experiences", path: "/testimonials" }])}
+      />
       <ScrollAnimator />
 
       {/* Hero Banner */}

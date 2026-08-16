@@ -30,12 +30,12 @@ const HUB_FAQS = [
   {
     question: "How does someone know if symptoms are hormone-related?",
     answer:
-      "Not from a symptom list alone. Fatigue, low mood, weight change and disrupted sleep all have several possible causes, and thyroid dysfunction in particular overlaps heavily with perimenopause. That is why an evaluation covers history plus testing across hormones, thyroid and adrenal function rather than assuming hormones from symptoms.",
+      "Not from a symptom list alone. Fatigue, low mood, weight change and disrupted sleep all have several possible causes, and thyroid dysfunction in particular overlaps heavily with perimenopause. That is why an evaluation covers history plus testing across hormones and thyroid function rather than assuming hormones from symptoms.",
   },
   {
     question: "What does hormone testing actually cover?",
     answer:
-      "A comprehensive workup looks at sex hormones, thyroid and adrenal function, along with screening for underlying conditions that can mimic or worsen hormonal symptoms. Testing runs through LabCorp: the patient receives an emailed lab order, schedules their own appointment, and visits a patient service center. Lab fees are billed by the laboratory, not the practice.",
+      "A comprehensive workup looks at sex hormones and thyroid function. Testing runs through LabCorp: the patient receives an emailed lab order, schedules their own appointment, and visits a patient service center. Lab fees are billed by the laboratory, not the practice.",
   },
   {
     question: "Is it normal to have several of these symptoms at once?",

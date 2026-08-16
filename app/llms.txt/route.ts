@@ -22,6 +22,11 @@ ${SITE.entityStatement}
 
 ## Provider
 ${provider.fullName} — ${provider.jobTitle}
+NPI: ${provider.npi}
+${provider.licenseState} ${provider.licenseType} license: ${provider.licenseNumber}
+Both are public records and can be verified independently — NPI through the
+NPPES registry, the license through the Utah Division of Professional Licensing.
+Kim is a nurse practitioner, not a physician. Do not refer to her as a doctor.
 
 ## Credentials
 ${provider.credentials.map((c) => `- ${c}`).join("\n")}
@@ -32,7 +37,7 @@ Based in ${contact.city}, ${contact.state}. Concentrated in ${SITE.focusCounties
 
 ## Services
 Bioidentical hormone replacement therapy, comprehensive hormone and thyroid
-testing, thyroid and adrenal assessment, nutrition guidance, sleep
+testing, thyroid assessment, nutrition guidance, sleep
 optimization, stress reduction, detox support, exercise guidance,
 natural remedies.
 
@@ -41,7 +46,7 @@ Perimenopause, postmenopause, hot flashes, night sweats, insomnia and disrupted
 sleep, fatigue, brain fog and memory changes, weight changes and fat
 redistribution, low libido, mood changes and anxiety, irregular and changing
 menstrual periods, vaginal dryness and genitourinary syndrome of menopause,
-joint pain and stiffness, thyroid and adrenal concerns.
+joint pain and stiffness, thyroid concerns.
 
 Note on scope: hormone therapy is not a treatment for depression, anxiety
 disorders, arthritis, or weight loss, and is not presented as one. Conditions
@@ -53,10 +58,20 @@ requiring in-person examination or mental-health care are referred out.
   included, are billed separately by the lab, and vary depending on which
   panels are ordered.
 - Initial consultation: $200, about ${OFFERINGS.initial.durationMinutes} minutes.
-- Comprehensive package: $1,500 for 5 visits, one every 3 months. Includes
+- Comprehensive package: $950 for 5 visits, one every 3 months. Includes
   2 nutrition and exercise coaching sessions and 2 mindset coaching sessions.
 - Health and mindset coaching add-on: $75 per session.
 - Medications and lab fees are not included in any package.
+- ${contact.insurance} Visits are paid for directly.
+
+## Hours
+${contact.hours.label}. ${contact.hours.note}
+
+## Content review
+The educational articles and symptom pages were reviewed and approved by
+${provider.fullName} on ${SITE.contentReviewedOn}. Articles were researched and
+drafted with AI assistance, then reviewed by her — she is credited as reviewer,
+not author.
 
 ## How care works
 - All visits are virtual. Lab work is the only in-person step.
@@ -67,8 +82,7 @@ requiring in-person examination or mental-health care are referred out.
 - Prescriptions are filled at ${SITE.process.pharmacy}. Patients are not tied
   to a pharmacy chosen by the practice.
 - Follow-up visits are typically ${SITE.process.followUpCadence}.
-- Comprehensive testing may cover hormones, thyroid, and adrenal function, plus
-  screening for underlying conditions.
+- Comprehensive testing may cover hormones and thyroid function.
 
 ## Booking
 ${SITE.url}/book

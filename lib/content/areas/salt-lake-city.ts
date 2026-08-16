@@ -48,7 +48,7 @@ export const saltLakeCity: GeoPage = {
       heading: "Can someone keep their existing primary care doctor?",
       paragraphs: [
         "Yes, and most people should.",
-        "Hormone care through this practice is focused rather than comprehensive — it addresses hormone, thyroid, and adrenal concerns and the lifestyle factors around them. It is not a replacement for a primary care relationship, for gynecological care, or for the screening that goes with both. Patients commonly keep the clinicians they already have and add a provider who works specifically in this area. Sharing lab results and treatment details with an existing physician is straightforward and generally a good idea.",
+        "Hormone care through this practice is focused rather than comprehensive — it addresses hormone and thyroid concerns and the lifestyle factors around them. It is not a replacement for a primary care relationship, for gynecological care, or for the screening that goes with both. Patients commonly keep the clinicians they already have and add a provider who works specifically in this area. Sharing lab results and treatment details with an existing physician is straightforward and generally a good idea.",
       ],
     },
     {
@@ -61,7 +61,7 @@ export const saltLakeCity: GeoPage = {
     {
       heading: "What does it cost?",
       paragraphs: [
-        "The introductory phone consultation is free and runs about 15 minutes. A full initial consultation is $200 for about 60 minutes, and a comprehensive package covering five visits over roughly a year is $1,500.",
+        "The introductory phone consultation is free and runs about 15 minutes. A full initial consultation is $200 for about 60 minutes, and a comprehensive package covering five visits over roughly a year is $950.",
         "Coaching sessions are $75 each as an add-on. Medications and lab fees are not included in any option. Published pricing is deliberate — cost is the most common question before booking, and quoting it only after a consultation makes comparison harder than it needs to be.",
       ],
     },
@@ -76,12 +76,12 @@ export const saltLakeCity: GeoPage = {
     {
       question: "Can a virtual provider order the same lab tests?",
       answer:
-        "Yes. Lab orders go through LabCorp, and the patient schedules the draw at a patient service center of their choosing. The testing itself is identical to what an in-person clinician would order — hormone panels, thyroid, adrenal function, and screening for underlying conditions where indicated.",
+        "Yes. Lab orders go through LabCorp, and the patient schedules the draw at a patient service center of their choosing. The testing itself is identical to what an in-person clinician would order — hormone panels and thyroid function. Results are reviewed together at the follow-up consultation rather than sent without explanation.",
     },
     {
       question: "Does this replace an OB-GYN or primary care doctor?",
       answer:
-        "No. This practice focuses on hormone, thyroid, and adrenal concerns and the lifestyle factors around them. It does not replace primary care, gynecological care, or routine screening. Most patients keep the clinicians they already see and add a provider who works specifically in hormone care.",
+        "No. This practice focuses on hormone and thyroid concerns and the lifestyle factors around them. It does not replace primary care, gynecological care, or routine screening. Most patients keep the clinicians they already see and add a provider who works specifically in hormone care.",
     },
     {
       question: "What if an in-person examination turns out to be needed?",
@@ -117,6 +117,6 @@ export const saltLakeCity: GeoPage = {
     { label: "How to choose a hormone provider", href: "/find-a-hormone-provider" },
     { label: "BHRT vs traditional HRT", href: "/bhrt-vs-hrt" },
     { label: "Menopause brain fog", href: "/symptoms/brain-fog-memory" },
-    { label: "All service areas", href: "/service-areas" },
+    { label: "BHRT in South Jordan", href: "/service-areas/south-jordan" },
   ],
 };

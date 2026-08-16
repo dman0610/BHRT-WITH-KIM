@@ -218,6 +218,46 @@ section("FAQ answers");
   console.log(`  ${total} answers, all 40-80 words and present in the HTML`);
 }
 
+// ── 4b. FAQ duplication across pages ───────────────────────────────────────
+section("FAQ uniqueness");
+{
+  /*
+    Google serves one page per query. The same question answered on two URLs
+    splits the signal and can suppress both, and for AI retrieval it produces
+    two competing passages where one authoritative one would do.
+
+    Four pairs had drifted in by the time this was written — the cost question
+    on /faq and /bhrt-cost-utah, a GSM definition on two symptom pages, a
+    boilerplate "available across Utah" on two more, and a LabCorp answer
+    duplicated verbatim. All were invisible until measured, which is why this
+    check exists rather than a convention.
+  */
+  const questions = new Map();
+  const answers = new Map();
+  for (const route of pages) {
+    for (const o of schemaObjects(html.get(route), route)) {
+      if (o["@type"] !== "FAQPage") continue;
+      for (const q of o.mainEntity) {
+        const qKey = q.name.toLowerCase().replace(/[^a-z ]/g, "").trim();
+        const aKey = q.acceptedAnswer.text.slice(0, 90);
+        if (!questions.has(qKey)) questions.set(qKey, []);
+        if (!answers.has(aKey)) answers.set(aKey, []);
+        questions.get(qKey).push(route);
+        answers.get(aKey).push(route);
+      }
+    }
+  }
+  for (const [q, routes] of questions) {
+    if (routes.length > 1)
+      fail("FAQ", `question on ${routes.length} pages — "${q.slice(0, 52)}" (${routes.join(", ")})`);
+  }
+  for (const [, routes] of answers) {
+    if (routes.length > 1)
+      fail("FAQ", `identical answer text on ${routes.join(", ")}`);
+  }
+  console.log(`  ${questions.size} distinct questions, no duplicate question or answer text`);
+}
+
 // ── 5. safety content ──────────────────────────────────────────────────────
 section("Safety content — do not weaken");
 {
@@ -289,6 +329,11 @@ section("Compliance");
 // ── 7. links and anchors ───────────────────────────────────────────────────
 section("Links");
 {
+  /*
+    Non-page routes that legitimately appear in href/src attributes. These are
+    generated image and metadata routes with no extension, so the file-type
+    skip below doesn't catch them and they'd read as broken page links.
+  */
   const routes = new Set([
     ...pages,
     "/",
@@ -296,6 +341,9 @@ section("Links");
     "/robots.txt",
     "/sitemap.xml",
     "/opengraph-image",
+    "/apple-icon",
+    "/icon",
+    "/manifest.webmanifest",
   ]);
   let checked = 0;
   const broken = new Set();
@@ -345,6 +393,93 @@ section("Homepage symptom chips");
   }
 }
 
+// ── 2b. page-level schema ──────────────────────────────────────────────────
+section("Page-level schema");
+{
+  /*
+    Every page carries the sitewide entity graph from the root layout. That
+    describes the BUSINESS. A page with nothing else tells a crawler what the
+    practice is but nothing about what the page is for, which is how nine pages
+    ended up generic — including the booking pages, which have prices.
+
+    The homepage is exempt: WebSite + MedicalBusiness + Person is the correct
+    shape for a root, and a breadcrumb there would be noise.
+  */
+  const PAGE_LEVEL = [
+    "MedicalWebPage",
+    "Article",
+    "FAQPage",
+    "ProfilePage",
+    "ContactPage",
+    "CollectionPage",
+    "Service",
+    "BreadcrumbList",
+  ];
+  let typed = 0;
+  for (const route of pages) {
+    if (route === "/index" || route === "/") continue;
+    const types = [...html.get(route).matchAll(/"@type":"([A-Za-z]+)"/g)].map((m) => m[1]);
+    if (types.some((t) => PAGE_LEVEL.includes(t))) typed++;
+    else fail(route, "carries only the sitewide entity graph — no page-level schema");
+  }
+  console.log(`  ${typed} pages carry page-level schema (homepage exempt)`);
+}
+
+// ── 2c. thin pages ─────────────────────────────────────────────────────────
+section("Content depth");
+{
+  /*
+    /quiz shipped with ~50 words of server-rendered content while being the
+    designated ad landing page — invisible to search and to AI, because
+    everything lived inside a client component. This floor catches that class
+    of page before it ships again.
+  */
+  const FLOOR = 250;
+
+  /*
+    Exempt by function, not by convenience. These three rank on what they DO,
+    not on prose, and padding them would be worse than the word count:
+
+      /contact      — a form and contact details; nobody wants an essay here
+      /resources    — an index; the article cards carry the content
+      /testimonials — three quotes, and inventing more is out of the question
+
+    "Thin content" means little value RELATIVE TO PURPOSE. A short contact page
+    is not thin. A 50-word ad landing page was.
+  */
+  const EXEMPT = new Set(["/contact", "/resources", "/testimonials"]);
+
+  let thinnest = Infinity;
+  let thinnestRoute = "";
+  for (const route of pages) {
+    const words = prose(html.get(route)).split(/\s+/).filter(Boolean).length;
+    if (EXEMPT.has(route)) continue;
+    if (words < thinnest) {
+      thinnest = words;
+      thinnestRoute = route;
+    }
+    if (words < FLOOR) fail(route, `only ${words} rendered words (floor ${FLOOR})`);
+  }
+  console.log(
+    `  all content pages ≥ ${FLOOR} words; thinnest is ${thinnestRoute} at ${thinnest} (${EXEMPT.size} utility pages exempt)`
+  );
+}
+
+// ── 2d. sitemap dates ──────────────────────────────────────────────────────
+section("Sitemap date honesty");
+{
+  /*
+    `new Date()` here stamps every URL with the build time, telling Google all
+    39 pages changed on every deploy — a signal search engines learn to
+    discount precisely because it always moves.
+  */
+  const src = fs.readFileSync(path.join(ROOT, "app/sitemap.ts"), "utf8");
+  const body = src.replace(/\/\*[\s\S]*?\*\//g, "").replace(/\/\/.*$/gm, "");
+  if (/new Date\(\)/.test(body))
+    fail("app/sitemap.ts", "uses new Date() — lastModified must come from content");
+  console.log("  lastModified derives from content dates, not build time");
+}
+
 // ── 6b. nav contrast at first paint ────────────────────────────────────────
 section("Nav contrast (pre-hydration)");
 {
@@ -376,6 +511,56 @@ section("Nav contrast (pre-hydration)");
   console.log(`  ${checked} pages render nav links dark-on-cream before hydration`);
 }
 
+// ── 6bb. scope of practice ─────────────────────────────────────────────────
+section("Scope of practice");
+{
+  /*
+    Kim narrowed what she offers on 2026-08-12: thyroid assessment only (not
+    adrenal), no mold or Lyme testing, and no broad "screening for underlying
+    conditions". Those phrases had been propagated to ~15 pages when the content
+    engine was built, so a partial fix would have left the site contradicting
+    its own Services page — and every stale sentence is an inaccurate claim
+    about a licensed provider's scope.
+
+    These are claims, not vocabulary: the tripwire list in lib/analytics.ts
+    still contains "adrenal" on purpose and is not page copy.
+  */
+  const OUT_OF_SCOPE = [
+    [/\badrenal\b/i, "adrenal assessment — Kim does not offer this yet"],
+    [/screening for underlying conditions/i, "broad underlying-condition screening"],
+    [/mold exposure/i, "mold testing"],
+    [/\bLyme\b/i, "Lyme testing"],
+  ];
+  for (const route of pages) {
+    const text = prose(html.get(route));
+    for (const [re, label] of OUT_OF_SCOPE) {
+      const m = text.match(re);
+      if (m) fail(route, `out-of-scope claim (${label}): "${m[0]}"`);
+    }
+  }
+  console.log(`  ${pages.length} pages — no out-of-scope testing claims`);
+}
+
+// ── 6bc. price consistency ─────────────────────────────────────────────────
+section("Price consistency");
+{
+  /*
+    The package price lives in copy, Offer schema, the FAQ, /llms.txt and
+    bhrt-cost-utah. Kim caught the last error herself — 5 visits at $200 was
+    $1,000 while the package was priced at $1,500. A stale figure anywhere is a
+    published price the practice does not honour.
+  */
+  let mentions = 0;
+  for (const route of pages) {
+    const text = prose(html.get(route));
+    if (/\$1,?500/.test(text)) fail(route, "stale $1,500 package price");
+    if (/\$950/.test(text)) mentions++;
+  }
+  const home = html.get("/index") ?? html.get("/");
+  if (home && /"price":\s*"1500"/.test(home)) fail("/", "stale price in Offer schema");
+  console.log(`  no stale $1,500 anywhere; $950 stated on ${mentions} pages`);
+}
+
 // ── 6c. clinical titles ────────────────────────────────────────────────────
 section("Clinical titles");
 {
@@ -393,6 +578,13 @@ section("Clinical titles");
     /\bKim\s+Yadon,?\s*(MD|M\.D\.|DO|PhD)\b/i,
     /Kim[^.]{0,40}\bis a (physician|doctor|medical doctor)\b/i,
     /\b(our|your)\s+(physician|doctor)\s+Kim\b/i,
+    /*
+      APRN is her LICENCE CATEGORY, not a post-nominal. The licence number is
+      published, which makes "Kim Yadon, APRN" an easy slip — and every other
+      source renders her as FNP-C, so the inconsistency would fracture the
+      entity exactly where it is meant to be verifiable.
+    */
+    /\bKim\s+Yadon,?\s*APRN\b/i,
   ];
   for (const route of pages) {
     const text = prose(html.get(route));

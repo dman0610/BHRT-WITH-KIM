@@ -74,7 +74,7 @@ export const moodAnxiety: ContentPage = {
       heading: "What does an evaluation cover?",
       paragraphs: [
         "A useful evaluation looks at the hormonal picture and the alternative explanations together, rather than choosing one in advance.",
-        "Kim Yadon, FNP-C works through history and comprehensive testing across hormones, thyroid, and adrenal function, plus screening for underlying conditions, and addresses the foundations that affect mood directly — sleep, nutrition, movement, and stress. Where symptoms point toward depression or an anxiety disorder, the appropriate step is care from a provider who treats those conditions, and hormone care does not replace it. The two can run alongside each other.",
+        "Kim Yadon, FNP-C works through history and comprehensive testing across hormones and thyroid function, and addresses the foundations that affect mood directly — sleep, nutrition, movement, and stress. Where symptoms point toward depression or an anxiety disorder, the appropriate step is care from a provider who treats those conditions, and hormone care does not replace it. The two can run alongside each other.",
       ],
     },
   ],
@@ -133,6 +133,6 @@ export const moodAnxiety: ContentPage = {
     { label: "Sleep and insomnia", href: "/symptoms/sleep-insomnia" },
     { label: "Menopause brain fog", href: "/symptoms/brain-fog-memory" },
     { label: "Stress reduction", href: "/services#stress" },
-    { label: "All FAQs", href: "/faq" },
+    { label: "Sleep and hormone health", href: "/resources/sleep-hormones" },
   ],
 };

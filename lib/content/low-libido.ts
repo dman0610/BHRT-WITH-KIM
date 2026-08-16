@@ -66,7 +66,7 @@ export const lowLibido: ContentPage = {
       heading: "How is this addressed in a consultation?",
       paragraphs: [
         "The evaluation looks at which contributors are actually present rather than assuming a hormonal explanation.",
-        "That means history covering sleep, mood, medications, physical comfort, and context, alongside comprehensive testing across hormones, thyroid, and adrenal function. Kim Yadon, FNP-C addresses foundations first — sleep, stress, nutrition, movement — before considering a prescription. Raising this topic can feel awkward; it is a routine part of a hormone consultation and describing what actually changed, and when, is the most useful thing someone can bring.",
+        "That means history covering sleep, mood, medications, physical comfort, and context, alongside comprehensive testing across hormones and thyroid function. Kim Yadon, FNP-C addresses foundations first — sleep, stress, nutrition, movement — before considering a prescription. Raising this topic can feel awkward; it is a routine part of a hormone consultation and describing what actually changed, and when, is the most useful thing someone can bring.",
       ],
     },
   ],
@@ -78,9 +78,15 @@ export const lowLibido: ContentPage = {
         "Changes in sexual desire are commonly reported during the menopause transition, but common does not mean there is nothing to investigate. Contributors include hormonal change, physical discomfort, sleep deprivation, stress, mood, and medications. Because those are addressed very differently, an evaluation is worthwhile rather than assuming it is simply expected.",
     },
     {
-      question: "What is genitourinary syndrome of menopause?",
+      /*
+        Was "What is genitourinary syndrome of menopause?" — the same question
+        verbatim on /symptoms/vaginal-dryness, which is the page that owns GSM.
+        Reframed to this page's actual subject; the GSM page is linked in prose
+        rather than having its answer duplicated here.
+      */
+      question: "Is low desire the same thing as discomfort during sex?",
       answer:
-        "It is the clinical term for physical changes to vaginal and urinary tissue associated with declining estrogen — including dryness, thinning tissue, discomfort during sex, and urinary symptoms. These are physical changes with recognised treatment options that differ from approaches aimed at desire, which is why the two are worth separating in conversation.",
+        "No, and separating them changes what helps. Physical discomfort usually reflects tissue changes that have their own recognised treatments, while reduced desire involves hormones, sleep, mood, medications and context together. Someone whose interest faded because sex became painful is describing a different problem from someone whose desire changed while everything else stayed comfortable.",
     },
     {
       question: "Is testosterone prescribed to women?",

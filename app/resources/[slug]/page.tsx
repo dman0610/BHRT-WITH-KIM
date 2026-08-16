@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, Calendar, Clock, ExternalLink } from "lucide-react";
 import { ARTICLES } from "@/lib/articles";
 import { BLOG_POSTS } from "@/lib/constants";
+import { SITE } from "@/lib/site";
 import { articleSchema, breadcrumbSchema } from "@/lib/schema";
 import JsonLd from "@/components/seo/JsonLd";
 import ScrollAnimator from "@/components/layout/ScrollAnimator";
@@ -169,27 +170,26 @@ export default async function ArticlePage({ params }: Props) {
           </div>
 
           {/*
-            Byline deliberately renders WITHOUT a `reviewedOn` date, so it reads
-            "About the practice" rather than "Reviewed by".
+            Kim read these articles on 2026-08-12 and 2026-08-15 and sent
+            corrections, several of which removed or rewrote whole passages.
+            The byline now carries her review date.
 
-            The AI-drafting disclosure below stays until Kim decides whether to
-            review and byline these articles (OPEN-QUESTIONS.md item 9).
-            Removing that line while the content is unreviewed would be
-            misattributing authorship on YMYL health content — not an option.
-
-            When she reviews: pass reviewedOn, move this above the article body,
-            and update the disclosure.
+            The AI-drafting disclosure stays and is now MORE accurate, not less:
+            it names who reviewed the content and when. Dropping it because a
+            clinician has reviewed would misrepresent how the drafts were
+            produced. Both facts are true and both are stated.
           */}
           <div className="mt-10 border-t border-stone-300 pt-8">
-            <AuthorByline />
+            <AuthorByline reviewedOn={SITE.contentReviewedOn} />
           </div>
 
           {/* Disclaimer */}
           <p className="mt-6 text-sm text-clay-text leading-relaxed">
             This article is for informational purposes only and does not
             constitute medical advice. Always consult a qualified healthcare
-            provider before making changes to your health regimen. Content
-            researched and drafted with AI assistance; reviewed for accuracy.
+            provider before making changes to your health regimen. Researched
+            and drafted with AI assistance, then reviewed and approved by{" "}
+            {SITE.provider.fullName}.
           </p>
         </div>
       </section>

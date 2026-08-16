@@ -36,7 +36,7 @@ export default function ServicesPage() {
             name: "Bioidentical Hormone Therapy — Comprehensive Package",
             description:
               "Five BHRT-focused visits, one every three months, plus two nutrition and exercise coaching sessions and two mindset coaching sessions. Medications and lab fees are not included.",
-            price: 1500,
+            price: 950,
             path: "/services",
           }),
         ]}
@@ -209,7 +209,7 @@ export default function ServicesPage() {
                   Comprehensive Package
                 </h2>
                 <div className="flex items-baseline gap-1 mt-3">
-                  <span className="font-heading text-5xl font-semibold text-white">$1,500</span>
+                  <span className="font-heading text-5xl font-semibold text-white">$950</span>
                 </div>
                 <p className="text-white/80 mt-1">5 visits · one every 3 months · BHRT-focused</p>
               </div>

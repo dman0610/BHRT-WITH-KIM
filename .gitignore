@@ -39,3 +39,12 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# ─── Local-only records ──────────────────────────────────────────────────────
+# Working notes kept on Dallin's machine and deliberately NOT committed or
+# deployed — competitive research, AI-visibility baselines, anything gathered
+# for internal reference rather than publication.
+#
+# This entry is load-bearing: commits here are made with `git add -A`, so
+# without it these files would be swept into the next push. Do not remove it.
+/_records/
