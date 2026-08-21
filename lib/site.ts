@@ -175,6 +175,29 @@ export const SITE = {
   },
 
   /**
+   * Official social profiles, confirmed 2026-08-16 from the Google Business
+   * Profile admin view — i.e. from an account Kim controls, not guessed from
+   * a search.
+   *
+   * These feed `sameAs` on both the practice and the person. `sameAs` is how a
+   * retrieval system resolves "BHRT with Kim" the GBP listing, "BHRT with Kim"
+   * the website, and "Kim Yadon" the NPI record to ONE entity rather than three
+   * loosely-related strings. That disambiguation is the whole job.
+   *
+   * It matters more than usual here: a different Kim, of Serotonin Centers,
+   * already ranks on the brand query. Corroborating profiles are what separate
+   * them.
+   *
+   * ⚠️ Only add a profile that has been confirmed from an account Kim controls.
+   * A wrong or dead URL in `sameAs` actively degrades entity confidence — it is
+   * worse than an absent one.
+   */
+  social: {
+    facebook: "https://www.facebook.com/profile.php?id=61592043292697",
+    instagram: "https://www.instagram.com/hormonereplacementwithkim/",
+  },
+
+  /**
    * Date Kim personally reviewed the educational content — the 5 resource
    * articles, the 10 symptom pages and the /symptoms hub.
    *

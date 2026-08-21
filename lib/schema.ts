@@ -67,6 +67,16 @@ export function medicalBusinessSchema() {
       closes: SITE.contact.hours.closes,
     },
     paymentAccepted: "Cash, credit card",
+    /*
+      The practice's own confirmed profiles. Distinct from the Person's
+      `sameAs`: this resolves the BUSINESS entity — website, Google Business
+      Profile, Facebook and Instagram as one practice — while the Person block
+      resolves Kim herself against the NPI registry.
+
+      Both matter, and they are what let a retrieval system tell this practice
+      apart from a different Kim who already ranks on the brand query.
+    */
+    sameAs: [SITE.social.facebook, SITE.social.instagram],
     areaServed: [
       { "@type": "State", name: "Utah" },
       ...SITE.focusCounties.map((name) => ({
@@ -130,7 +140,11 @@ export function personSchema() {
       and a claim a retrieval system can resolve against a government source,
       and it is the strongest entity-disambiguation signal available here.
     */
-    sameAs: [`https://npiregistry.cms.hhs.gov/provider-view/${SITE.provider.npi}`],
+    sameAs: [
+      `https://npiregistry.cms.hhs.gov/provider-view/${SITE.provider.npi}`,
+      SITE.social.facebook,
+      SITE.social.instagram,
+    ],
     identifier: [
       {
         "@type": "PropertyValue",

@@ -567,7 +567,7 @@ enabling it is what would genuinely block crawlers.
 ### Then
 
 - [ ] **Secondary-category test** (60s, reversible): remove `Medical clinic` + `Wellness center`, keep `Nurse practitioner` primary, retry the address toggle. If a *secondary* was the blocker this wins a hidden address at no cost. Read the address decision first
-- [ ] **Add social profiles to `sameAs`** in `lib/site.ts` — Facebook `profile.php?id=61592043292697`, Instagram `hormonereplacementwithkim`. Both verified via GBP admin. Entity-resolution signal linking profile ↔ site ↔ NPI. **Code change, not yet made**
+- [x] **Social profiles added to `sameAs`** ✅ 2026-08-21 — `SITE.social` in `lib/site.ts`, consumed by both `medicalBusinessSchema()` (resolves the practice) and the Person block (resolves Kim, alongside the NPI registry). Instagram and NPPES verified live 200. **Facebook could not be machine-verified** — it returns 400 to every non-browser request, including `facebook.com/zuck`, so the check is uninformative rather than negative. Provenance is Kim's own GBP admin view. ⚠️ Worth one manual click to confirm, since a dead URL in `sameAs` degrades entity confidence more than an absent one
 - [ ] **"How did you hear about Kim?"** inside Healthie's intake form — dashboard config, not code (the booking widget is a cross-origin iframe). Biggest remaining measurement hole; most bookers never touch the contact form
 - [ ] **Review process with Kim.** Two hard rules, both non-negotiable: never trade the discount for a review (Google policy + FTC; suspension trigger), and she never confirms or denies patient status in a public reply. Target 10 in 90 days
 - [ ] Apple Business Connect; check for duplicate listings
