@@ -68,8 +68,27 @@ export default function EmailCaptureStep({
         <h2 className="font-heading text-3xl font-semibold text-bark sm:text-4xl">
           Where should we send your results?
         </h2>
+        {/*
+          INTERIM COPY — see docs/06-EMAIL.md.
+
+          This previously promised "a copy along with Kim's hormone health
+          guide". Both were unfulfillable: there is no authenticated sending
+          domain (a Gmail From address relayed by a third party fails DMARC
+          alignment), and the guide does not exist. Someone handing over an
+          address and receiving nothing is worse than never asking.
+
+          Deliberately carries NO timeline — "will follow up", never "within
+          24 hours". docs/05-CONTENT-STANDARDS.md bans response and relief
+          timelines, and a missed stated deadline is a real exposure.
+
+          "Reviews your answers" is not a clinical claim. QUIZ_DISCLAIMER still
+          renders on the results screen: educational, not diagnostic.
+
+          Replace this when the sequence goes live — and only then.
+        */}
         <p className="mt-3 text-clay-text leading-relaxed">
-          We&apos;ll email you a copy along with Kim&apos;s hormone health guide.
+          Kim reviews every completed assessment personally and will follow up
+          by email.
         </p>
       </div>
 

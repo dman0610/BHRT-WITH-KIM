@@ -79,14 +79,26 @@ export async function POST(request: Request) {
   }
 
   // Provider failed or isn't configured yet. The lead still reaches Kim.
+  //
+  // These are different events and the inbox email distinguishes them. An
+  // unconfigured provider is the current interim design — Kim replies to
+  // leads personally, which is what the quiz form promises. A *configured*
+  // provider failing is a genuine bug.
   const reason = result.error ?? "unknown";
-  const delivered = await sendLeadToInbox(lead, reason);
+  const expected = !provider.configured;
+  const delivered = await sendLeadToInbox(lead, reason, expected);
 
-  console.error("[quiz-capture] provider failed", {
-    provider: provider.name,
-    reason,
-    fallbackDelivered: delivered,
-  });
+  if (expected) {
+    console.info("[quiz-capture] no provider configured; lead sent to inbox", {
+      fallbackDelivered: delivered,
+    });
+  } else {
+    console.error("[quiz-capture] provider failed", {
+      provider: provider.name,
+      reason,
+      fallbackDelivered: delivered,
+    });
+  }
 
   // Still 200: the client must render results either way.
   return NextResponse.json({ ok: true, queued: true });

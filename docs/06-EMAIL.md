@@ -65,11 +65,63 @@ Results render immediately, regardless of API outcome
 ### Capture screen spec
 
 - **Headline:** "Where should we send your results?"
-- **Subhead:** "Get your assessment plus Kim's hormone health guide."
+- **Subhead:** ⚠️ **Interim wording — see below.** The spec'd subhead ("Get your assessment plus Kim's hormone health guide") is restored only when the sequence and the guide both exist.
 - Fields: first name, email
 - **Consent checkbox, unchecked by default:** "I agree to receive emails from BHRT with Kim. Unsubscribe anytime." Links to `/privacy`.
 - Submit: "See My Results"
 - **Skip link: "Show my results without email."** Required — gating results behind email violates the rule above and depresses quiz completion. Some leads are worth less than the trust.
+
+### ⚠️ Interim state — 2026-08-21
+
+**The capture flow is live and working. The sending half is not.** Until
+MailerLite and an authenticated sending domain exist, the site cannot email
+anyone, and there is no lead magnet — `public/` contains no PDF.
+
+The screen previously promised *"We'll email you a copy along with Kim's
+hormone health guide."* **Both halves were unfulfillable.** Someone handed over
+an address and received nothing, which is worse than never asking, and ad spend
+was about to be pointed at it.
+
+**Current subhead:**
+
+> Kim reviews every completed assessment personally and will follow up by email.
+
+Three properties this wording depends on:
+
+- **No timeline.** "will follow up", never "within 24 hours". `05-CONTENT-STANDARDS.md`
+  bans response and relief timelines; a missed stated deadline is a real exposure.
+- **Not a clinical claim.** "reviews your answers" ≠ "reviews your case".
+  `QUIZ_DISCLAIMER` still renders on the results screen.
+- **A personal 1:1 reply is not bulk commercial email**, so it needs no CAN-SPAM
+  footer and no PO box. That is precisely what makes this interim viable while
+  the sequence is blocked on both.
+
+**It commits Kim to replying by hand.** Sustainable at current volume; if ads
+raise it, that is the trigger to prioritise the sequence — *not* a reason to
+quietly drop the promise the form now makes.
+
+**Guarded.** `npm run verify` §21 fails the build if the capture copy offers a
+guide/download while no PDF exists in `public/`, or states a response timeline.
+The guard disables itself once a real guide ships.
+
+### Leads reach Kim's inbox meanwhile
+
+`lib/email/fallback.ts` posts to Web3Forms — the same service already delivering
+the contact form, so no new dependency. It distinguishes two cases that must not
+look alike:
+
+| | Subject | Framing |
+|---|---|---|
+| No provider configured *(today)* | `Quiz lead — <name>` | "Someone completed the hormone quiz and asked to hear from you." |
+| Configured provider **failed** | `Quiz lead — <name> (NEEDS MANUAL ADD)` | ⚠️ flagged as a bug worth investigating |
+
+Kim receives severity (as an ordinal, "Significant (4 of 5)"), hormonal stage as
+its full label, the top three services as **published titles** rather than ids,
+consent timestamp in Mountain Time, and UTMs.
+
+⚠️ **The `Quiz lead — ` subject prefix is load-bearing.** When MailerLite goes
+live, searching it in Gmail is the only way to recover every lead captured
+during the interim. Changing it casually strands them.
 
 ### Data captured
 

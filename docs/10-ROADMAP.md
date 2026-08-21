@@ -481,44 +481,112 @@ It also caught a bug I introduced the same day: `apple-icon` is an extensionless
 
 ---
 
-### Blocked on a deployed URL
+### Blocked on a deployed URL — ✅ all cleared 2026-08-16
 
-- [ ] Search Console verified; sitemap submitted (35 URLs)
-- [ ] Baseline snapshot recorded — [07-TRACKING.md](07-TRACKING.md)
-- [ ] AI test prompts baselined — [04-AI-VISIBILITY.md](04-AI-VISIBILITY.md)
-- [ ] Rich Results Test on `/`, `/faq`, a symptom page, a city page
+- [x] Search Console **Domain property verified** via DNS TXT at Vercel
+- [x] AI test prompts baselined — local-only record in `_records/`, gitignored, **never to be committed**
+- [x] Rich Results Test run. Note: it only reports rich-result-*eligible* types, so `Person` never appears regardless of correctness — absence there is not a defect
+- [x] Site live, 49 routes, verified serving correct titles/canonical
+- [ ] **Sitemap submitted** — attempt failed with "Invalid sitemap address." Cause: a **Domain property needs the full URL**, `https://bhrtwithkim.com/sitemap.xml`, not `sitemap.xml`. Sitemap itself independently validated: HTTP 200, `application/xml`, well-formed `urlset`, 39 URLs, all apex-host; `robots.txt` already references it
 - [ ] Mobile LCP under 2.5s on a real device
 - [ ] JS-disabled audit of every key page
 
-### Blocked on accounts
+---
 
-- [ ] `NEXT_PUBLIC_META_PIXEL_ID` set; **verify no health data in any payload, and that the pixel does not fire on `/symptoms/*`**
-- [ ] "How did you hear about Kim?" added inside Healthie's intake — dashboard config, not code
-- [ ] GBP: address hidden, service area set, categories, hours, description
-- [ ] Bing Places + Apple Business Connect
-- [ ] Duplicate listings merged
-- [ ] Review request process live — target 10 in 90 days
+## Phase 12 — Interim quiz-lead flow ✅ 2026-08-21
+
+Dallin paused a Google Ads launch believing email capture was unfinished. **It
+was already built and live** — capture UI, `/api/quiz-capture`, consent
+enforcement, and the Web3Forms fallback to Kim. Nothing needed rebuilding.
+
+Three real defects, found by reading the shipped code:
+
+**1. The form promised what the site cannot deliver.** *"We'll email you a copy
+along with Kim's hormone health guide"* — no authenticated sending domain, and
+no guide exists anywhere in `public/`. Ad spend was about to be pointed at a
+promise that resolves to nothing. Replaced with an honest interim subhead
+committing Kim to a personal reply; carries no timeline and makes no clinical
+claim.
+
+**2. Kim wasn't getting the results.** The fallback sent name, email, stage,
+consent time and UTMs — but not `severity` or `topServices`, which is the part
+she actually needs. Now included, with severity as an ordinal and services
+mapped through `SERVICES` to published titles.
+
+**3. Every lead looked like a bug report.** The fallback was written for a world
+where MailerLite exists and failed, so it opened *"A quiz lead could not be
+added…"*. In the interim the inbox **is** the system. Now branches on
+`!provider.configured` — a genuine provider failure stays visibly distinct.
+
+Two bugs found while verifying, both pre-existing:
+
+- **`.filter(Boolean)` was stripping every blank line** from Kim's email — the
+  `""` spacers are falsy — collapsing it into a wall of text.
+- **A skipped name rendered as "Quiz lead — there"**. The route defaults blank
+  names to `"there"` so a sequence can greet "Hi there"; that default is wrong
+  in Kim's subject line. Now falls back to the email address.
+
+**New guard — §21, 21 sections total.** Fails the build if the capture copy
+offers a guide/download while `public/` holds no PDF, or states a response
+timeline. Both failure modes were tested by reintroducing them.
+
+**Verified:** lint, `tsc`, build clean at 49 routes; 21/21 verify; consent gates
+re-tested against a running server — `consent` omitted, `false`, and the string
+`"true"` all correctly 400.
+
+⚠️ **Not verified locally:** the actual Web3Forms send. No `.env` exists on this
+machine — the key lives only in Vercel. Confirm against production after deploy.
 
 ---
 
-## Blocked
+## Pick up here — 2026-08-21
 
-**Nothing blocks Phase 6 itself** — but almost everything below is now on its critical path, and the largest item is that *nothing has been deployed at all*.
+**The build is done.** 49 routes, 20/20 verify sections, everything Kim corrected is live, search engines have a path in. Nothing further to build until data returns. Ordered by value.
 
-| Blocker | Blocks | Owner | Status |
-|---|---|---|---|
-| **Deployment** | Everything. Production still advertises labs as included. | Dallin | **Not started** |
-| Consult logistics (duration, labs, prescriptions, follow-up) | 5+ FAQ answers, every symptom page | Kim | ✅ Answered 2026-08-10 |
-| Insurance answer | Top-3 pre-booking FAQ | Kim | Asked |
-| Article review decision | `/resources` E-E-A-T | Kim | Asked |
-| MailerLite account | Phase 4 go-live | Dallin | — |
-| PO box / virtual address | First email send (CAN-SPAM) | Dallin | — |
-| Lead magnet | Email 1 | Dallin | — |
-| GBP access | All of local (Phase 6) | Dallin | — |
-| Sending address on the domain | Email sequence going live | Dallin | DNS access confirmed |
-| Web3Forms destination | Form delivery matching published address | Dallin | In progress |
+### Do first — minutes each
 
-DNS is **no longer a blocker** — nameservers are delegated to Vercel and Dallin controls them. The records simply haven't been added yet.
+| # | Task | Notes |
+|---|---|---|
+| 1 | **Resubmit the sitemap** | Enter the **full URL** `https://bhrtwithkim.com/sitemap.xml`. The earlier failure was a wrong-format entry, not a broken sitemap |
+| 2 | **Bing Webmaster Tools → "Import from Google Search Console"** | ~2 min. Matters because **ChatGPT search runs on Bing's index** — this is an AI channel, not a second-tier search engine |
+| 3 | **GBP: delete the house-exterior photo** | Highest privacy-per-second action available. See [08-LOCAL-GBP.md](08-LOCAL-GBP.md#the-address-decision--️-revised-2026-08-16) |
+| 4 | **GBP: fix hours → Mon–Fri 9:00am** *(shows 9:30)*, **website → apex** *(shows `www`)*, **description → canonical entity statement** | All three are drift against `lib/site.ts`. Exact values in [08-LOCAL-GBP.md](08-LOCAL-GBP.md#remaining-setup-steps) |
+| 5 | **GBP: add the nine services** | Service lists feed "near me" queries directly |
+
+### Then
+
+- [ ] **Secondary-category test** (60s, reversible): remove `Medical clinic` + `Wellness center`, keep `Nurse practitioner` primary, retry the address toggle. If a *secondary* was the blocker this wins a hidden address at no cost. Read the address decision first
+- [ ] **Add social profiles to `sameAs`** in `lib/site.ts` — Facebook `profile.php?id=61592043292697`, Instagram `hormonereplacementwithkim`. Both verified via GBP admin. Entity-resolution signal linking profile ↔ site ↔ NPI. **Code change, not yet made**
+- [ ] **"How did you hear about Kim?"** inside Healthie's intake form — dashboard config, not code (the booking widget is a cross-origin iframe). Biggest remaining measurement hole; most bookers never touch the contact form
+- [ ] **Review process with Kim.** Two hard rules, both non-negotiable: never trade the discount for a review (Google policy + FTC; suspension trigger), and she never confirms or denies patient status in a public reply. Target 10 in 90 days
+- [ ] Apple Business Connect; check for duplicate listings
+
+### ~30 days out
+
+Re-check Search Console for **which queries actually land** — this consistently differs from what any keyword plan predicts, and it should drive the next content decisions rather than the original keyword map.
+
+Re-run the three AI baseline prompts **verbatim** on the same three models. Protocol and comparison table in `_records/`. Changing the wording destroys comparability.
+
+### Still blocked on a decision, not on work
+
+| Item | Blocks | Owner |
+|---|---|---|
+| MailerLite account | The email *sequence*. **Capture already works** — leads reach Kim's inbox today | Dallin |
+| Sending domain + SPF/DKIM/DMARC | First send — a Gmail From address fails DMARC alignment | Dallin *(DNS access confirmed)* |
+| PO box / virtual address | First send (CAN-SPAM) | Dallin |
+| Lead magnet | Email 1 | Dallin |
+| `NEXT_PUBLIC_META_PIXEL_ID` | Paid ads. **Verify no health data in any payload and that it never fires on `/symptoms/*`** | Dallin |
+| Testimonial provenance | Nothing — the four quotes stay unmarked as `Review` schema regardless | Kim |
+| Menopause Society (MSCP/NCMP) certification | Nothing today. Surfaced unprompted by ChatGPT in the AI baseline as the credential it steers people toward | Kim |
+
+### Resolved since last session
+
+- ✅ **Deployment** — three pushes; site live and verified
+- ✅ **GBP access** — the profile already existed, verified, under Kim's control. Was the largest standing blocker
+- ✅ **Web3Forms key** — confirmed **present in the production bundle**, 36-char UUID format. Contact form and quiz-lead fallback both work. This had been the longest-open silent-failure risk
+- ✅ **Insurance answer** — cash pay only, live on the site
+- ✅ **Article review** — Kim signed off; 16 pages carry `Reviewed by Kim Yadon, FNP-C`
+- ✅ **DNS** — nameservers delegated to Vercel, TXT record added, Search Console verified
 
 Full detail, plus a copy/paste list of what to ask Kim, in [OPEN-QUESTIONS.md](OPEN-QUESTIONS.md).
 

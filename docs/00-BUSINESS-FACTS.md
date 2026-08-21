@@ -103,21 +103,24 @@ Licensed and serving **all of Utah**. Concentration, in order of priority:
 
 South Jordan is the GBP proximity anchor. Naming the city in page copy ("based in South Jordan, serving all of Utah") is fine and useful; publishing the street address is not.
 
-### Address policy — deliberate, not an omission
+### Address policy — revised 2026-08-16
 
-Kim works from home and the Google Business Profile is currently attached to that home address, publicly visible.
+Kim works from home. The Google Business Profile is attached to that home address.
 
-**Decision: hide the address on GBP; never publish it on the site.**
+**The policy is now split, because the two surfaces have different rules.**
 
-Rationale, because this will look like a missed opportunity to someone reviewing later:
+| Surface | Policy | Status |
+|---|---|---|
+| **The website** | **Never publish the street address** — not in copy, schema, `/llms.txt`, or any directory | ✅ Enforced; verified clean on live site 2026-08-16 |
+| **Google Business Profile** | Address **stays visible** — Google will not permit hiding it at Kim's categories | ⚠️ Revised; was "hide it" |
 
-- Hiding the address **does not reduce ranking.** Google still uses the registered address for proximity calculation; it only stops displaying it. There is no traffic upside to leaving it visible.
-- A public home address on a service-area business is one of Google's most-reported suspension triggers, and any competitor can file the report. Losing the listing costs more local traffic than the entire on-site build produces.
-- A street address published on the website becomes a citation that propagates to scraper directories and is very difficult to retract.
+**Why the site rule is absolute:** a street address published on the website becomes a citation that propagates to scraper directories and is very difficult to retract. `MedicalBusiness` schema therefore uses `areaServed` and omits `streetAddress` — valid schema, not a degraded version of it.
 
-`LocalBusiness`/`MedicalBusiness` schema therefore uses `areaServed` and omits `streetAddress`. This is valid schema, not a degraded version of it.
+**Why the GBP rule changed:** hiding the address requires service-area mode, which requires a category Google classifies as service-area. Kim's categories (`Nurse practitioner` primary, plus `Medical clinic`, `Wellness center`, `Women's health clinic`) are all storefront categories, and Google blocks the toggle with *"Your business category requires a location customers can visit."* Google's SAB definition covers businesses that **travel to customers** — Kim is virtual-only, so she qualifies as neither storefront nor SAB. The one category that would unlock it (`Home health care service`) is false for her and was rejected.
 
-Full procedure in [08-LOCAL-GBP.md](08-LOCAL-GBP.md).
+⚠️ **Do not "fix" this by changing the GBP category.** The reasoning, the rejected workaround, and the one remaining untested experiment are all recorded in [08-LOCAL-GBP.md](08-LOCAL-GBP.md#the-address-decision--️-revised-2026-08-16). Read it before touching the profile.
+
+The house-exterior photo was removed from the profile instead — zero ranking value, maximum privacy cost.
 
 ### Email policy
 
@@ -408,9 +411,13 @@ Blocking items live in [OPEN-QUESTIONS.md](OPEN-QUESTIONS.md). Most of this list
 - ✅ Insurance — cash pay only
 - ✅ Article review — done, 16 pages carry her name
 
+**Answered 2026-08-16:**
+- ✅ **Google Business Profile ownership — resolved.** The profile already existed, is verified, and Kim controls it. This had been the largest remaining blocker for weeks and turned out to be already solved. State as found, and the four fields still needing correction, are in [08-LOCAL-GBP.md](08-LOCAL-GBP.md#state-as-found-2026-08-16)
+- ✅ **Social profiles** — Facebook `profile.php?id=61592043292697` and Instagram `hormonereplacementwithkim`, both confirmed via the GBP admin view. Not yet added to `sameAs` in `lib/site.ts`
+
 **Still open:**
 - Years in practice — never asked; low value, and absence costs nothing
-- Google Business Profile ownership and access — **now the largest remaining blocker.** Hours, insurance and the service-area configuration are all ready to go the moment access exists
 - Testimonial provenance — the four quotes stay unmarked as `Review` schema regardless
+- Menopause Society (MSCP/NCMP) certification — surfaced unprompted by ChatGPT in the AI baseline as the credential it steers people toward. Kim does not hold one. Not a gap to paper over, but a real, achievable credential worth raising with her
 
 Until answered, each is simply absent from the site. Absence is correct; approximation is not.

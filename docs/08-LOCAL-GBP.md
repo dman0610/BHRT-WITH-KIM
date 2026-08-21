@@ -6,25 +6,48 @@ Last updated: 2026-08-10 · Owner: Dallin
 
 ---
 
-## The address decision
+## The address decision — ⚠️ REVISED 2026-08-16
 
-**Kim works from home. The GBP is currently attached to that home address, publicly visible.**
+**The original plan was to hide the street address. Google will not allow it at Kim's categories. Do not spend another session retrying this — read the whole section first.**
 
-**Action: keep the listing verified at the home address, enable service-area mode, and hide the street address.**
+### What we found
 
-### Why this doesn't cost traffic
+The profile already existed and Kim controls it. Categories were `Nurse practitioner` (primary), `Medical clinic`, `Wellness center`, `Women's health clinic`. Toggling **"Show business address to customers"** off returns:
 
-The intuitive worry is that hiding the address weakens local ranking. It doesn't.
+> ⚠️ *Your business category requires a location customers can visit*
 
-**Google still uses the registered address for proximity calculation — it only stops displaying it.** Service-area businesses rank in the map pack for their registered city exactly as address-visible businesses do. The only thing lost is a street address on the listing, which no prospective patient needs for a virtual practice.
+All four are **storefront categories**. Google requires a visitable address for them, and the toggle is disabled until the category changes.
 
-### Why leaving it public is a real risk
+### Why there is no clean way around it
 
-- **Guideline violation.** Google requires businesses that don't serve customers at their address to hide it. Home-based service businesses with visible addresses are among the most-reported listings, and any competitor can file the report.
-- **Suspension costs everything.** A suspended profile removes the listing entirely and reinstatement is slow and uncertain. Losing the listing costs more local traffic than the entire on-site build produces.
-- **Personal safety and privacy.** A home address published to a business audience, permanently.
+Google's service-area definition is narrower than this doc previously assumed:
 
-There is no traffic upside to leaving it visible. Only downside.
+> "If your business doesn't have a storefront with clear signage but **travels to customers at their physical locations**, you're allowed one service-area Business Profile."
+> — [Guidelines for representing your business](https://support.google.com/business/answer/3038177)
+
+**Kim does not travel to customers. She is virtual-only.** She fits neither the storefront model nor the SAB model, which is precisely why the toggle is blocked. Healthcare is also held to a *higher* address standard than other verticals — Google treats a verified address as a trust signal for medical listings rather than an optional field.
+
+### The workaround that exists, and why it was rejected
+
+**`Home health care service` is SAB-eligible and would unlock the toggle.** Recorded here so nobody rediscovers it and assumes it was missed.
+
+**Do not use it.** Kim does not visit patients at home, so it is a false category — category misrepresentation is itself a suspension trigger, and it would pull her into home-health-aide and elder-care queries that are wrong for a hormone practice. That trades a small risk for a larger one *and* degrades traffic quality.
+
+### Decision: leave the address on GBP, remove the house photo
+
+- Her categories **legitimately require** an address. She is not misrepresenting anything — she genuinely works there, and Google's practitioner guideline explicitly contemplates a provider who "can be contacted directly at the verified location during stated hours." That is her Mon–Fri 9–5 reachability exactly.
+- The profile is **healthy** — verified, 5 weeks of history, 28 interactions, one 5.0 review. Category surgery on a healthy listing triggers re-review, and the risk would be spent reaching a state Google does not offer her.
+- **The house photo came down instead.** The lead image was the front of the home: zero ranking value, maximum privacy cost. The map pin already shows the street; a photo of the front door is a different order of exposure. Replaced with a logo/portrait.
+
+### What has NOT changed
+
+**The website policy is untouched and still absolute.** The street address stays off bhrtwithkim.com, out of schema, and out of `/llms.txt`. Verified clean on the live site 2026-08-16 across `/`, `/about`, `/contact`, `/service-areas/south-jordan`.
+
+The distinction is real: GBP is a Google-controlled surface with its own rules. The site becoming an independent citation source that propagates to scraper directories is the thing worth preventing, and it is prevented.
+
+### One test still worth 60 seconds
+
+Not yet run. Remove **`Medical clinic`** and **`Wellness center`** as secondaries, keep `Nurse practitioner` primary, retry the toggle. The warning says "category" singular, so the primary is the likely blocker — but if a *secondary* is the culprit, this yields a hidden address **and** the accurate primary. Cheap to test, fully reversible.
 
 ### On the website
 
@@ -36,26 +59,42 @@ Never publish the street address — not in the footer, not in schema, not on `/
 
 ## GBP configuration
 
-Blocked until profile access is confirmed — see [OPEN-QUESTIONS.md](OPEN-QUESTIONS.md).
+**✅ UNBLOCKED 2026-08-16 — the profile exists, is verified, and Kim controls it.** This was the largest remaining blocker in the project and it turned out to be already solved. Access confirmed via the "You manage this Business Profile" badge.
 
-### Setup steps
+### State as found, 2026-08-16
 
-1. **Claim/verify** ownership. Confirm who currently controls it.
-2. **Set service-area mode:** enable "I deliver goods and services to my customers," then hide the address.
+| Field | Value found | Correct? |
+|---|---|---|
+| Name | BHRT with Kim | ✅ matches NAP |
+| Phone | (801) 573-0606 | ✅ matches `lib/site.ts` |
+| Categories | Nurse practitioner *(primary)*, Medical clinic, Wellness center, Women's health clinic | ⚠️ blocks address hiding — see above |
+| Address | *(home address, South Jordan — not recorded here)* | ⚠️ public on GBP, staying — see above |
+| Hours | Opens **9:30am** | ❌ site publishes **9:00am** |
+| Website | `www.bhrtwithkim.com` | ❌ canonical is the apex, no `www` |
+| Description | "Kim is a nurse practitioner offering Bioidentical Hormone Replacement Therapy" | ❌ not the canonical entity statement |
+| Social | Facebook `61592043292697`, Instagram `hormonereplacementwithkim` | ✅ verified — not yet in site `sameAs` |
+| Reviews | 1 review, 5.0 | baseline |
+| Interactions | 28 | baseline |
+
+### Remaining setup steps
+
+1. ~~**Claim/verify** ownership~~ — ✅ done, already owned.
+2. ~~**Set service-area mode**~~ — ❌ **not possible.** See the address decision above. Do not retry without reading it.
 3. **Define the service area.** Kim is based in **South Jordan** (confirmed 2026-08-07) and serves all of Utah, concentrated in Salt Lake County then Utah County.
 
    Set the service area to **Salt Lake County and Utah County**, not "Utah" statewide. An overbroad area dilutes relevance, and proximity ranking is driven by the registered South Jordan address regardless of how wide the declared area is — listing the whole state buys nothing and costs specificity.
 
    Realistic map-pack reach from a South Jordan anchor: strong in South Jordan, West Jordan, Riverton, Herriman and Draper; moderate in Sandy and Midvale; weak in downtown Salt Lake City (~15 miles) and Utah County. That gradient is why the SLC and Lehi pages are organic plays rather than map-pack plays — see [02-KEYWORD-MAP.md](02-KEYWORD-MAP.md).
-4. **Categories.** Primary carries the most ranking weight; choose carefully.
-   - Primary: *Nurse practitioner* (or *Women's health clinic* — pick the one matching how patients describe her, and don't change it later; category changes reset ranking history)
-   - Secondary: *Wellness center*, *Medical clinic*
-5. **NAP exactly as in [00-BUSINESS-FACTS.md](00-BUSINESS-FACTS.md)** — character for character with the website footer. "BHRT with Kim" ≠ "BHRT With Kim, LLC".
-6. **Hours.** Currently unknown. Needed — hours affect both ranking and conversion.
-7. **Description** (750 chars): open with the canonical entity statement from [00-BUSINESS-FACTS.md](00-BUSINESS-FACTS.md). Same facts as `/llms.txt` and the homepage — consistency across sources is what AI systems cross-reference.
-8. **Services:** list all nine from [00-BUSINESS-FACTS.md](00-BUSINESS-FACTS.md) with descriptions.
-9. **Photos.** Weak signal individually, strong in aggregate. `kim-portrait.jpg` as the profile image; add a logo and any workspace shots that don't reveal the home location.
-10. **Website link:** `https://bhrtwithkim.com` — no UTM on the main link (it interferes with Google's own attribution). UTMs are fine on Posts.
+4. ~~**Categories**~~ — already set: `Nurse practitioner` primary, which is the right choice. **Do not change it**; category changes reset ranking history and trigger re-review. The only permitted experiment is the secondary-removal test described above.
+5. **NAP exactly as in [00-BUSINESS-FACTS.md](00-BUSINESS-FACTS.md)** — character for character with the website footer. "BHRT with Kim" ≠ "BHRT With Kim, LLC". ✅ verified correct as found.
+6. **Hours → fix to Mon–Fri 9:00am–5:00pm.** Found at 9:30am; `SITE.contact.hours` publishes 9:00. A site/GBP mismatch costs local confidence. Source of truth is `lib/site.ts` — change GBP, not the site.
+7. **Description** → replace with the canonical entity statement from [00-BUSINESS-FACTS.md](00-BUSINESS-FACTS.md), verbatim. Identical wording across GBP, `/llms.txt`, schema and the homepage is what raises AI entity confidence. Approved text:
+
+   > Kim Yadon, FNP-C is a board-certified family nurse practitioner providing bioidentical hormone replacement therapy (BHRT) through virtual consultations to women throughout Utah, with a focus on perimenopause and postmenopause. Free 15-minute phone consultation. Cash pay; insurance is not accepted.
+
+8. **Services:** list all nine from [00-BUSINESS-FACTS.md](00-BUSINESS-FACTS.md) with descriptions. Service lists feed "near me" queries directly. Not yet done.
+9. **Photos.** ⚠️ **Delete the house-exterior photo first** — see the address decision. Then `kim-portrait.jpg` as the profile image, plus a logo. No workspace shots that reveal the home.
+10. **Website link → change `www.bhrtwithkim.com` to `https://bhrtwithkim.com`.** The `www` host 307-redirects to the apex, so it works, but the canonical should be pointed at directly. No UTM on the main link (it interferes with Google's own attribution). UTMs are fine on Posts.
 
 ---
 

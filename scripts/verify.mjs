@@ -681,6 +681,60 @@ section("Service-area distinctness");
   console.log(`  ${cities.length} city pages, worst pairwise overlap ${(worst * 100).toFixed(1)}%`);
 }
 
+// ── 11. deliverable promises ───────────────────────────────────────────────
+section("Email capture promises");
+{
+  /*
+    The quiz capture form must not promise something the site cannot deliver.
+
+    It previously said "We'll email you a copy along with Kim's hormone health
+    guide" — while there was no authenticated sending domain and no guide. A
+    visitor handed over an address and received nothing, which is worse than
+    never asking.
+
+    This is exactly the kind of defect that comes back: the guide gets written,
+    the copy gets updated to match, the PDF gets renamed or moved, and the
+    promise silently breaks again. So the check is mechanical — if the copy
+    offers a downloadable, one has to exist.
+
+    The guard disables itself the moment a real PDF lands in public/.
+  */
+  const src = path.join(ROOT, "components/quiz/EmailCaptureStep.tsx");
+  const copy = fs.existsSync(src) ? fs.readFileSync(src, "utf8") : "";
+
+  // Strip comments — the rationale above mentions the old wording on purpose.
+  const visible = copy
+    .replace(/\/\*[\s\S]*?\*\//g, " ")
+    .replace(/^\s*\/\/.*$/gm, " ");
+
+  const walk = (dir) =>
+    !fs.existsSync(dir)
+      ? []
+      : fs.readdirSync(dir, { withFileTypes: true }).flatMap((e) => {
+          const p = path.join(dir, e.name);
+          return e.isDirectory() ? walk(p) : [p];
+        });
+  const pdfs = walk(path.join(ROOT, "public")).filter((f) => f.endsWith(".pdf"));
+
+  const before = failures;
+  const promisesDownload = /\bguide\b|\bdownload\b|\bebook\b|\bworkbook\b|\bchecklist\b/i.test(visible);
+
+  if (promisesDownload && pdfs.length === 0) {
+    fail("EmailCaptureStep", "promises a guide/download but no PDF exists in public/");
+  }
+
+  // Timelines are banned outright by docs/05-CONTENT-STANDARDS.md — a stated
+  // response deadline the practice may miss is a real exposure.
+  const timeline = visible.match(/within \d+\s*(hours?|days?|business days?)|in \d+\s*(hours?|days?)/i);
+  if (timeline) fail("EmailCaptureStep", `states a response timeline: "${timeline[0]}"`);
+
+  if (failures === before) {
+    console.log(
+      `  capture copy makes no unfulfillable promise (${pdfs.length} PDF${pdfs.length === 1 ? "" : "s"} in public/)`
+    );
+  }
+}
+
 // ── result ─────────────────────────────────────────────────────────────────
 console.log("\n" + "=".repeat(60));
 if (failures === 0) {
