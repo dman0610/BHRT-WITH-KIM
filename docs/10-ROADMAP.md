@@ -534,8 +534,19 @@ timeline. Both failure modes were tested by reintroducing them.
 re-tested against a running server — `consent` omitted, `false`, and the string
 `"true"` all correctly 400.
 
-⚠️ **Not verified locally:** the actual Web3Forms send. No `.env` exists on this
-machine — the key lives only in Vercel. Confirm against production after deploy.
+**Verified in production 2026-08-21** after deploy: a test lead POSTed to
+`/api/quiz-capture` returned `{ok:true,queued:true}` (i.e. it took the inbox
+path, as expected with no provider configured), and all three consent/validation
+gates still reject correctly live. Delivery itself is confirmed by eye in the
+Web3Forms destination inbox — the route returns 200 regardless, by design, so it
+cannot self-report that.
+
+**Note on the 403 scare:** a burst of automated verification requests tripped
+Vercel's IP-scoped DDoS mitigation, which returned `x-vercel-mitigated:
+challenge` to this machine only. It was briefly misread as a site-wide block of
+Googlebot. It was not — the firewall dashboard showed 680 allowed against 32
+challenged, and access restored itself. **Bot Protection must stay Inactive**;
+enabling it is what would genuinely block crawlers.
 
 ---
 
