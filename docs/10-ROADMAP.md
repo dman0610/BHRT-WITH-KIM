@@ -550,7 +550,52 @@ enabling it is what would genuinely block crawlers.
 
 ---
 
-## Pick up here — 2026-08-21
+## Phase 13 — Internal linking + citation kit ✅ 2026-08-28
+
+Search Console showed real queries at **position 51–95**, and Dallin asked
+whether the site needed changes. It largely did not — but two things were true.
+
+**The measurement that mattered.** Inbound internal links, counted across the
+built HTML: every service-area page had **2**, including
+`/service-areas/salt-lake-city`, which is the site's **top query** (11
+impressions). The footer linked the `/service-areas` and `/symptoms` hubs but
+never an individual city or symptom page.
+
+This is a crawl problem more than an authority one. "Reachable from one hub
+only" is the profile of a page Google discovers and then defers — which is
+exactly the **19 pages sitting in "Discovered – currently not indexed."**
+
+**Fix:** a `Serving Utah` row in the footer, driven from `SERVICE_AREA_PAGES` so
+a new city appears automatically. City pages went **2 → 39 inbound links**.
+
+**New guard — §22, 22 sections.** Fails if any sitemap page has **zero** inbound
+internal links. Threshold is deliberately 0, not an arbitrary "healthy" number:
+`/book/follow-up` legitimately has one link because it is for existing patients,
+and demanding four would mean manufacturing links to satisfy a script. Verified
+to fire by temporarily raising the threshold.
+
+**Two things I had wrong, corrected:**
+
+- I reported *"position 12.3, close to page 1."* Wrong — that average was
+  inflated by two single-impression queries (`bhrt near me` at 1.0, `bhrt` at
+  2.0) that are almost certainly personalised results. Real queries sit 51–95.
+- I claimed the footer had only 4 links and the related-pages module only 2. A
+  static-href grep had missed the mapped ones. The footer had 12, and `related`
+  arrays already carried 4 each — so that half of the plan was dropped as
+  already done.
+
+**`docs/12-CITATIONS.md`** — the off-site work in submission order with every
+field pre-written, since Dallin's constraint is time, not willingness. GBP
+corrections, the five health directories that **NPI 1316718968 was published to
+unlock and which had never been acted on**, Bing import, Apple Business Connect,
+and the review process with both standing rules.
+
+**Verified:** lint, `tsc`, build clean at 49 routes; 22/22 verify; 39 pages all
+reachable, median 38 inbound, fewest 1.
+
+---
+
+## Pick up here — 2026-08-28
 
 **The build is done.** 49 routes, 20/20 verify sections, everything Kim corrected is live, search engines have a path in. Nothing further to build until data returns. Ordered by value.
 

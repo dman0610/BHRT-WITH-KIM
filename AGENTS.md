@@ -60,6 +60,7 @@ Nothing invisible to users, nothing served differently to crawlers, no keyword s
 | [09-DESIGN-SYSTEM.md](docs/09-DESIGN-SYSTEM.md) | Components, tokens, accessibility |
 | [10-ROADMAP.md](docs/10-ROADMAP.md) | Starting a session — current status |
 | [11-LAUNCH.md](docs/11-LAUNCH.md) | Deploying, or doing anything that needs a live URL |
+| [12-CITATIONS.md](docs/12-CITATIONS.md) | Off-site listings, directories, reviews — the link-authority gap |
 | [OPEN-QUESTIONS.md](docs/OPEN-QUESTIONS.md) | Hitting an unknown |
 
 ## Stack

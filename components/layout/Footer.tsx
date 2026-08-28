@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { FOOTER_LINKS } from "@/lib/constants";
 import { SITE } from "@/lib/site";
+import { SERVICE_AREA_PAGES } from "@/lib/content";
 import NewsletterForm from "@/components/layout/NewsletterForm";
 
 function BotanicalAccent() {
@@ -127,6 +128,53 @@ export default function Footer() {
             <NewsletterForm />
           </div>
         </div>
+
+        {/*
+          Service areas, linked sitewide.
+
+          The footer previously linked only the /service-areas HUB, so each city
+          page had just two inbound internal links — and `bhrt salt lake city`
+          is the site's top query. Internal link depth is a crawl-priority
+          signal, and "reachable from one hub only" is the profile of a page
+          Google discovers but defers crawling; 19 pages sat in "Discovered –
+          currently not indexed" when this was added.
+
+          Driven from SERVICE_AREA_PAGES so a new city appears here
+          automatically and the list cannot drift from the routes.
+
+          Kept to the five real city pages with plain city-name anchors. A
+          footer stuffed with every route, or with keyword anchors like "best
+          BHRT Salt Lake City", is the spam version of this and would earn the
+          opposite result.
+        */}
+        <nav
+          aria-label="Service areas"
+          className="mt-12 pt-8 border-t border-stone/10"
+        >
+          <h3 className="font-heading text-lg font-medium text-white mb-3">
+            Serving Utah
+          </h3>
+          <ul className="flex flex-wrap gap-x-6 gap-y-2">
+            {SERVICE_AREA_PAGES.map((area) => (
+              <li key={area.slug}>
+                <Link
+                  href={`/${area.slug}`}
+                  className="text-sm text-stone/70 hover:text-sunlight transition-colors"
+                >
+                  {area.city}
+                </Link>
+              </li>
+            ))}
+            <li>
+              <Link
+                href="/service-areas"
+                className="text-sm text-stone/70 underline underline-offset-4 hover:text-sunlight transition-colors"
+              >
+                All service areas
+              </Link>
+            </li>
+          </ul>
+        </nav>
 
         {/* Sitewide medical disclaimer — required on every page. */}
         <div className="mt-12 pt-8 border-t border-stone/10 space-y-4">

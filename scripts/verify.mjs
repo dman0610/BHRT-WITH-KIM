@@ -735,6 +735,60 @@ section("Email capture promises");
   }
 }
 
+// ── 12. internal link reachability ─────────────────────────────────────────
+section("Internal link reachability");
+{
+  /*
+    Every page in the sitemap must be reachable by following links from another
+    page. A page listed in the sitemap but linked from nowhere is an orphan:
+    Google will discover it and then deprioritise crawling it, which is exactly
+    the "Discovered – currently not indexed" state 19 pages sat in.
+
+    The threshold is deliberately 1, not an arbitrary "healthy" number. Pages
+    have legitimately different importance — /book/follow-up is for existing
+    patients and having one inbound link is correct, not a defect. Demanding
+    four would mean manufacturing links to satisfy a script, which is the
+    behaviour this file exists to prevent elsewhere.
+
+    What this catches is the real regression: a page added to the sitemap and
+    then linked from nothing.
+  */
+  // The homepage is built as /index but linked as "/" everywhere. Same
+  // normalisation the sitemap section uses.
+  const norm = (r) => (r === "/index" ? "/" : r);
+
+  const inbound = Object.create(null);
+  for (const route of pages) inbound[norm(route)] = 0;
+
+  for (const route of pages) {
+    const doc = html.get(route);
+    if (!doc) continue;
+    const from = norm(route);
+    const targets = new Set(
+      [...doc.matchAll(/href="(\/[^"#?]*)"/g)].map(
+        (m) => m[1].replace(/\/$/, "") || "/"
+      )
+    );
+    for (const t of targets) {
+      if (t !== from && t in inbound) inbound[t]++;
+    }
+  }
+
+  const orphans = Object.entries(inbound).filter(([, n]) => n === 0);
+  for (const [route] of orphans) {
+    fail(route, "orphan — in the sitemap but no page links to it");
+  }
+
+  const counts = Object.values(inbound);
+  const min = Math.min(...counts);
+  const median = counts.sort((a, b) => a - b)[Math.floor(counts.length / 2)];
+  if (orphans.length === 0) {
+    console.log(
+      `  ${pages.length} pages, all reachable; fewest inbound ${min}, median ${median}`
+    );
+  }
+}
+
 // ── result ─────────────────────────────────────────────────────────────────
 console.log("\n" + "=".repeat(60));
 if (failures === 0) {
