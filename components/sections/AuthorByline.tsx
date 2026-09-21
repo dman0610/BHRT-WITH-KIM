@@ -21,6 +21,18 @@ export default function AuthorByline({
     <div className="flex items-start gap-4 rounded-2xl bg-mist px-5 py-4">
       <Image
         src="/kim-portrait.jpg"
+        /*
+          Empty alt is deliberate, not an oversight. Her name and credential
+          are in the text immediately beside this image, so giving the photo
+          its own alt text makes a screen reader announce "Kim Yadon, FNP-C"
+          twice on all 23 pages that carry this byline. WCAG H67 is explicit
+          that an image whose information is already in adjacent text should
+          be marked decorative.
+
+          The entity signal is not lost: the hero on `/` and the portrait on
+          `/about` both carry alt="Kim Yadon, FNP-C", which is where an image
+          result would sensibly point anyway.
+        */
         alt=""
         width={56}
         height={56}

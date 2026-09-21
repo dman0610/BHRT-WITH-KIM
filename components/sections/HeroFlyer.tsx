@@ -48,7 +48,26 @@ export default function HeroFlyer() {
                   width={600}
                   height={750}
                   className="w-full h-full object-cover object-top"
-                  priority
+                  /*
+                    This is the LCP element, and both of these are load-bearing.
+
+                    `sizes` — rendered at 320px inside `max-w-xs` on mobile and
+                    ~600px in the md grid column. Without it, next/image falls
+                    back to a fixed 1x/2x srcset off `width={600}` and mobile
+                    downloads the w=1200 variant (84KB) into a 320px box. That
+                    is 69KB wasted on the LCP image itself, over the connection
+                    least able to afford it.
+
+                    `fetchPriority`/`loading` — `priority` is DEPRECATED in
+                    Next 16 and emits only a <link rel=preload> carrying no
+                    priority hint, which is why Lighthouse's "LCP request
+                    discovery" audit failed here. The Next docs say to prefer
+                    these two over preload; see
+                    node_modules/next/dist/docs/01-app/03-api-reference/02-components/image.md
+                  */
+                  sizes="(min-width: 768px) 600px, 320px"
+                  fetchPriority="high"
+                  loading="eager"
                 />
                 {/* Badge — inside image on mobile so it never overflows */}
                 <div className="absolute bottom-4 right-4 bg-forest text-white rounded-full w-24 h-24 md:w-32 md:h-32 flex flex-col items-center justify-center text-center p-2 shadow-xl">
@@ -91,7 +110,7 @@ export default function HeroFlyer() {
 
               {/* BHRT benefits — right after headline */}
               <div className="mb-6">
-                <p className="text-xs font-semibold tracking-[0.15em] text-bark/60 uppercase mb-4">
+                <p className="text-xs font-semibold tracking-[0.15em] text-bark/75 uppercase mb-4">
                   BHRT May Help With:
                 </p>
                 <div className="grid grid-cols-5 gap-2 md:gap-3">
@@ -136,7 +155,7 @@ export default function HeroFlyer() {
               <p className="font-heading text-xl md:text-2xl font-semibold text-white leading-tight">
                 Worldlink Medical
               </p>
-              <p className="text-white/60 text-xs md:text-sm">Trusted Education. Personalized Care.</p>
+              <p className="text-white/75 text-xs md:text-sm">Trusted Education. Personalized Care.</p>
             </div>
           </div>
         </div>

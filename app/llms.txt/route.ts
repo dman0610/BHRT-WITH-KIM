@@ -10,6 +10,17 @@ import { SYMPTOM_PAGES, GUIDE_PAGES, SERVICE_AREA_PAGES } from "@/lib/content";
  *
  * No marketing voice, no adjectives, no persuasion. Facts only. Anything here
  * must trace to docs/00-BUSINESS-FACTS.md.
+ *
+ * FORMAT: this follows the llmstxt.org structure literally — H1, a blockquote
+ * summary, then H2 sections whose link lists use Markdown `[name](url): detail`
+ * syntax. Bare URLs read fine to a human but the file is a *Markdown* document
+ * by spec, and Lighthouse's agentic-browsing `llms-txt` audit fails a file
+ * containing no Markdown links at all. Keep the link syntax when editing.
+ *
+ * Worth knowing what this file is and is not for: Google Search states plainly
+ * that it ignores llms.txt, so nothing here affects Google rankings or AI
+ * Overviews. It is for the crawlers that do read it. The real work of being
+ * quotable is done by the server-rendered pages.
  */
 export const dynamic = "force-static";
 
@@ -18,7 +29,7 @@ function body(): string {
 
   return `# ${SITE.name}
 
-${SITE.entityStatement}
+> ${SITE.entityStatement}
 
 ## Provider
 ${provider.fullName} — ${provider.jobTitle}
@@ -85,34 +96,34 @@ not author.
 - Comprehensive testing may cover hormones and thyroid function.
 
 ## Booking
-${SITE.url}/book
+- [Book a consultation](${SITE.url}/book)
 
 ## Contact
 Phone: ${contact.phone}
 Email: ${contact.email}
 
 ## Key pages
-- ${SITE.url}/ — practice overview and service area
-- ${SITE.url}/about — credentials, training, and approach
-- ${SITE.url}/services — services offered and full pricing
-- ${SITE.url}/faq — common questions about BHRT, cost, and the process
-- ${SITE.url}/book — book a free ${OFFERINGS.freeConsult.durationMinutes}-minute phone consultation
-- ${SITE.url}/quiz — educational hormone symptom assessment
-- ${SITE.url}/resources — educational articles on hormone health
-- ${SITE.url}/disclaimer — medical disclaimer
-- ${SITE.url}/privacy — privacy policy
+- [BHRT with Kim](${SITE.url}/): practice overview and service area
+- [About Kim Yadon, FNP-C](${SITE.url}/about): credentials, training, and approach
+- [Services](${SITE.url}/services): services offered and full pricing
+- [FAQ](${SITE.url}/faq): common questions about BHRT, cost, and the process
+- [Book a consultation](${SITE.url}/book): free ${OFFERINGS.freeConsult.durationMinutes}-minute phone consultation
+- [Hormone symptom quiz](${SITE.url}/quiz): educational hormone symptom assessment
+- [Resources](${SITE.url}/resources): educational articles on hormone health
+- [Medical disclaimer](${SITE.url}/disclaimer)
+- [Privacy policy](${SITE.url}/privacy)
 
 ## Guides
-${GUIDE_PAGES.map((p) => `- ${SITE.url}/${p.slug} — ${p.description}`).join("\n")}
+${GUIDE_PAGES.map((p) => `- [${p.h1}](${SITE.url}/${p.slug}): ${p.description}`).join("\n")}
 
 ## Symptom pages
-${SYMPTOM_PAGES.map((p) => `- ${SITE.url}/${p.slug} — ${p.description}`).join("\n")}
+${SYMPTOM_PAGES.map((p) => `- [${p.h1}](${SITE.url}/${p.slug}): ${p.description}`).join("\n")}
 
 ## Service areas
 All of Utah. Visits are virtual and licensure is statewide, so no city is
 outside the service area. Pages exist for these cities because people search
 by city name, not because eligibility depends on one:
-${SERVICE_AREA_PAGES.map((p) => `- ${SITE.url}/${p.slug} — ${p.city}, ${p.county}`).join("\n")}
+${SERVICE_AREA_PAGES.map((p) => `- [${p.city}, ${p.county}](${SITE.url}/${p.slug}): ${p.hubBlurb}`).join("\n")}
 There is no physical clinic in any of these cities. All consultations are
 conducted by phone or video.
 

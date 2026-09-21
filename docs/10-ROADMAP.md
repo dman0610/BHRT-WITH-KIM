@@ -665,7 +665,7 @@ Full detail, plus a copy/paste list of what to ask Kim, in [OPEN-QUESTIONS.md](O
 - [ ] Pixel verified firing, **carrying zero health data**
 - [ ] "How did you hear about Kim?" live
 - [ ] Mobile LCP under 2.5s
-- [ ] Body text passes WCAG AA
+- [x] **Body text passes WCAG AA** ✅ 2026-09-21 — 20 of 20 audited page types at Lighthouse accessibility 100. `clay-text` passed on `stone` but failed on the `mist` and tinted panels (4.29–4.36:1), which is most body copy on `/contact`, `/faq`, `/services`, `/book/*` and `/quiz`. Tokens re-measured against every surface they land on, and `npm run verify` now fails the build below 4.5:1. See [09-DESIGN-SYSTEM.md](09-DESIGN-SYSTEM.md)
 - [ ] GBP address hidden, service area configured
 - [ ] Zero unverifiable claims, zero hidden content
 - [ ] No business fact hardcoded outside `lib/site.ts`

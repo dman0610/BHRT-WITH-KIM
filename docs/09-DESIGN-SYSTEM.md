@@ -58,6 +58,87 @@ All `text-clay` and `text-clay/N` usages were migrated to `text-clay-text`.
 
 ---
 
+## Accessibility issue: the same contrast bug, one layer down
+
+**Fixed 2026-09-21.** The Phase 1 fix above was right about the problem and
+incomplete about the surface. It is worth reading the two together.
+
+`clay-text` was measured against `stone` and shipped at **4.56:1** — twelve
+hundredths of a point over the AA threshold. But body copy is not painted only
+on `stone`. It sits on `mist` panels (the FAQ callout, the lab-cost note, the
+booking disclaimers) and on the tinted cards on `/contact`. On those it
+measured **4.29:1, 4.35:1 and 4.36:1** — failing, sitewide, in exactly the
+places Phase 1 was trying to protect.
+
+**A Lighthouse run on the homepage does not find this**, because the homepage
+happens not to use those panels. It took auditing every page type.
+
+| Page | Before | After |
+|---|---|---|
+| `/contact` | 96 | 100 |
+| `/faq`, `/services` | 96 | 100 |
+| `/book`, `/book/*`, `/quiz`, `/resources/*` | 97 | 100 |
+| `/` | 97 | 100 |
+
+**20 of 20 audited pages now score 100.**
+
+### What changed
+
+```css
+--color-clay-text: #6D5F51;   /* was #7A6C5C */
+--color-error:     #A63D3D;   /* was #C45B5B */
+--color-success-on-dark: #8CAE90;   /* new */
+--color-error-on-dark:   #E08F8F;   /* new */
+```
+
+**Measured against every surface each one is actually painted on:**
+
+| Pair | Ratio | AA normal |
+|---|---|---|
+| `clay-text` on white | 6.17:1 | ✅ |
+| `clay-text` on `stone` | 5.52:1 | ✅ |
+| `clay-text` on `mist` | 5.20:1 | ✅ |
+| `clay-text` on peach tint `#F7EBE8` | 5.29:1 | ✅ |
+| `clay-text` on lavender tint `#F1ECEE` | 5.28:1 | ✅ |
+| `error` on white | 6.26:1 | ✅ |
+| `error` on `stone` | 5.60:1 | ✅ |
+| `error` on its own /10 tint | 5.40:1 | ✅ |
+| `success-on-dark` on `bark` | 5.12:1 | ✅ |
+| `error-on-dark` on `bark` | 5.08:1 | ✅ |
+
+`error` was the worst of them in practice: at `#C45B5B` it was **2.99:1** on the
+dark footer and **3.35:1** against its own tint in the contact form's submit
+error — the single message a reader most needs to be able to read.
+
+### Opacity variants, raised to pass
+
+These were each measured against their own background, not assumed:
+
+| Was | Now | Ratio | Where |
+|---|---|---|---|
+| `text-bark/60` on `stone` — 3.54:1 | `text-bark/75` | 5.37:1 | homepage hero eyebrow |
+| `text-white/60` on `forest` — 4.03:1 | `text-white/75` | 5.31:1 | hero tagline, article back-link |
+| `text-white/50` on `forest` — 3.29:1 | `text-white/75` | 5.31:1 | article meta row |
+| `text-stone/50` on `bark` — 4.07:1 | `text-stone/70` | 6.37:1 | newsletter status line |
+| `placeholder:text-stone/40` on `bark` — 3.17:1 | `/60` | 5.15:1 | newsletter input |
+
+### The rule this adds
+
+Phase 1's rule — *measure a new colour against its actual background* — was
+correct and was followed. It still produced a sitewide failure, because
+"its actual background" was read as one background when the token had five.
+
+**`npm run verify` now asserts the token values against every light surface
+they land on**, and fails the build below 4.5:1. That check is what makes the
+rule enforceable rather than aspirational; it catches the regression that
+re-lightening `clay-text` would cause, without anyone remembering to run
+Lighthouse on the right page. It also still fails if `text-clay` is used for
+text.
+
+Opacity variants are composites resolved at paint time and are *not* covered by
+the build check — the table above is the record for those.
+
+
 ## Typography
 
 - **Headings:** Cormorant Garamond (`--font-heading`), weights 400/500/600. Applied to all `h1`–`h6` via `@layer base`.

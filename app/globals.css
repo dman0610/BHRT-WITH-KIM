@@ -16,8 +16,22 @@
   --color-bark: #3B3228;
   /* Decorative only — 3.6:1 on stone, below the WCAG AA 4.5:1 threshold. */
   --color-clay: #8B7D6B;
-  /* Body copy — 4.6:1 on stone. Use this for anything meant to be read. */
-  --color-clay-text: #7A6C5C;
+  /*
+    Body copy. Darkened from #7A6C5C on 2026-09-21.
+
+    #7A6C5C was chosen against `stone` alone, where it measured 4.56:1 — a
+    12-hundredths margin over the AA threshold. It is used on every light
+    surface, not just stone, and on the tinted panels it fell through:
+    4.29:1 on `mist`, 4.35:1 on the lavender tint, 4.36:1 on the peach tint.
+    That meant seven of seventeen audited pages failed WCAG AA on their body
+    text, including the contact details on /contact and the lab-cost note.
+
+    #6D5F51 is measured against every background it actually appears on:
+    white 6.17:1, stone 5.52:1, mist 5.20:1, peach tint 5.29:1, lavender tint
+    5.28:1. Worst case 5.20:1 — headroom rather than a pass by a hair, which
+    matters for an audience where reduced contrast sensitivity is the norm.
+  */
+  --color-clay-text: #6D5F51;
   --color-sunlight: #E8C547;
   --color-lavender: #E6DFF1;
   --color-peach: #FADADD;
@@ -25,7 +39,23 @@
   --color-mist: #E8EDE9;
   --color-success: #4A7C59;
   --color-warning: #E8C547;
-  --color-error: #C45B5B;
+  /*
+    Was #C45B5B, which measured 4.2:1 on white and 3.8:1 on stone — failing
+    WCAG AA for normal text on both, and 3.4:1 against its own /10 tint, which
+    is how the contact form renders its submit error. An error message the
+    reader cannot comfortably read is the worst possible one to under-serve.
+    #A63D3D is 6.3:1 on white, 5.6:1 on stone, 4.9:1 on the tint.
+  */
+  --color-error: #A63D3D;
+
+  /*
+    On-dark status variants. The newsletter form sits on `bark` in the footer,
+    where the light-background tokens above invert into failures: `success`
+    measured 4.2:1 there and `error` 3.0:1. Measured against #3B3228 —
+    5.1:1 both. Do not use these on a light background.
+  */
+  --color-success-on-dark: #8CAE90;
+  --color-error-on-dark: #E08F8F;
 
   /* shadcn mappings */
   --color-primary: var(--primary);

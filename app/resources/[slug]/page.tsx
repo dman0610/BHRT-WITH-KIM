@@ -89,7 +89,7 @@ export default async function ArticlePage({ params }: Props) {
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
           <Link
             href="/resources"
-            className="inline-flex items-center gap-2 text-white/60 hover:text-white text-sm transition-colors mb-8"
+            className="inline-flex items-center gap-2 text-white/75 hover:text-white text-sm transition-colors mb-8"
           >
             <ArrowLeft className="size-4" />
             Back to Resources
@@ -109,7 +109,7 @@ export default async function ArticlePage({ params }: Props) {
             {article.intro}
           </p>
 
-          <div className="mt-6 flex items-center gap-5 text-sm text-white/50">
+          <div className="mt-6 flex items-center gap-5 text-sm text-white/75">
             <span className="flex items-center gap-1.5">
               <Calendar className="size-4" />
               {formattedDate}

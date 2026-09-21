@@ -13,7 +13,7 @@ export const saltLakeCity: GeoPage = {
   slug: "service-areas/salt-lake-city",
   city: "Salt Lake City",
   county: "Salt Lake County",
-  titleSegment: "BHRT in Salt Lake City",
+  titleSegment: "BHRT in Salt Lake City, Utah — Virtual Care",
   description:
     "Bioidentical hormone therapy for women in Salt Lake City. Virtual visits with Kim Yadon, FNP-C, and an honest comparison with in-person clinics.",
   h1: "Bioidentical Hormone Therapy in Salt Lake City",

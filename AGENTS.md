@@ -75,3 +75,10 @@ Next.js 16.2.2 (App Router) · React 19.2.4 · TypeScript · Tailwind CSS v4 (**
 - Path alias `@/` → repo root.
 - JSON-LD renders as a native `<script>` with `.replace(/</g, "\\u003c")`, never `next/script`.
 - Update [10-ROADMAP.md](docs/10-ROADMAP.md) checkboxes as work lands.
+- **Changing page copy, links, titles or descriptions? Run `npm run stamp`.**
+  Sitemap `lastmod` is derived from a fingerprint of each page's rendered
+  content, kept in `lib/content-dates.json`. `npm run verify` fails the build
+  when that file is stale, and tells you so. The loop is
+  `npm run build && npm run stamp && npm run build`. Commit the JSON — Vercel
+  builds from a clean checkout, so a date that only exists locally never ships.
+  Restyling does not move a date; changing what the page says does.

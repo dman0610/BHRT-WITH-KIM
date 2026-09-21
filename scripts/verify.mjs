@@ -24,6 +24,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { currentFingerprints, readManifest } from "./stamp-content.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const APP = path.join(ROOT, ".next/server/app");
@@ -785,6 +786,156 @@ section("Internal link reachability");
   if (orphans.length === 0) {
     console.log(
       `  ${pages.length} pages, all reachable; fewest inbound ${min}, median ${median}`
+    );
+  }
+}
+
+// ── 6c. text token contrast against every surface it lands on ──────────────
+section("Colour token contrast");
+{
+  /*
+    `--color-clay-text` was introduced in Phase 1 to fix body copy that failed
+    WCAG AA, and it was measured against `stone` — where it passed at 4.56:1,
+    twelve hundredths over the line. It is used on every light surface, and on
+    the tinted panels it failed anyway: 4.29:1 on `mist`, 4.35:1 on the
+    lavender tint, 4.36:1 on the peach tint. Seven of seventeen audited pages
+    failed their body text, including the contact details on /contact.
+
+    The lesson is not "that hex was wrong". It is that a single-background
+    measurement does not generalise, and nothing in the build caught it. So
+    the token values are asserted here against EVERY background they are
+    painted on — cheap, static, and it fails the build rather than waiting for
+    someone to think to run Lighthouse on the right page.
+
+    Opacity variants (text-bark/75 and friends) are not covered by this; they
+    are composites resolved at paint time. Those are held by the Lighthouse
+    sweep recorded in docs/09-DESIGN-SYSTEM.md.
+  */
+  const css = fs.readFileSync(path.join(ROOT, "app/globals.css"), "utf8");
+  const token = (name) => {
+    const m = css.match(new RegExp("--color-" + name + ": *(#[0-9A-Fa-f]{6})"));
+    if (!m) {
+      fail("globals.css", `--color-${name} not found`);
+      return "#000000";
+    }
+    return m[1];
+  };
+
+  const srgb = (hex) =>
+    [1, 3, 5].map((i) => {
+      const c = parseInt(hex.slice(i, i + 2), 16) / 255;
+      return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+    });
+  const lum = (hex) => {
+    const [r, g, b] = srgb(hex);
+    return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+  };
+  const ratio = (a, b) => {
+    const [hi, lo] = [lum(a), lum(b)].sort((x, y) => y - x);
+    return (hi + 0.05) / (lo + 0.05);
+  };
+
+  /*
+    Every light surface body copy is painted on. The two tints are `mist` and
+    `peach` laid over `stone` at low alpha by section wrappers — hard-coded as
+    the composites Lighthouse actually measured, because the alpha lives in
+    Tailwind classes rather than in a token.
+  */
+  const LIGHT_SURFACES = {
+    white: "#FFFFFF",
+    stone: token("stone"),
+    mist: token("mist"),
+    "lavender tint": "#F1ECEE",
+    "peach tint": "#F7EBE8",
+  };
+
+  const AA = 4.5;
+  let worstName = "";
+  let worst = Infinity;
+
+  for (const [bgName, bg] of Object.entries(LIGHT_SURFACES)) {
+    const r = ratio(token("clay-text"), bg);
+    if (r < worst) [worst, worstName] = [r, bgName];
+    if (r < AA)
+      fail(
+        "globals.css",
+        `--color-clay-text is ${r.toFixed(2)}:1 on ${bgName} — WCAG AA needs ${AA}:1 for body text`
+      );
+  }
+
+  /* Status colours in the footer newsletter form sit on `bark`, not on a page. */
+  const bark = token("bark");
+  for (const name of ["success-on-dark", "error-on-dark"]) {
+    const r = ratio(token(name), bark);
+    if (r < AA)
+      fail("globals.css", `--color-${name} is ${r.toFixed(2)}:1 on bark — needs ${AA}:1`);
+  }
+
+  /* `error` is read on white cards and on its own /10 tint in the contact form. */
+  for (const [bgName, bg] of [["white", "#FFFFFF"], ["stone", token("stone")]]) {
+    const r = ratio(token("error"), bg);
+    if (r < AA)
+      fail("globals.css", `--color-error is ${r.toFixed(2)}:1 on ${bgName} — needs ${AA}:1`);
+  }
+
+  /* `clay` is decorative by decree. Assert it never becomes a text colour. */
+  for (const route of pages) {
+    if (/class="[^"]*\btext-clay\b(?!-text)/.test(html.get(route)))
+      fail(route, "uses text-clay for text — decorative only, use text-clay-text");
+  }
+
+  if (failures === 0)
+    console.log(
+      `  clay-text worst case ${worst.toFixed(2)}:1 (on ${worstName}); status colours pass on bark`
+    );
+}
+
+// -- 6d. sitemap dates track real content changes -------------------------
+section("Sitemap date freshness");
+{
+  /*
+    The failure this prevents has already happened once and cost five weeks.
+
+    The sitemap's lastModified was pinned to a hand-maintained constant with a
+    comment asking whoever changed content to move it. The footer gained
+    sitewide service-area links on 2026-08-28; both schema entities gained
+    social profiles on 2026-08-21. Nobody moved the constant. The sitemap told
+    Google "nothing has changed here since 2026-08-16" every day for five
+    weeks, and 19 URLs sat in "Discovered - currently not indexed" without
+    being fetched once.
+
+    So the rule is not a comment any more. Every route's rendered content is
+    fingerprinted; if a fingerprint moved and lib/content-dates.json was not
+    restamped, this fails and the sitemap cannot ship a stale date.
+  */
+  const current = currentFingerprints();
+  const manifest = readManifest();
+
+  const stale = [];
+  const missing = [];
+  for (const [route, hash] of Object.entries(current)) {
+    if (!manifest[route]) missing.push(route);
+    else if (manifest[route].hash !== hash) stale.push(route);
+  }
+  const orphaned = Object.keys(manifest).filter((r) => !(r in current));
+
+  for (const route of missing)
+    fail(route, "no entry in lib/content-dates.json - run `npm run stamp`");
+  for (const route of stale)
+    fail(route, "content changed since it was last stamped - run `npm run stamp`");
+  for (const route of orphaned)
+    fail(route, "in lib/content-dates.json but not in the build - run `npm run stamp`");
+
+  if (stale.length || missing.length) {
+    console.log("");
+    console.log("    The sitemap would ship a date that is not true. Fix with:");
+    console.log("      npm run stamp && npm run build && npm run verify");
+  }
+
+  if (!stale.length && !missing.length && !orphaned.length) {
+    const dates = Object.values(manifest).map((e) => e.date).sort();
+    console.log(
+      `  ${Object.keys(current).length} routes stamped; newest content date ${dates[dates.length - 1]}`
     );
   }
 }

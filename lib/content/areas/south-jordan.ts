@@ -12,7 +12,7 @@ export const southJordan: GeoPage = {
   slug: "service-areas/south-jordan",
   city: "South Jordan",
   county: "Salt Lake County",
-  titleSegment: "BHRT in South Jordan",
+  titleSegment: "BHRT in South Jordan, Utah — Virtual Care",
   description:
     "Bioidentical hormone therapy for women in South Jordan, Utah. Kim Yadon, FNP-C is based in South Jordan and sees patients by virtual visit statewide.",
   h1: "Bioidentical Hormone Therapy in South Jordan, Utah",

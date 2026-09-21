@@ -13,7 +13,7 @@ export const lehi: GeoPage = {
   slug: "service-areas/lehi",
   city: "Lehi",
   county: "Utah County",
-  titleSegment: "BHRT in Lehi",
+  titleSegment: "BHRT in Lehi, Utah — Virtual Care",
   description:
     "Bioidentical hormone therapy for women in Lehi and across Utah County. Kim Yadon, FNP-C is licensed statewide and sees patients by virtual visit.",
   h1: "Bioidentical Hormone Therapy in Lehi, Utah",

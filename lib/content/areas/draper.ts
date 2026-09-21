@@ -13,7 +13,7 @@ export const draper: GeoPage = {
   slug: "service-areas/draper",
   city: "Draper",
   county: "Salt Lake County",
-  titleSegment: "BHRT in Draper",
+  titleSegment: "BHRT in Draper, Utah — Virtual Care",
   description:
     "Bioidentical hormone therapy for women in Draper, Utah. Virtual visits with Kim Yadon, FNP-C fit around a commute — no drive, no waiting room.",
   h1: "Bioidentical Hormone Therapy in Draper, Utah",

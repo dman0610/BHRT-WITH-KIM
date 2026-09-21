@@ -60,7 +60,7 @@ export default function NewsletterForm() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-          className="bg-bark border-stone/20 text-stone placeholder:text-stone/40 focus:border-sage rounded-full text-sm"
+          className="bg-bark border-stone/20 text-stone placeholder:text-stone/60 focus:border-sage rounded-full text-sm"
           aria-label="Email for newsletter"
         />
         <Button
@@ -71,12 +71,17 @@ export default function NewsletterForm() {
           {status === "loading" ? "..." : "Join"}
         </Button>
       </form>
-      <p className="mt-2 text-xs text-stone/50" role="status">
+      {/*
+        All three colours here are measured against `bark`, not against a light
+        page — stone/50, sage and error each failed WCAG AA on this background.
+        See docs/09-DESIGN-SYSTEM.md.
+      */}
+      <p className="mt-2 text-xs text-stone/70" role="status">
         {status === "success" && (
-          <span className="text-sage">Welcome! You&apos;ll hear from us soon.</span>
+          <span className="text-success-on-dark">Welcome! You&apos;ll hear from us soon.</span>
         )}
         {status === "error" && (
-          <span className="text-error">Something went wrong. Please try again.</span>
+          <span className="text-error-on-dark">Something went wrong. Please try again.</span>
         )}
         {status !== "success" && status !== "error" && "Unsubscribe anytime."}
       </p>

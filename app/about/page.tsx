@@ -61,7 +61,14 @@ export default function AboutPage() {
                 width={600}
                 height={750}
                 className="w-full h-full object-cover object-top"
-                priority
+                /*
+                  Deliberately NOT preloaded. This sits in the second section,
+                  below the fold — `priority` here told the browser to race it
+                  against the actual above-the-fold content for bandwidth.
+                  `priority` is also deprecated in Next 16; see HeroFlyer.tsx
+                  for the LCP image that genuinely wants the priority hint.
+                */
+                sizes="(min-width: 768px) 600px, 100vw"
               />
             </div>
 

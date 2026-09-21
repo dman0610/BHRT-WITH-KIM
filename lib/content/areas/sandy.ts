@@ -15,7 +15,7 @@ export const sandy: GeoPage = {
   slug: "service-areas/sandy",
   city: "Sandy",
   county: "Salt Lake County",
-  titleSegment: "BHRT in Sandy, Utah",
+  titleSegment: "BHRT in Sandy, Utah — Virtual Care",
   description:
     "Bioidentical hormone therapy for women in Sandy, Utah. Virtual visits with Kim Yadon, FNP-C, plus what to have ready before a first consultation.",
   h1: "Bioidentical Hormone Therapy in Sandy, Utah",
