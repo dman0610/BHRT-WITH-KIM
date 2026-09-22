@@ -48,10 +48,12 @@ as much as any page.
 |---|---|
 | Hours Mon–Fri 9:00–5:00 | ✅ fixed (Dallin, confirmed 2026-09-22) |
 | Website → `https://bhrtwithkim.com` | ✅ linked (confirmed 2026-09-22) |
-| Description → canonical entity statement | ❓ unconfirmed — exact text in [12-CITATIONS.md](12-CITATIONS.md) |
-| Nine services listed | ❓ unconfirmed |
-| House-exterior photo removed | ❓ unconfirmed |
-| Reviews | 1 as of 2026-08-16; current count unknown |
+| Description → canonical entity statement | ✅ submitted 2026-09-22 (pending Google review) — text in [12-CITATIONS.md](12-CITATIONS.md) |
+| Services | ✅ being added 2026-09-22 under *Nurse practitioner*, "No price" (pending review, up to 1 day) |
+| Categories | ✅ unchanged: Nurse practitioner (primary), Medical clinic, Wellness center, Women's health clinic. **Checked 2026-09-22: Google offers no category matching "hormone", "menopause" or "therapy"** — don't search again |
+| Onsite services attribute | ✅ **No** — correct, all visits are virtual |
+| House photo | "See outside" is Google Street View, which owners cannot remove; only uploaded photos can be |
+| Reviews | **5** on 2026-09-22 (1 on 2026-08-16) |
 
 ---
 
@@ -110,7 +112,7 @@ Branch `seo-pass-2026-09-22`.
 |---|---|---|---|
 | 1 | ✅ **Deployed** 2026-09-22 | Dallin | Verified in production: 39/39 URLs 200, 21 new `lastmod` dates, Healthie embed intact |
 | 2 | ✅ **Indexing requested** for all 10 below, 2026-09-22 | Dallin | Search Console → search bar at the top ("Inspect any URL…") → paste the **full** URL → Enter → **Request indexing**. ~10 per day. A bare path like `/services` returns "URL not in property". Order: `https://bhrtwithkim.com/` ✅ requested 2026-09-22, then `https://bhrtwithkim.com/services`, `https://bhrtwithkim.com/about`, `https://bhrtwithkim.com/service-areas/salt-lake-city`, `https://bhrtwithkim.com/service-areas/draper`, `https://bhrtwithkim.com/bhrt-cost-utah`, `https://bhrtwithkim.com/faq`, `https://bhrtwithkim.com/service-areas/sandy`, `https://bhrtwithkim.com/service-areas/south-jordan`, `https://bhrtwithkim.com/symptoms/menopause-fatigue` |
-| 3 | **GBP description + nine services** | Dallin / Kim | Exact text and click path in [12-CITATIONS.md](12-CITATIONS.md) |
+| 3 | ✅ **GBP description + services** submitted 2026-09-22 | Dallin | Confirm both publish within a day or two |
 | 4 | **Reviews — stop the review-for-free-session offer, then ask every patient with nothing attached** | Kim | ⚠️ **Live issue, found 2026-09-22:** Kim currently gives a free first session to anyone who leaves a review. Google's Maps policy prohibits "free goods and/or services in exchange for posting any review" (removal of reviews, feature limits, account disabling); the FTC permits sentiment-neutral incentives only if the review discloses them. Stop the offer; do not ask anyone to delete existing reviews. Rules in [08-LOCAL-GBP.md](08-LOCAL-GBP.md#reviews--the-highest-priority-local-task) |
 | 5 | **Health directories** — Healthgrades, WebMD Care, Vitals, Doximity | Dallin | Reopened 2026-09-22 (Dallin had not ruled them out). Fields pre-written in [12-CITATIONS.md](12-CITATIONS.md) |
 | 6 | **NPPES practice location** | Kim | The federal NPI record lists her practice location as **Riverton** (mailing: South Jordan), last updated 2024-01-12. GBP says South Jordan. If Riverton is stale, Kim updates it at nppes.cms.hhs.gov — it is the government record `sameAs` points at |

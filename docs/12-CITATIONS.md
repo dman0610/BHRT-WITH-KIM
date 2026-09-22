@@ -104,9 +104,10 @@ and it is ranked from the profile, not the website.
 |---|---|
 | Hours Mon–Fri 9:00am–5:00pm | ✅ done |
 | Website `https://bhrtwithkim.com` | ✅ done |
-| Description | ❓ **unconfirmed** — replace with the text below |
-| Nine services | ❓ **unconfirmed** — list below |
-| House-exterior photo | ❓ unconfirmed — delete it if it is still there |
+| Description | ✅ submitted 2026-09-22, pending Google review |
+| Services | ✅ being added 2026-09-22 under *Nurse practitioner* only, price "No price" |
+| Categories | ✅ unchanged. **Google has no category for "hormone", "menopause" or "therapy"** (checked 2026-09-22) |
+| House photo | The "See outside" tile is Street View — not removable by the owner |
 
 ### Description — click path and exact text
 
@@ -138,6 +139,11 @@ From [Google's help page](https://support.google.com/business/answer/9455399):
 Business Profile → **Edit services** → **Add custom service** for each name
 below → open the service → add the description → **Save**. Service names must
 not contain prices or phone numbers.
+
+Add them under **Nurse practitioner** only ("Add more services" beneath it) —
+not duplicated under each category. Leave Price on **No price**: these are parts
+of care, not separately sold. ⚠️ The blue **Delete** links beside the secondary
+categories delete the *category*, not a service.
 
 | Service name | Description (paste) |
 |---|---|
