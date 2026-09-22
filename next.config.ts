@@ -12,7 +12,7 @@ import type { NextConfig } from "next";
  * booking (the single most important action on the site) or be permissive
  * enough to add nothing. That belongs as its own task against the deployed
  * page, where each origin can be observed rather than guessed.
- * See docs/11-LAUNCH.md.
+ * See docs/archive/2026-08-launch-runbook.md.
  *
  * Note X-Frame-Options: SAMEORIGIN stops OTHER sites framing us. It does not
  * affect us embedding Healthie — that is frame-src, which is unset.

@@ -1,6 +1,6 @@
 # 01 — Strategy
 
-Last updated: 2026-08-10 · Owner: Dallin
+Last updated: 2026-09-22 · Owner: Dallin
 
 ---
 
@@ -31,7 +31,7 @@ The practical test for any new page: *does this make Kim more obviously the horm
 ### What differentiates, in order of usefulness
 
 1. **Virtual-first across all of Utah** — reaches rural and southern Utah women with no local option. This is a genuine access advantage, not a convenience feature.
-2. **Test, don't guess** — comprehensive panels including thyroid, adrenals, and screening for underlying conditions.
+2. **Test, don't guess** — comprehensive hormone and thyroid panels before any treatment plan. *(Adrenal assessment and broad "underlying conditions" screening left Kim's scope on 2026-08-12 — never reintroduce them in copy.)*
 3. **Lifestyle before prescription** — foundations first, hormones when indicated. Differentiates from prescribe-first telehealth.
 4. **Lived experience** — Kim's own perimenopause account. First-hand experience is an explicit E-E-A-T signal, and it's real.
 5. **Transparent pricing** — published rates. Rare in this category and disproportionately effective for both trust and AI citation.
@@ -66,7 +66,7 @@ Most sites pitch at stage one and lose everyone not already at stage five. The e
 
 ## Funnel model
 
-**These are planning assumptions, not measured data.** Nothing is instrumented yet — the site has no analytics of any kind. Replace each figure with real numbers after 30 days of tracking. They are here to make the model explicit and falsifiable, not to forecast.
+**These are planning assumptions, not measured data.** Vercel Analytics and the five funnel events have been live since 2026-08-16 — replace each figure with the measured number when reviewing. Search Console's first three months are summarised in [10-ROADMAP.md](10-ROADMAP.md). They are here to make the model explicit and falsifiable, not to forecast.
 
 ```
 Ad / organic  →  Quiz page  →  Quiz complete  →  Email capture  →  Nurture  →  Booked consult

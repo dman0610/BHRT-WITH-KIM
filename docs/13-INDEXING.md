@@ -166,8 +166,9 @@ in `next.config.ts`. Judging it needs a preview deployment.
 Check Search Console → Pages. If "Discovered – currently not indexed" is still 19
 two weeks after 2026-09-21, the sitemap signal was not the constraint.
 
-**Do not** re-suggest Bing Webmaster Tools or directory/citation submissions —
-Dallin has declined both.
+**Do not** re-suggest Bing Webmaster Tools — Dallin has ruled it out. *(Health
+directories are a separate channel and were never declined — corrected
+2026-09-22. They are an authority lever, not an indexing fix.)*
 
 Worth investigating instead:
 

@@ -2,8 +2,8 @@
 
 **This file is the single source of truth for every fact published about this business.**
 
-Last verified: 2026-08-10 · Owner: Dallin
-Source of record: audit of live site + Kim Yadon emails of 2026-08-06
+Last verified: 2026-09-22 · Owner: Dallin
+Source of record: Kim Yadon's emails (2026-08-06 → 2026-08-15), Dallin's confirmations, and the NPPES registry
 
 ---
 
@@ -82,15 +82,15 @@ NAP (Name, Address, Phone) must match the Google Business Profile **character fo
 | Field | Value | Status |
 |---|---|---|
 | Name | BHRT with Kim | Verified |
-| Phone | `(801) 573-0606` | Verified — [lib/constants.ts:629](../lib/constants.ts#L629) |
+| Phone | `(801) 573-0606` | Verified — `SITE.contact.phone` in [lib/site.ts](../lib/site.ts) |
 | Public email | `bhrtwithkim@gmail.com` | Verified 2026-08-07 — business inbox, **receiving only**. See below. |
 | Street address | — | **Not for publication.** See below. |
 | City | **South Jordan** | Verified 2026-08-07 — **GBP proximity anchor only, not for publication as an address** |
 | State | Utah | Verified |
-| Service area line | `Serving patients in Utah` | Verified — [lib/constants.ts:630](../lib/constants.ts#L630) |
+| Service area line | `Serving patients in Utah` | Verified — `SITE.contact.serviceAreaLine` |
 | Business hours | **Monday–Friday, 9am–5pm** | Verified 2026-08-12 — **reachability, not appointment slots.** See below |
 | Insurance | **Cash pay only — not accepted** | Verified 2026-08-12 |
-| NPI | **1316718968** | Verified 2026-08-12 — public via NPPES |
+| NPI | **1316718968** | Verified 2026-08-12; re-checked live against NPPES 2026-09-22 — see below |
 | Utah licence | **APRN #308855-4405** | Verified 2026-08-12 — public via Utah DOPL |
 
 ### Service area
@@ -191,7 +191,7 @@ This is the primary sitewide CTA. It removes the price objection at first contac
 
 ## Services
 
-Nine services, defined at [lib/constants.ts:45-127](../lib/constants.ts#L45-L127). Descriptions are verified copy and may be edited for compliance but not for substance without Kim's input.
+Nine services, defined in `SERVICES` in [lib/constants.ts](../lib/constants.ts). Descriptions are verified copy and may be edited for compliance but not for substance without Kim's input.
 
 | id | Title | Featured |
 |---|---|---|
@@ -202,7 +202,7 @@ Nine services, defined at [lib/constants.ts:45-127](../lib/constants.ts#L45-L127
 | `exercise` | Exercise & Movement | |
 | `detox` | Detox Support | |
 | `natural-remedies` | Natural Remedies | |
-| `thyroid-adrenal` | Thyroid & Adrenal Health | |
+| `thyroid` | Thyroid Assessment | |  *(was `thyroid-adrenal` until the 2026-08-12 scope narrowing)*
 | `testing` | Comprehensive Testing | |
 
 **Fixed in Phase 3.** All nine descriptions now render on `/services`, each with a working `#id` anchor, so the `/services#bhrt`-style links from the homepage cards and from quiz results resolve. Before that they pointed at fragments that did not exist and every quiz completion dead-ended.
@@ -247,7 +247,7 @@ This is a deliberate trade. Published pricing normally earns AI citations and pr
 
 **Kim: not ready. Remove every mention**, including the `/services` hero subtitle and both pricing tiers. Do not reintroduce without her go-ahead.
 
-**Unknown:** whether insurance is accepted. High-value FAQ answer, currently unanswerable.
+**Insurance:** cash pay only — not accepted (Kim, 2026-08-12). Stated on the site.
 
 ---
 
@@ -259,7 +259,7 @@ This is a deliberate trade. Published pricing normally earns AI citations and pr
 |---|---|
 | Code | `BHRTwithKim25` |
 | Discount | 25% off any package |
-| Valid through | **2026-09-15** |
+| Valid through | **2026-09-15** — ✅ expired; the banner self-disabled, verified absent from the live site 2026-09-22 |
 | Placement | Sitewide banner, `/services`, ads |
 
 Single source of truth is `lib/promo.ts`; `<PromoBanner />` reads it and **self-disables after the expiry date**. Pages are statically generated, so the root layout needs `revalidate` for the expiry to actually fire — a build-time date check would never expire. A stated deadline that silently passes is a false-advertising exposure.
@@ -328,7 +328,7 @@ From `/about`. These are the "what actually happens" specifics that AI systems q
 
 ## Testimonials
 
-Four, at [lib/constants.ts:132-165](../lib/constants.ts#L132-L165): Natalie K., Allison G., Alyssa C., Beccah G.
+Four, in `TESTIMONIALS` in [lib/constants.ts](../lib/constants.ts): Natalie K., Allison G., Alyssa C., Beccah G.
 
 - All have empty `context` fields, which render as blank lines.
 - Source and date unknown. **Do not** mark up as `Review`/`AggregateRating` schema — Google requires reviews be genuinely collected and attributable, and self-serving review schema is a manual-action risk. `npm run verify` fails the build if that schema ever appears.
@@ -365,6 +365,25 @@ Both are public records, so publishing exposes nothing private, and a checkable 
 
 ⚠️ **APRN is the licence CATEGORY, not a post-nominal.** `Kim Yadon, FNP-C` remains the only authorized rendering. `npm run verify` fails the build if `Kim Yadon, APRN` ever appears.
 
+**Both are visible on `/about#verify` since 2026-09-22**, each linked to the issuing registry. Before that they existed only in JSON-LD and `/llms.txt` — earlier notes said "published on /about", which was never true of the visible page. `npm run verify` now asserts both numbers are in visible text.
+
+### The NPPES record — checked live 2026-09-22
+
+From the NPPES API for NPI 1316718968. **Recorded for consistency checking — not for publication beyond what is already published.**
+
+| Field | NPPES value | Matches the site? |
+|---|---|---|
+| Name | KIMBERLIE YADON | Site uses "Kim Yadon" — expected, `sameAs` links them |
+| Credential | FNP | ✅ consistent with FNP-C |
+| Taxonomy | Nurse Practitioner — Family (primary), state UT | ✅ |
+| Licence | 308855-4405, UT | ✅ |
+| Status | Active | ✅ |
+| Mailing address city | South Jordan, UT | ✅ |
+| **Practice location city** | **Riverton, UT** | ⚠️ GBP and site say South Jordan |
+| Last updated | 2024-01-12 | predates this practice's site |
+
+The practice-location mismatch matters because the NPPES record is exactly what `Person.sameAs` points at, and health directories auto-populate from it. **Only Kim can change it**, at nppes.cms.hhs.gov. Asked in [OPEN-QUESTIONS.md](OPEN-QUESTIONS.md). Do not "fix" it on the site — the site is right if South Jordan is right.
+
 ### The LLC is "NAET with Kim" — and that is fine
 
 Kim asked whether this causes problems. **No, provided the LLC name stays off the public site.**
@@ -375,9 +394,17 @@ So: **do not add `legalName` to schema, and do not surface it in any copy.** It 
 
 ### Content review
 
-She read the resource articles on 2026-08-12 and 2026-08-15 and sent corrections that removed or rewrote several passages. **16 pages now carry `Reviewed by Kim Yadon, FNP-C`** — 5 articles, 10 symptom pages, the `/symptoms` hub — with `reviewedBy` → `#kim` in schema.
+She read the resource articles on 2026-08-12 and 2026-08-15 and sent corrections that removed or rewrote several passages. **23 pages carry `Reviewed by Kim Yadon, FNP-C`**, with `reviewedBy` → `#kim` in schema:
 
-`author` stays the practice. She reviewed; she did not write. Review and authorship are different claims and the markup keeps them different. The date lives in `SITE.contentReviewedOn` — **only move it when she has actually re-read.**
+| Pages | Evidence of review |
+|---|---|
+| 5 resource articles | Kim's own corrections, 2026-08-12 and 2026-08-15 |
+| 10 symptom pages + `/symptoms` hub | Dallin, 2026-08-16 |
+| 3 guides (`/bhrt-cost-utah`, `/bhrt-vs-hrt`, `/find-a-hormone-provider`) and 5 city pages | **Dallin, 2026-09-22** — "she read all 8" |
+
+The last row closes a gap: the byline had been rendering on those 8 pages since the content engine shipped, while this doc recorded 16. The claim was in the code before it was in the record.
+
+`author` stays the practice. She reviewed; she did not write. Review and authorship are different claims and the markup keeps them different. ⚠️ Until 2026-09-22 `MedicalWebPage` schema broke this rule on all 18 symptom, guide and city pages (`author` → `#kim`); fixed in `lib/schema.ts`. The date lives in `SITE.contentReviewedOn` — **only move it when she has actually re-read.**
 
 ---
 
@@ -413,7 +440,7 @@ Blocking items live in [OPEN-QUESTIONS.md](OPEN-QUESTIONS.md). Most of this list
 
 **Answered 2026-08-16:**
 - ✅ **Google Business Profile ownership — resolved.** The profile already existed, is verified, and Kim controls it. This had been the largest remaining blocker for weeks and turned out to be already solved. State as found, and the four fields still needing correction, are in [08-LOCAL-GBP.md](08-LOCAL-GBP.md#state-as-found-2026-08-16)
-- ✅ **Social profiles** — Facebook `profile.php?id=61592043292697` and Instagram `hormonereplacementwithkim`, both confirmed via the GBP admin view. Not yet added to `sameAs` in `lib/site.ts`
+- ✅ **Social profiles** — Facebook `profile.php?id=61592043292697` and Instagram `hormonereplacementwithkim`, both confirmed via the GBP admin view. In `sameAs` on both entities since 2026-08-21
 
 **Still open:**
 - Years in practice — never asked; low value, and absence costs nothing

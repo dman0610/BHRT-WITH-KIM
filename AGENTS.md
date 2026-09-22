@@ -58,8 +58,8 @@ Nothing invisible to users, nothing served differently to crawlers, no keyword s
 | [07-TRACKING.md](docs/07-TRACKING.md) | Analytics, pixels, events |
 | [08-LOCAL-GBP.md](docs/08-LOCAL-GBP.md) | Google Business Profile, reviews, local |
 | [09-DESIGN-SYSTEM.md](docs/09-DESIGN-SYSTEM.md) | Components, tokens, accessibility |
-| [10-ROADMAP.md](docs/10-ROADMAP.md) | Starting a session — current status |
-| [11-LAUNCH.md](docs/11-LAUNCH.md) | Deploying, or doing anything that needs a live URL |
+| [10-ROADMAP.md](docs/10-ROADMAP.md) | Starting a session — current status, Search Console baseline, what's next |
+| [archive/](docs/archive/) | History only: the August build log, the launch runbook, the original spec. Not current guidance |
 | [12-CITATIONS.md](docs/12-CITATIONS.md) | Off-site listings, directories, reviews — the link-authority gap |
 | [13-INDEXING.md](docs/13-INDEXING.md) | **Any question about why a page isn't indexed, crawl behaviour, `sitemap.ts`, or host/redirect rules. Read before theorising — it records what was already ruled out, with measurements.** |
 | [OPEN-QUESTIONS.md](docs/OPEN-QUESTIONS.md) | Hitting an unknown |
@@ -75,7 +75,7 @@ Next.js 16.2.2 (App Router) · React 19.2.4 · TypeScript · Tailwind CSS v4 (**
 - **All analytics goes through `lib/analytics.ts`.** Never call `fbq` or `va` directly. It enforces the no-health-data rule in code; see [07-TRACKING.md](docs/07-TRACKING.md).
 - Path alias `@/` → repo root.
 - JSON-LD renders as a native `<script>` with `.replace(/</g, "\\u003c")`, never `next/script`.
-- Update [10-ROADMAP.md](docs/10-ROADMAP.md) checkboxes as work lands.
+- Update [10-ROADMAP.md](docs/10-ROADMAP.md) as work lands. Keep it short — history goes in `docs/archive/`, not the roadmap.
 - **Changing page copy, links, titles or descriptions? Run `npm run stamp`.**
   Background and the bug this prevents: [13-INDEXING.md](docs/13-INDEXING.md).
   Sitemap `lastmod` is derived from a fingerprint of each page's rendered

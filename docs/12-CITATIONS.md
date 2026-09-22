@@ -1,6 +1,6 @@
 # 12 — Citations & Directory Listings
 
-Created 2026-08-28 · Owner: Dallin
+Created 2026-08-28 · Updated 2026-09-22 · Owner: Dallin
 
 **This is the off-site work, in submission order, with every field pre-written.
 Paste and submit — nothing here needs composing.**
@@ -95,37 +95,74 @@ see the note at the end.
 
 ## 1. Google Business Profile — do this first
 
-**Highest value by a wide margin, free, ~15 minutes, and still not done.**
-`bhrt near me` is already in the Search Console data, and that is a map-pack
-query no amount of on-site work or ad spend wins as efficiently.
+For "bhrt draper ut"-type searches the map pack sits above every organic result,
+and it is ranked from the profile, not the website.
 
-Full detail in [08-LOCAL-GBP.md](08-LOCAL-GBP.md#remaining-setup-steps). The four
-fields that have drifted:
+### Status — 2026-09-22
 
-| Field | Currently | Change to |
-|---|---|---|
-| Photos | House exterior as lead image | **Delete it.** Zero ranking value, maximum privacy cost. Use logo or Kim's portrait |
-| Hours | Opens 9:30am | **Mon–Fri 9:00am–5:00pm** |
-| Website | `www.bhrtwithkim.com` | `https://bhrtwithkim.com` |
-| Description | "Kim is a nurse practitioner offering…" | The verbatim description above |
+| Field | State |
+|---|---|
+| Hours Mon–Fri 9:00am–5:00pm | ✅ done |
+| Website `https://bhrtwithkim.com` | ✅ done |
+| Description | ❓ **unconfirmed** — replace with the text below |
+| Nine services | ❓ **unconfirmed** — list below |
+| House-exterior photo | ❓ unconfirmed — delete it if it is still there |
 
-Then add the **nine services** from
-[00-BUSINESS-FACTS.md](00-BUSINESS-FACTS.md#services) — service lists feed
-"near me" queries directly.
+### Description — click path and exact text
+
+Path from [Google's help page](https://support.google.com/business/answer/3039617):
+on a computer, signed in to the Google account that manages the profile, search
+Google for **BHRT with Kim** → the management panel appears above the results →
+**Edit profile** → **Business information** → **About** → **Description**
+(pencil) → paste → **Save**.
+
+⚠️ **Google rejects descriptions that contain prices, promotions or URLs**, and
+the limit is 750 characters. The earlier version of this text ended with "Free
+15-minute phone consultation", which risks rejection. This one is 662 characters
+and contains none of the three:
+
+> Kim Yadon, FNP-C is a board-certified family nurse practitioner providing bioidentical hormone replacement therapy (BHRT) through virtual consultations to women throughout Utah, with a focus on perimenopause and postmenopause. Kim is based in South Jordan and works with patients across Salt Lake County, Utah County and the rest of the state. Care starts with a detailed history and lab testing: lab work is drawn at a LabCorp patient service center the patient chooses, and prescriptions can be filled at any compounding pharmacy the patient chooses. Follow-up visits are typically every 3 months, or sooner if needed. Cash pay only; insurance is not accepted.
+
+The first sentence is the canonical entity statement, verbatim — identical
+wording across GBP, the site, schema and `/llms.txt` is what lets a retrieval
+system resolve them to one entity.
+
+**Do not add** "there is no office" or anything like it here. The listing uses
+storefront categories that require a visitable location (see
+[08-LOCAL-GBP.md](08-LOCAL-GBP.md)); the website explains the virtual model,
+and the profile should not argue with its own category.
+
+### Services — click path and exact text
+
+From [Google's help page](https://support.google.com/business/answer/9455399):
+Business Profile → **Edit services** → **Add custom service** for each name
+below → open the service → add the description → **Save**. Service names must
+not contain prices or phone numbers.
+
+| Service name | Description (paste) |
+|---|---|
+| Bioidentical Hormone Therapy | Personalized estrogen, progesterone, and testosterone balancing using bioidentical hormones that mirror your body's own chemistry. We start with comprehensive testing and tailor your protocol to your unique needs. |
+| Comprehensive Testing | Comprehensive hormone and thyroid panels, so decisions rest on what your levels actually show rather than on symptoms alone. |
+| Thyroid Assessment | Assessment of thyroid function — a system that profoundly impacts energy, weight, mood, and hormonal balance, and one whose symptoms overlap heavily with perimenopause. |
+| Sleep Optimization | Sleep protocols that address common causes of insomnia and restless nights. Quality sleep is when your body repairs, restores, and rebalances hormones. |
+| Stress Reduction | Increased focus on mindfulness, breathwork, spirituality and social connections help calm the nervous system. Chronic stress affects hormone balance — managing it is part of every plan we build. |
+| Nutrition & Hydration | Whole-food, anti-inflammatory dietary guidance designed to support hormonal balance from the inside out. Proper hydration and nutrient-dense eating are foundational to every protocol we build. |
+| Exercise & Movement | Cardiovascular fitness, strength training, and brain-oxygenating movement tailored to your energy levels and goals. The right exercise at the right intensity makes all the difference. |
+| Detox Support | Support your body's natural elimination pathways through sweat, digestion, and reducing toxic exposure. |
+| Natural Remedies | Herbs, targeted supplements, and outdoor time prescriptions that work alongside your body's natural healing processes. Nature provides powerful tools when you know how to use them. |
+
+These are the verified descriptions from `SERVICES` in `lib/constants.ts` — the
+same text as `/services`. If one changes there, change it here.
 
 ⚠️ **Do not change the category to hide the address.** That was tried and the
 reasoning is recorded; `Home health care service` would unlock it and is a false
 category.
 
-## 2. Bing Webmaster Tools — 2 minutes
+## 2. Health directories — the ones NPI unlocked
 
-[bing.com/webmasters](https://www.bing.com/webmasters) → **Import from Google
-Search Console**. Authorises in one click, no re-verification.
-
-**This is an AI channel, not a second-tier search engine** — ChatGPT search runs
-on Bing's index. Disproportionate value for the time.
-
-## 3. Health directories — the ones NPI unlocked
+**Reopened 2026-09-22.** An earlier note recorded Dallin as having declined
+these; he hadn't. They are the closest thing to the off-site mentions that
+2026 research ranks highest for AI visibility.
 
 Free listings. Each is a high-authority health domain citing the practice, which
 is exactly the signal currently missing. Expect identity verification against the
@@ -140,19 +177,22 @@ licence — that is why these carry weight.
 | **CareDash** | `caredash.com` | Lower authority; do it last, skip if time is short |
 
 For each: search the NPI first — **a profile may already exist** and be
-auto-generated from NPPES data. Claiming an existing profile beats creating a
+auto-generated from NPPES data. ⚠️ That record currently lists Kim's practice
+location as **Riverton**, not South Jordan; if a directory pre-fills Riverton,
+correct it to match the GBP, and ask Kim to update NPPES (see
+[OPEN-QUESTIONS.md](OPEN-QUESTIONS.md)). Claiming an existing profile beats creating a
 duplicate, and duplicates are actively harmful.
 
 Use the NAP block, the verbatim description, and the four credentials. Specialty:
 **Family Nurse Practitioner**. Focus: **bioidentical hormone replacement therapy,
 perimenopause, postmenopause**.
 
-## 4. Apple Business Connect
+## 3. Apple Business Connect
 
 [businessconnect.apple.com](https://businessconnect.apple.com). Feeds Apple Maps
 and Siri. Small volume, but the audience skews iPhone and it costs one session.
 
-## 5. Reviews — the strongest local signal available
+## 4. Reviews — the strongest local signal available
 
 Reviews outrank almost everything else in local ranking, and Kim currently has
 one. Target **10 in 90 days**.
@@ -177,6 +217,35 @@ Detail in [08-LOCAL-GBP.md](08-LOCAL-GBP.md#reviews--the-highest-priority-local-
 
 ---
 
+## 5. Earned mentions — legitimate, and what AI systems weigh most
+
+Health directories are listings. The other off-site signal is being *mentioned*:
+a local news piece, a podcast episode, a community talk that gets written up, a
+Utah women's-health roundup written by someone independent. One well-indexed
+third-party mention can be the difference between absent and present in AI
+answers.
+
+Angles that are true and newsworthy, from documented facts only:
+
+- A nurse practitioner who went through perimenopause herself — Kim's own
+  account on `/about`, in her words
+- Virtual hormone care reaching rural and southern Utah, where the nearest
+  in-person provider can be hours away
+- Published pricing in a category where most clinics quote only after a visit
+- Why "bioidentical" describes molecular structure, not a regulatory category —
+  the honest explainer on `/bhrt-vs-hrt`
+
+Whatever runs must be written by the outlet. Kim can be interviewed; she cannot
+write her own coverage and present it as independent.
+
+⚠️ **Never create or fund a "best of" or review site that includes Kim.** A
+business-controlled site presented as independent reviews of its own category is
+prohibited outright by the FTC's rule on consumer reviews,
+[16 CFR 465](https://www.ecfr.gov/current/title-16/chapter-I/subchapter-D/part-465)
+([FTC announcement](https://www.ftc.gov/news-events/news/press-releases/2024/08/federal-trade-commission-announces-final-rule-banning-fake-reviews-testimonials)),
+with civil penalties per violation. Disclosing the ownership makes it legal and
+worthless — the value of a mention is that someone else chose to make it.
+
 ## Not doing, deliberately
 
 - **Paid link building, guest-post networks, directory-submission services.**
@@ -186,6 +255,7 @@ Detail in [08-LOCAL-GBP.md](08-LOCAL-GBP.md#reviews--the-highest-priority-local-
 - **Listing under "NAET with Kim LLC."** Google wants the name customers
   encounter. Two names for one practice fractures the entity — the exact
   problem this file exists to prevent.
+- **Bing Webmaster Tools and Bing Places.** Dallin, 2026-09-22: "nobody uses bing."
 - **Yelp**, unless Kim wants it. It requires an address more insistently than
   the others and its health-category value is modest.
 

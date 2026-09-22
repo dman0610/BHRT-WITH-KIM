@@ -1,10 +1,10 @@
 # 07 — Tracking & Attribution
 
-Last updated: 2026-08-10 · Owner: Dallin
+Last updated: 2026-09-22 · Owner: Dallin
 
 **Status: instrumentation built in Phase 6, 2026-08-10.** Vercel Analytics and Speed Insights are mounted sitewide. All five events fire. The Meta pixel is built but **deliberately dormant** until `NEXT_PUBLIC_META_PIXEL_ID` is set.
 
-Nothing has been deployed, so there is still no data and still no baseline. **Record the baseline on the day of launch** — see below. Skipping it makes every later result arguable.
+Live since 2026-08-16. The AI-visibility baseline was captured on 2026-08-16 (local-only, in `_records/`); the Search Console baseline for the first three months is in [10-ROADMAP.md](10-ROADMAP.md). The pixel is still dormant.
 
 ---
 

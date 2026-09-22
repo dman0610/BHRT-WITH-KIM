@@ -1,6 +1,6 @@
 # 04 — AI Answer Visibility
 
-Last updated: 2026-08-10 · Owner: Dallin
+Last updated: 2026-09-22 · Owner: Dallin
 
 **Goal:** when someone asks an AI assistant "who does bioidentical hormone therapy in Utah" or "what helps menopause night sweats," this site is retrievable, parseable, and citable.
 
@@ -16,7 +16,7 @@ The project brief described this as *"backend prompt injection for AIs, optimize
 - **Filtered anyway.** Major AI crawlers strip and ignore imperative text embedded in page content. It doesn't work.
 - **A reputational landmine.** A healthcare provider caught manipulating AI recommendations is a story that outlives any traffic it produced.
 
-**What actually gets a site cited is unglamorous and effective: be the most factually specific, verifiable, machine-readable source on the topic.** AI retrieval doesn't reward persuasion — it can't be persuaded. It surfaces sources that state checkable facts plainly and consistently. A page that says "initial consultations run 60 minutes and cost $200, with labs at $250" gets quoted. A page that says "compassionate, expert care tailored to you" does not, because there's nothing in it to quote.
+**What actually gets a site cited is unglamorous and effective: be the most factually specific, verifiable, machine-readable source on the topic.** AI retrieval doesn't reward persuasion — it can't be persuaded. It surfaces sources that state checkable facts plainly and consistently. A page that says "an initial consultation is $200 for about 60 minutes, and labs are drawn at any LabCorp patient service center" gets quoted. A page that says "compassionate, expert care tailored to you" does not, because there's nothing in it to quote.
 
 The good news: this is the same work that wins at Google, so the effort compounds instead of splitting. Everything below is that work.
 
@@ -65,6 +65,8 @@ Two things it must always get right:
 - **The lab wording.** The consultation and the lab *order* are free; the labs are not. The file states this explicitly rather than leaving it inferable.
 - **No lab dollar figures.** Withdrawn — Kim reports they vary by panel, and a wrong number quoted back by an AI assistant is worse than no number.
 
+**Keep it, but don't invest in it.** Google states plainly that appearing in AI Overviews and AI Mode needs "no new machine readable files, AI text files, or markup" ([Search Central](https://developers.google.com/search/docs/appearance/ai-features)). It costs nothing here because it is generated from `lib/site.ts`; it is not a lever.
+
 It deliberately omits the promo code. `/llms.txt` should carry durable facts; a time-boxed offer scraped into a model's context outlives its own expiry date.
 
 ---
@@ -76,7 +78,9 @@ AI systems quote **self-contained passages**. Structure accordingly — this is 
 **Lead every section with a one-sentence direct answer, then elaborate.**
 
 > ❌ "Many women wonder about the timeline. There are a lot of factors involved. Let's explore what affects how quickly…"
-> ✅ "Most women notice initial changes within 4 to 8 weeks of starting BHRT, though the timeline varies. Factors include…"
+> ✅ "Response to hormone therapy varies from person to person, which is why follow-up visits happen every 3 months, or sooner if needed. Factors include…"
+
+*(This example previously promised "initial changes within 4 to 8 weeks" — a relief timeline, which [05-CONTENT-STANDARDS.md](05-CONTENT-STANDARDS.md) bans. A style example that breaks a content rule gets copied; it was replaced 2026-09-22.)*
 
 The second is quotable standalone. The first cannot be extracted without losing meaning.
 
@@ -84,7 +88,7 @@ The second is quotable standalone. The first cannot be extracted without losing 
 
 **Self-contained answers.** No "as mentioned above," no "this," no pronouns whose antecedent is in a previous paragraph. Every answer must survive being lifted out of the page alone — because that's exactly what happens to it.
 
-**Concrete facts over adjectives.** The publishable specifics that earn citations: what a first consult includes, how long it takes, how lab work is handled for a virtual patient, how follow-ups work, what the visit format is, which conditions are addressed, service area, price. Four of those are currently unknown and are the highest-value gaps in the project — see [OPEN-QUESTIONS.md](OPEN-QUESTIONS.md).
+**Concrete facts over adjectives.** The publishable specifics that earn citations: what a first consult includes, how long it takes, how lab work is handled for a virtual patient, how follow-ups work, what the visit format is, which conditions are addressed, service area, price. All of them are now known and published, in `lib/site.ts`. Keep them prominent — the homepage's "How does virtual hormone care with Kim work?" section exists for exactly this.
 
 **State the entity plainly and repeatedly in natural prose.** Name, credential, specialty, location. Not keyword-stuffed — written out normally, in full, more often than feels necessary. AI retrieval depends on unambiguous entity association, and "she" and "the practice" break it. Copy that never names the entity loses the association entirely.
 
@@ -100,16 +104,9 @@ Both Google's quality systems and AI citation behavior weight demonstrated exper
 - **Honest publish/updated dates.**
 - **Never claim an unverified credential.** One unverifiable claim undermines the entity trust everything else builds, and AI systems cross-reference.
 
-### Active liability: the AI-drafting disclosure
+### The AI-drafting disclosure — resolved
 
-[app/resources/[slug]/page.tsx:139-144](../app/resources/[slug]/page.tsx#L139-L144) publicly states articles were *"drafted with AI assistance; reviewed for accuracy."*
-
-On YMYL health content this is a direct contradiction of the expertise signal the rest of the site is built to establish, and it's visible on every article. Two acceptable resolutions:
-
-1. Kim genuinely reviews each article, and the byline becomes hers with a real reviewed-on date. Best outcome — converts a liability into an E-E-A-T asset.
-2. Unpublish the articles until she can.
-
-Removing the disclosure while leaving the content unreviewed is not an option — that's misattributing authorship on health content.
+The articles publicly disclose AI-assisted drafting, which on YMYL content undercut the expertise signal. Resolved the only acceptable way: **Kim read and corrected the content**, and the disclosure now names her as reviewer. 23 pages carry `Reviewed by Kim Yadon, FNP-C`; `reviewedBy` → `#kim`, `author` → `#practice`. Detail in [00-BUSINESS-FACTS.md](00-BUSINESS-FACTS.md#content-review).
 
 ---
 
@@ -119,15 +116,27 @@ AI systems cross-reference sources. Contradictions between them suppress confide
 
 - The website
 - Google Business Profile
-- Bing Places
-- Healthgrades / Vitals / Zocdoc, if listed
+- **The NPPES record** — the federal registry `Person.sameAs` points at, and the source health directories auto-populate from. Its practice location currently says Riverton; see [00-BUSINESS-FACTS.md](00-BUSINESS-FACTS.md#the-nppes-record--checked-live-2026-09-22)
+- Healthgrades / WebMD Care / Vitals / Doximity, once listed — see [12-CITATIONS.md](12-CITATIONS.md)
 - Any social profiles
 
 **Identical** means character-for-character on name, phone, and service area. "BHRT with Kim" and "BHRT With Kim, LLC" read as two entities.
 
 ---
 
-## 7. Measuring it
+## 7. Where AI citations actually come from — 2026 evidence
+
+Checked 2026-09-22. The on-site work above is necessary and, by now, largely done. It is not sufficient:
+
+- [Whitespark's 2026 Local Search Ranking Factors](https://whitespark.ca/local-search-ranking-factors/) added AI search as a category for the first time. Its top factors are **off-site**: being named in expert-curated "best of" lists, prominence on industry-relevant domains, unstructured mentions, and authoritative review sites. "Dedicated page for each service" is the one on-site factor near the top — already done.
+- A June 2026 study of 216 independent local health practices found **98% scored zero** across ChatGPT, Claude and Gemini; one well-indexed third-party publication was sometimes enough to register ([summary](https://www.slideshare.net/slideshow/ai-citation-factors-for-local-health-practices-2026/288271981)). Treat the exact figures as indicative — it is one study — but the direction matches everything else.
+- The August 2026 baseline in `_records/` named no small practices at all; every provider cited had years of third-party mentions.
+
+**So: the site is the thing AI systems check a mention *against*.** Mentions come from elsewhere — health directories, genuine local press or podcast coverage, and reviews. See [12-CITATIONS.md](12-CITATIONS.md).
+
+⚠️ **Never manufacture the mentions.** A site the practice controls that presents itself as independent reviews or a "best of" list in Kim's own category is prohibited by the FTC ([16 CFR 465](https://www.ecfr.gov/current/title-16/chapter-I/subchapter-D/part-465)), and AI systems discount self-published praise anyway.
+
+## 8. Measuring it
 
 There is no Search Console for AI visibility. Measurement is manual and that's fine — run these monthly and log results.
 

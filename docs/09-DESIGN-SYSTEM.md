@@ -298,7 +298,7 @@ Width is `clamp(0px, calc((100% - 1280px) / 2), 150px)` with `overflow: hidden`,
 - [ ] Tap targets ≥44×44px — **not measured**; the nav is now 8 items plus a CTA
 - [ ] Forms have real `<label>`s, and errors are announced — labels exist; error announcement unverified
 - [ ] Keyboard-navigable throughout — **not tested**
-- [ ] `axe` scan — needs a browser, so it belongs in [11-LAUNCH.md](11-LAUNCH.md)
+- [ ] `axe` scan — needs a browser, so it belongs in a real-browser pass (see [10-ROADMAP.md](10-ROADMAP.md))
 
 The unticked items all need a real browser and a keyboard, which is why they are listed as launch checks rather than quietly marked done.
 

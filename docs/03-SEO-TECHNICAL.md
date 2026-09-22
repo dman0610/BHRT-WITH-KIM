@@ -1,6 +1,6 @@
 # 03 — Technical SEO
 
-Last updated: 2026-08-10 · Owner: Dallin
+Last updated: 2026-09-22 · Owner: Dallin
 
 > **Next.js 16.2.2, App Router.** The APIs below were verified against `node_modules/next/dist/docs/` in this repo on 2026-08-07. Metadata and file conventions changed across recent majors — read the local docs before changing any of this, per [AGENTS.md](../AGENTS.md).
 
@@ -16,11 +16,11 @@ Last updated: 2026-08-10 · Owner: Dallin
 | OG image | ✅ [app/opengraph-image.tsx](../app/opengraph-image.tsx) |
 | JSON-LD | ✅ [lib/schema.ts](../lib/schema.ts) + [components/seo/JsonLd.tsx](../components/seo/JsonLd.tsx) |
 | `robots.txt` | ✅ [app/robots.ts](../app/robots.ts) |
-| `sitemap.xml` | ✅ [app/sitemap.ts](../app/sitemap.ts), 16 URLs |
+| `sitemap.xml` | ✅ [app/sitemap.ts](../app/sitemap.ts), 39 URLs, content-fingerprinted dates — see [13-INDEXING.md](13-INDEXING.md) |
 | `/llms.txt` | ✅ [app/llms.txt/route.ts](../app/llms.txt/route.ts) |
-| Rich Results Test | ⬜ needs a deployed URL |
+| Rich Results Test | ✅ run after launch 2026-08-16 |
 
-Verified at build: 19 JSON-LD blocks parse clean; no `Review`, `AggregateRating`, or `streetAddress` anywhere; all titles ≤52 chars with no duplicated site name; descriptions 121–149 chars.
+`npm run verify` asserts all of this on every build — JSON-LD parses, no `Review`/`AggregateRating`/`streetAddress`, metadata complete, page-level schema present. Trust it over the counts that used to be written here.
 
 The rest of this document is the **rules that govern changes to any of it.**
 
@@ -134,7 +134,7 @@ Use stable `@id` values so entities link rather than duplicate. This is what let
 | `/services` | `Service` × 2 with `Offer` pricing, `BreadcrumbList` | ✅ |
 | `/faq` | `FAQPage` | ✅ |
 | `/resources/[slug]` | `Article` + `BreadcrumbList`, `author` → **`#practice`** | ✅ |
-| `/symptoms/*`, guides | `MedicalWebPage`, `FAQPage`, `BreadcrumbList`, author ref | ✅ |
+| `/symptoms/*`, guides | `MedicalWebPage` (`author` → `#practice`, `reviewedBy` → `#kim`), `FAQPage`, `BreadcrumbList` | ✅ |
 | `/service-areas` | `Service` (state-wide), `BreadcrumbList` | ✅ |
 | `/service-areas/*` | `MedicalWebPage`, `FAQPage`, `BreadcrumbList`, `Service` with **City** `areaServed` | ✅ |
 | `/quiz` | `MedicalWebPage`, `FAQPage`, `BreadcrumbList` | ✅ |
@@ -171,7 +171,7 @@ That changed on 2026-08-16: Kim's corrections removed and rewrote whole passages
 
 It did until 2026-08-16, which stamped every URL with the build time and told Google all 39 pages changed on every deploy — including deploys that touched one CSS class. **A date that always moves is a signal search engines learn to discount**, so the field ends up worth nothing exactly when it matters.
 
-Dates now come from content: `SITE.contentReviewedOn` for reviewed pages, each article's own publication date (or the review date, whichever is later), and a hand-maintained `CONTENT_UPDATED` constant for static pages. `npm run verify` fails the build if `new Date()` reappears in `app/sitemap.ts`.
+⚠️ The hand-maintained constant that replaced it was the second mistake — nobody moved it, and it froze for five weeks. Dates now come from `lib/content-dates.json`, written by `npm run stamp` from a fingerprint of each page's rendered content. Full account in [13-INDEXING.md](13-INDEXING.md). `npm run verify` fails the build if `new Date()` reappears or the manifest is stale.
 
 ### Rich Results Test will not show you `Person` — that is not a defect
 
@@ -181,7 +181,7 @@ A verification pass on 2026-08-14 read "No Person entity detected on any page" a
 
 What *did* come out of it: `/about` now emits `ProfilePage` with `mainEntity` → `#kim`, so Kim is the declared subject of her own page rather than a free-floating node, and `Person` carries an `image`.
 
-**Article `author` is the practice, not Kim — deliberately.** These pieces were AI-drafted and Kim has not reviewed them. Naming a credentialed clinician as author of content she hasn't read is misattribution on health content, and it would spend entity trust dishonestly. When she reviews them, three things change together: `author` → `#kim` plus `reviewedBy`, `reviewedOn` passed to `<AuthorByline />`, and the AI-drafting disclosure updated. Never one without the others. `dateModified` is omitted rather than defaulted to the publish date — a fabricated freshness signal is worse than none.
+**`author` is the practice, and `reviewedBy` is Kim, on every educational page** — `Article` and `MedicalWebPage` alike. The content was drafted with AI assistance; Kim read and corrected it. Review and authorship are different claims. This held for `Article` from the start; `MedicalWebPage` named her `author` on 18 pages until 2026-09-22, when it was brought into line. **Do not promote her to `author`** unless she genuinely writes a piece.
 
 **Geo pages emit `Service`, not a second `MedicalBusiness`.** Repeating the business entity per city — each one with a different `areaServed` — would present five entities where there is one, which is exactly the pattern that gets a service-area business flagged. `localServiceSchema()` scopes a single service to a `City` and links `provider` back to the one `#practice` `@id`. Still no `address`: naming a city Kim serves is not a claim of premises there.
 
@@ -212,7 +212,7 @@ Built by `personSchema()`. `name: "Kim Yadon"`, `honorificSuffix: "FNP-C"`, `job
 
 The full name plus a specific certification is what makes entity disambiguation work — "Kim" alone was nearly useless for linking the person across sources. **Do not add post-nominals beyond FNP-C**; nothing else is verified.
 
-Remaining upgrade available: a Utah license number and NPI would make the credential independently checkable. See [OPEN-QUESTIONS.md](OPEN-QUESTIONS.md).
+`identifier` carries the NPI and Utah licence number, and `sameAs` points at the NPPES record. Both numbers are also **visible** on `/about#verify` — schema must never describe what the page does not show, and until 2026-09-22 these two did exactly that.
 
 ### Schema prohibitions
 
@@ -226,33 +226,11 @@ Validate every block in the [Rich Results Test](https://search.google.com/test/r
 
 ## robots.ts
 
-`app/robots.ts`, typed `MetadataRoute.Robots`. Rules can be an array to address specific agents.
+`app/robots.ts` — read the file for the current list. `*` is allowed everywhere except `/api/`, and the AI crawlers (`GPTBot`, `OAI-SearchBot`, `ChatGPT-User`, `PerplexityBot`, `ClaudeBot`, `Claude-Web`, `Google-Extended`, `CCBot`, `Applebot-Extended`, `Bingbot`) are listed explicitly with the same rule.
 
-```ts
-import type { MetadataRoute } from "next";
-import { SITE } from "@/lib/site";
+**`Google-Extended` and `Applebot-Extended` are AI-training opt-out tokens, and allowing them is a deliberate choice.** Allowing means this content can be used to ground Gemini and Apple Intelligence answers. For a business whose strategy includes being cited by AI, that is the point.
 
-const AI_CRAWLERS = [
-  "GPTBot", "OAI-SearchBot", "ChatGPT-User",
-  "PerplexityBot", "ClaudeBot", "Claude-Web",
-  "Google-Extended", "CCBot", "Applebot-Extended",
-];
-
-export default function robots(): MetadataRoute.Robots {
-  return {
-    rules: [
-      { userAgent: "*", allow: "/", disallow: ["/api/"] },
-      { userAgent: AI_CRAWLERS, allow: "/" },
-    ],
-    sitemap: `${SITE.url}/sitemap.xml`,
-    host: SITE.url,
-  };
-}
-```
-
-**`Google-Extended` and `Applebot-Extended` are AI-training opt-out tokens, and allowing them is a deliberate choice.** Allowing means this content can be used to ground Gemini and Apple Intelligence answers. For a business whose entire strategy includes being cited by AI, that is the point. Blocking them protects content from training use but removes the site from those answer surfaces. We are opting in.
-
-Note that most of these agents are allowed by default anyway — listing them explicitly is insurance against a future blanket `Disallow` and makes the intent auditable.
+Most of these agents are allowed by default anyway — listing them is insurance against a future blanket `Disallow` and makes the intent auditable.
 
 ---
 
@@ -299,17 +277,9 @@ Audience is mobile-first, so **mobile LCP under 2.5s is a conversion metric**, n
 
 ---
 
-## Pre-deploy checklist
+## Standing checks — not covered by `npm run verify`
 
-- [x] Unique title, description, canonical on every page
-- [x] All JSON-LD parses clean (19 blocks, 0 failures)
-- [x] No page hardcodes a business fact — all resolve via `lib/site.ts`
-- [ ] Single keyworded H1 per page — audit as Phase 5 content ships
-- [ ] `/robots.txt`, `/sitemap.xml`, `/llms.txt` resolve on the **deployed** domain
-- [x] Key content present in server-rendered HTML **with JS disabled** — Footer NAP and `/resources` fixed in Phase 3
-- [ ] JSON-LD through Rich Results Test *(needs deployed URL)*
-- [ ] OG image renders in a real share preview
-- [ ] Mobile LCP under 2.5s on a real device
-- [ ] Search Console verified, sitemap submitted
-
-**Note:** none of the Phase 1–4 work is deployed yet. The live site still shows the pre-correction pricing and the old credential block.
+- [ ] Mobile LCP under 2.5s on a real device — Vercel Speed Insights has real-user data now
+- [ ] Rich Results Test after any schema change (remember it never reports `Person`, `ProfilePage` or `MedicalWebPage`)
+- [ ] OG image in a real share preview after changing `opengraph-image.tsx`
+- [ ] After changing copy, links, titles or descriptions: `npm run build && npm run stamp && npm run build`, and commit `lib/content-dates.json`

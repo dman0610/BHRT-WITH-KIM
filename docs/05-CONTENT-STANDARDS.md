@@ -1,6 +1,6 @@
 # 05 — Content Standards
 
-Last updated: 2026-08-10 · Owner: Dallin
+Last updated: 2026-09-22 · Owner: Dallin
 
 **This file is loaded into every Claude session via [CLAUDE.md](../CLAUDE.md). Nothing gets published that violates it.**
 
@@ -10,7 +10,7 @@ Last updated: 2026-08-10 · Owner: Dallin
 
 **Accuracy is the marketing strategy, not a constraint on it.**
 
-This is not a compliance tax grudgingly paid. Google's quality systems and AI retrieval both reward verifiable specificity and punish unverifiable puffery. "Initial consultations are $200 and labs run $250" outperforms "compassionate, expert care" on every channel in this plan, because the first can be quoted and checked and the second cannot.
+This is not a compliance tax grudgingly paid. Google's quality systems and AI retrieval both reward verifiable specificity and punish unverifiable puffery. "An initial consultation is $200 for about 60 minutes" outperforms "compassionate, expert care" on every channel in this plan, because the first can be quoted and checked and the second cannot.
 
 Where a fact is missing, **write around the gap** rather than filling it. "Kim provides bioidentical hormone replacement therapy through virtual consultations across Utah" is publishable today. A guessed credential, a made-up consult duration, or an invented success rate is not.
 
@@ -49,55 +49,51 @@ Applying third person blanket-style to quiz results would make them incoherent. 
 
 ---
 
-## Remediation queue — ✅ fixed in code, ⚠️ still live on production
+## Worked examples — the bar every rewrite has cleared
 
-**Both halves of that are true and the distinction matters.** Every string below was rewritten in Phase 1 and machine-verified absent from all rendered HTML. But **nothing has been deployed**, so the production site still serves the original copy.
+All of these shipped and are live. They are kept because they show *why* the
+copy reads the way it does; new copy has to clear the same bar. Line references
+were dropped deliberately — they went stale within weeks.
 
-Do not re-do this work. Do not assume it's live either. The record below is kept as the reference for *why* each rewrite reads the way it does — future copy has to clear the same bar.
-
-### `lib/constants.ts` — quiz callouts
-
-**[:213](../lib/constants.ts#L213)**
+**Efficacy and "very treatable"** (quiz callouts, 2026-08-07)
 > ❌ "…estrogen and progesterone directly regulate your sleep architecture. **This is very treatable.**"
 > ✅ "…estrogen and progesterone both play a role in regulating sleep. Sleep changes are one of the most common things women bring to a hormone evaluation."
 
-**[:250](../lib/constants.ts#L250)** — highest priority; states a non-diagnosis as fact *and* promises response
+**An unrecognized diagnosis stated as fact, plus a promised response**
 > ❌ "Relying on caffeine to function often signals **adrenal fatigue** or thyroid dysfunction — both of which **respond well to the right support.**"
-> ✅ "Persistent reliance on caffeine is often worth evaluating alongside thyroid and adrenal function, which are part of a comprehensive hormone workup."
+> ✅ "Persistent reliance on caffeine is often worth evaluating alongside thyroid function, which is part of a comprehensive hormone workup."
 
-**[:287](../lib/constants.ts#L287)**
-> ❌ "Brain fog isn't just stress — it's often estrogen-related and **very treatable.**"
-> ✅ "Cognitive changes like word-finding difficulty are commonly reported during perimenopause, and estrogen's role in cognition is an active area of research."
+*(The approved version originally said "thyroid and adrenal function". Adrenal assessment left Kim's scope on 2026-08-12 — see [00-BUSINESS-FACTS.md](00-BUSINESS-FACTS.md#scope-of-practice--narrowed-2026-08-12). Scope changes invalidate old "approved" copy too.)*
 
-**[:331](../lib/constants.ts#L331)** — efficacy claim plus a timeline promise
+**Efficacy plus a timeline**
 > ❌ "…approaches that **work beautifully for most women — often faster than expected.**"
 > ✅ "Hot flashes and night sweats are among the most commonly reported perimenopausal symptoms, and there are both lifestyle and hormonal approaches worth discussing with a provider."
 
-### `lib/constants.ts` — severity messages
-
-**[:528](../lib/constants.ts#L528)**
-> ❌ "Many women leave their first conversation with more clarity than they've had in years." *(unverifiable outcome statistic)*
+**Unverifiable outcome statistics** (quiz severity messages)
+> ❌ "Many women leave their first conversation with more clarity than they've had in years."
 > ✅ "A first conversation is mostly about understanding your history and what you've been noticing."
 
-**[:532](../lib/constants.ts#L532)**
-> ❌ "These patterns have root causes, and **those causes have solutions.**"
-> ✅ "These patterns often have identifiable causes worth investigating."
-
-**[:537](../lib/constants.ts#L537)**
-> ❌ "…it's not inevitable, and there are **targeted approaches that work.**"
-> ✅ "…and it's worth discussing with a provider who works in this area specifically."
-
-**[:538](../lib/constants.ts#L538)**
 > ❌ "Kim hears stories like yours every day, and **she's seen what's possible** when the right support is in place."
 > ✅ "These are the conversations Kim has most often. A consultation is a chance to look at the full picture together."
 
-### Elsewhere
+**A specific figure implying a citation** — "Evidence-based 8-hour sleep protocols" → "Sleep protocols that address common causes of insomnia and restless nights."
 
-**[lib/constants.ts:78](../lib/constants.ts#L78)** — "Evidence-based 8-hour sleep protocols" implies a citable basis for a specific figure. Either cite it or write "Sleep protocols addressing common causes of disrupted sleep."
+**"Proven"** — "Trusted Education. **Proven Care.**" → "Trusted Education. Personalized Care."
 
-**[components/sections/HeroFlyer.tsx:124](../components/sections/HeroFlyer.tsx#L124)** — "Trusted Education. **Proven Care.**" → "Trusted Education. Personalized Care."
+**A homepage claim contradicting the site's own content** (2026-09-22)
+> ❌ "BHRT May Help With: … **Metabolism & Weight Management**" and "BHRT can help … relieve symptoms … **so you can feel like yourself again.**"
+> ✅ "Care for women experiencing: … Midlife Weight Changes" and "For women in perimenopause and menopause, hormone therapy is one option for symptoms like hot flashes, night sweats and disrupted sleep — considered alongside sleep, nutrition and stress, and only after testing."
 
-**Keep as-is:** the severity *headlines* ("You Deserve to Feel Like Yourself Again") are aspirational rather than clinical, and `QUIZ_DISCLAIMER` at [:542](../lib/constants.ts#L542) is well-written — it explicitly says "not a medical diagnosis" and notes Kim reviewed the questions personally.
+The first version survived five weeks of audits because each page was checked
+against the rules, not against the *other pages*. `/symptoms/hormonal-weight-gain`
+states that hormone therapy is not a weight-loss treatment and tells readers to be
+cautious of anyone selling it as one — the homepage was doing exactly that.
+**When writing a claim, search the site for the page that covers the same
+ground and make sure the two agree.**
+
+**Kept as-is, deliberately:** the quiz severity *headlines* ("You Deserve to Feel
+Like Yourself Again") are aspirational rather than clinical, and `QUIZ_DISCLAIMER`
+says plainly that the quiz is "not a medical diagnosis".
 
 ---
 

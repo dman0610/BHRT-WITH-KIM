@@ -99,7 +99,7 @@ public/                 Images, article art
 | [07-TRACKING.md](docs/07-TRACKING.md) | Analytics, events, attribution, the health-data rule |
 | [08-LOCAL-GBP.md](docs/08-LOCAL-GBP.md) | Google Business Profile, reviews, citations |
 | [09-DESIGN-SYSTEM.md](docs/09-DESIGN-SYSTEM.md) | Tokens, components, accessibility |
-| [10-ROADMAP.md](docs/10-ROADMAP.md) | **Phased tracker — start here** |
+| [10-ROADMAP.md](docs/10-ROADMAP.md) | **Current status and what's next — start here** |
 | [OPEN-QUESTIONS.md](docs/OPEN-QUESTIONS.md) | Unresolved inputs blocking work |
 
 `docs/archive/` holds the superseded original spec.

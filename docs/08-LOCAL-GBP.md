@@ -1,6 +1,6 @@
 # 08 — Local SEO & Google Business Profile
 
-Last updated: 2026-08-10 · Owner: Dallin
+Last updated: 2026-09-22 · Owner: Dallin
 
 **The Google Business Profile is the single highest-leverage local asset in this project — higher than any page on the site.** For "hormone doctor near me"-type searches, the map pack sits above organic results, and a profile with real reviews outranks a better website with none.
 
@@ -69,10 +69,10 @@ Never publish the street address — not in the footer, not in schema, not on `/
 | Phone | (801) 573-0606 | ✅ matches `lib/site.ts` |
 | Categories | Nurse practitioner *(primary)*, Medical clinic, Wellness center, Women's health clinic | ⚠️ blocks address hiding — see above |
 | Address | *(home address, South Jordan — not recorded here)* | ⚠️ public on GBP, staying — see above |
-| Hours | Opens **9:30am** | ❌ site publishes **9:00am** |
-| Website | `www.bhrtwithkim.com` | ❌ canonical is the apex, no `www` |
-| Description | "Kim is a nurse practitioner offering Bioidentical Hormone Replacement Therapy" | ❌ not the canonical entity statement |
-| Social | Facebook `61592043292697`, Instagram `hormonereplacementwithkim` | ✅ verified — not yet in site `sameAs` |
+| Hours | Opens **9:30am** | ✅ fixed to 9:00am — confirmed 2026-09-22 |
+| Website | `www.bhrtwithkim.com` | ✅ relinked — confirmed 2026-09-22 |
+| Description | "Kim is a nurse practitioner offering Bioidentical Hormone Replacement Therapy" | ❓ unconfirmed 2026-09-22 — exact text and path in [12-CITATIONS.md](12-CITATIONS.md) |
+| Social | Facebook `61592043292697`, Instagram `hormonereplacementwithkim` | ✅ verified — in site `sameAs` since 2026-08-21 |
 | Reviews | 1 review, 5.0 | baseline |
 | Interactions | 28 | baseline |
 
@@ -88,11 +88,9 @@ Never publish the street address — not in the footer, not in schema, not on `/
 4. ~~**Categories**~~ — already set: `Nurse practitioner` primary, which is the right choice. **Do not change it**; category changes reset ranking history and trigger re-review. The only permitted experiment is the secondary-removal test described above.
 5. **NAP exactly as in [00-BUSINESS-FACTS.md](00-BUSINESS-FACTS.md)** — character for character with the website footer. "BHRT with Kim" ≠ "BHRT With Kim, LLC". ✅ verified correct as found.
 6. **Hours → fix to Mon–Fri 9:00am–5:00pm.** Found at 9:30am; `SITE.contact.hours` publishes 9:00. A site/GBP mismatch costs local confidence. Source of truth is `lib/site.ts` — change GBP, not the site.
-7. **Description** → replace with the canonical entity statement from [00-BUSINESS-FACTS.md](00-BUSINESS-FACTS.md), verbatim. Identical wording across GBP, `/llms.txt`, schema and the homepage is what raises AI entity confidence. Approved text:
+7. **Description** → opens with the canonical entity statement, verbatim. **Use the text in [12-CITATIONS.md](12-CITATIONS.md#description--click-path-and-exact-text)**, not the version that used to be here: that one ended with "Free 15-minute phone consultation", and Google's description rules prohibit prices and promotions.
 
-   > Kim Yadon, FNP-C is a board-certified family nurse practitioner providing bioidentical hormone replacement therapy (BHRT) through virtual consultations to women throughout Utah, with a focus on perimenopause and postmenopause. Free 15-minute phone consultation. Cash pay; insurance is not accepted.
-
-8. **Services:** list all nine from [00-BUSINESS-FACTS.md](00-BUSINESS-FACTS.md) with descriptions. Service lists feed "near me" queries directly. Not yet done.
+8. **Services:** all nine, names and descriptions ready to paste in [12-CITATIONS.md](12-CITATIONS.md#services--click-path-and-exact-text). Unconfirmed as of 2026-09-22.
 9. **Photos.** ⚠️ **Delete the house-exterior photo first** — see the address decision. Then `kim-portrait.jpg` as the profile image, plus a logo. No workspace shots that reveal the home.
 10. **Website link → change `www.bhrtwithkim.com` to `https://bhrtwithkim.com`.** The `www` host 307-redirects to the apex, so it works, but the canonical should be pointed at directly. No UTM on the main link (it interferes with Google's own attribution). UTMs are fine on Posts.
 
@@ -136,11 +134,12 @@ Consistent NAP across the web is a local ranking factor, and contradictions betw
 
 **Priority order:**
 1. Google Business Profile
-2. Bing Places
+2. Healthgrades, WebMD Care, Vitals, Doximity — health-specific, high trust for this vertical
 3. Apple Business Connect
-4. Healthgrades, Vitals, WebMD Care — health-specific, high trust for this vertical
-5. Yelp
-6. Utah local directories, chamber of commerce
+4. Utah local directories, chamber of commerce
+5. Yelp, only if Kim wants it
+
+Not Bing Places — Dallin, 2026-09-22: "nobody uses bing."
 
 **Every listing:** identical name, identical phone, service-area (no street address), same website URL, same description opening.
 
@@ -177,16 +176,16 @@ Covered in [02-KEYWORD-MAP.md](02-KEYWORD-MAP.md). The essential point repeated 
 
 ## Checklist
 
-- [ ] GBP ownership confirmed
+- [x] GBP ownership confirmed
 - [ ] Service-area mode on; **street address hidden**
 - [ ] Service area set around Kim's city + Utah
-- [ ] Primary category chosen
+- [x] Primary category chosen
 - [ ] NAP matches website character for character
-- [ ] Hours set
+- [x] Hours set
 - [ ] Description uses the canonical entity statement
 - [ ] All nine services listed
 - [ ] Photos uploaded
-- [ ] Bing Places + Apple Business Connect claimed
+- [ ] Health directories + Apple Business Connect claimed
 - [ ] Duplicate listings found and merged
 - [ ] Review request process running; 10 reviews in 90 days
 - [ ] Kim responding to every review
