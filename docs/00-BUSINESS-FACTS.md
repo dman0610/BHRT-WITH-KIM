@@ -276,6 +276,8 @@ Public codes get scraped by coupon aggregators, permanently reset the reference 
 
 ### ⚠️ Never condition a discount on a review
 
+**⚠️ This was happening as of 2026-09-22** — Dallin reported Kim gives a free first session in exchange for leaving a review. Google's Maps policy prohibits exactly that ("free goods and/or services in exchange for posting any review"); raised with Kim via Dallin the same day. The FTC permits sentiment-neutral incentives only when the review discloses them ([FTC Q&A](https://www.ftc.gov/business-guidance/resources/consumer-reviews-testimonials-rule-questions-answers)).
+
 The public discount is intended partly to generate Google reviews. **Offering anything of value in exchange for a review violates Google's policies and FTC endorsement guidance and is a GBP suspension trigger.**
 
 Correct sequence: discount brings the client in → they receive care → Kim asks for a review, unconditionally, in a separate conversation. Never both in the same message. See [08-LOCAL-GBP.md](08-LOCAL-GBP.md).

@@ -19,9 +19,11 @@ fact in `00-BUSINESS-FACTS.md` and `lib/site.ts`, then delete it here.
 > 2. **The four testimonials** on the site (Natalie K., Allison G., Alyssa C.,
 >    Beccah G.) — do you know where they came from? If any were Google reviews we
 >    can point to them, which counts for much more.
-> 3. **Google reviews.** Would you be comfortable asking each patient for a
->    Google review after their visit, in a separate message from any discount?
->    It is the single biggest factor in showing up on the map for "BHRT near me".
+> 3. **Google reviews.** The free-first-session-for-a-review offer needs to stop:
+>    Google's rules ban giving anything (discounts, free services) in exchange for
+>    a review, and removes those reviews. You can keep a free first session as an
+>    offer — just not tied to reviewing. Instead, ask every patient for a review
+>    after their visit, with nothing attached. *(Raised 2026-09-22.)*
 > 4. **Healthie intake form.** Could you add one optional question to the free
 >    consultation's intake: "How did you hear about Kim?" with the options Google
 >    search · Facebook or Instagram · Friend or family · Flyer or event · Another
