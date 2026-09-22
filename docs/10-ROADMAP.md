@@ -53,7 +53,9 @@ as much as any page.
 | Categories | ✅ unchanged: Nurse practitioner (primary), Medical clinic, Wellness center, Women's health clinic. **Checked 2026-09-22: Google offers no category matching "hormone", "menopause" or "therapy"** — don't search again |
 | Onsite services attribute | ✅ **No** — correct, all visits are virtual |
 | House photo | "See outside" is Google Street View, which owners cannot remove; only uploaded photos can be |
-| Reviews | **5** on 2026-09-22 (1 on 2026-08-16) |
+| Reviews | **5**, rated 5.0, on 2026-09-22 (1 on 2026-08-16). Two unanswered — reply without confirming patient status |
+| Customer interactions | **79** on 2026-09-22 (28 on 2026-08-16) |
+| "Add a map to your website" card | ⚠️ **Ignore.** It would put the home-address pin on the website, which the address policy forbids |
 
 ---
 
