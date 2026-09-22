@@ -24,10 +24,7 @@ fact in `00-BUSINESS-FACTS.md` and `lib/site.ts`, then delete it here.
 >    a review, and removes those reviews. You can keep a free first session as an
 >    offer — just not tied to reviewing. Instead, ask every patient for a review
 >    after their visit, with nothing attached. *(Raised 2026-09-22.)*
-> 4. **Healthie intake form.** Could you add one optional question to the free
->    consultation's intake: "How did you hear about Kim?" with the options Google
->    search · Facebook or Instagram · Friend or family · Flyer or event · Another
->    website · Other?
+> *(Healthie "How did you hear about Kim?" — ✅ done 2026-09-22.)*
 
 **Do not ask for:** years in practice (unnecessary; if ever published it must be
 exact), or anything about the 12-Week Vitality Reset Program (she has said it
