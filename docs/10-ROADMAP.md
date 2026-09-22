@@ -12,7 +12,7 @@ is in [archive/2026-08-launch-runbook.md](archive/2026-08-launch-runbook.md).
 ## Where things stand — 2026-09-22
 
 Live at `https://bhrtwithkim.com` since 2026-08-16. 39 sitemap URLs.
-`npm run verify` runs 23 guard sections and is green.
+`npm run verify` runs 24 guard sections and is green.
 
 ### Search Console, last 3 months (data through 2026-09-20)
 
@@ -100,7 +100,7 @@ Branch `seo-pass-2026-09-22`.
 - **Schema**: `MedicalWebPage.author` is the practice, `reviewedBy` is Kim — it
   had named her author on 18 pages she reviewed but did not write.
 - **Next.js 16.2.2 → 16.2.12** for security advisories.
-- **verify** gained "Entity facts on the page" (23 sections).
+- **verify** gained "Entity facts on the page" (24 sections).
 
 ---
 
