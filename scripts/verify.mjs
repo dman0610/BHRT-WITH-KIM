@@ -597,6 +597,45 @@ section("Clinical titles");
   console.log(`  ${pages.length} pages — no physician/doctor/Dr./MD title on Kim`);
 }
 
+// ── 6d. entity facts are visible, not schema-only ───────────────────────────
+section("Entity facts on the page");
+{
+  /*
+    Two claims the docs made for weeks that the HTML did not back up:
+
+    1. "The canonical entity statement is used verbatim in the homepage
+       opening." It was not. The homepage — the page the Google Business
+       Profile links to — never named Kim Yadon in visible text at all.
+    2. "NPI and licence are now published on /about." They were in JSON-LD
+       only: structured data describing content the page did not show, and
+       nothing for a patient checking her out to click.
+
+    Both are asserted against prose() — visible text with nav and footer
+    removed — so schema, alt text and the footer cannot satisfy them.
+  */
+  const site = fs.readFileSync(path.join(ROOT, "lib/site.ts"), "utf8");
+  const entity = [...site.matchAll(/entityStatement:\s*((?:\s*"[^"]*"\s*\+?)+)/g)][0]?.[1]
+    .match(/"([^"]*)"/g)
+    .map((s) => s.slice(1, -1))
+    .join("");
+  const npi = site.match(/const NPI = "(\d+)"/)?.[1];
+  const licence = site.match(/licenseNumber: "([^"]+)"/)?.[1];
+
+  const before = failures;
+  const home = prose(html.get("/index") ?? html.get("/") ?? "");
+  if (!entity) fail("lib/site.ts", "could not read entityStatement");
+  else if (!home.includes(entity)) fail("/", "canonical entity statement not in visible homepage text");
+
+  const about = prose(html.get("/about") ?? "");
+  if (!npi || !about.includes(npi)) fail("/about", "NPI not visible in page text");
+  if (!licence || !about.includes(licence)) fail("/about", "Utah licence number not visible in page text");
+  if (!/npiregistry\.cms\.hhs\.gov/.test(html.get("/about") ?? ""))
+    fail("/about", "no link to the NPI registry record");
+
+  if (failures === before)
+    console.log("  entity statement on /, NPI + licence visible and linked on /about");
+}
+
 // ── 8b. decorative side vines ──────────────────────────────────────────────
 section("Decorative side vines");
 {

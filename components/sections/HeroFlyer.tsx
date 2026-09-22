@@ -3,12 +3,21 @@ import Link from "next/link";
 import Icon from "@/components/ui/Icon";
 import { SITE } from "@/lib/site";
 
-const BHRT_BENEFITS = [
+/*
+  What women come to Kim about — a description of scope, not a list of results.
+
+  This read "BHRT May Help With: … Metabolism & Weight Management" until
+  2026-09-22. The site's own weight page says hormone therapy is not a
+  weight-loss treatment and tells readers to be cautious of anyone selling it as
+  one, so the homepage was contradicting it. Weight-loss claims are also the
+  most heavily enforced category of health advertising.
+*/
+const CARE_AREAS = [
   { label: "Hot Flashes & Night Sweats", icon: "sun" },
   { label: "Sleep & Energy", icon: "moon" },
   { label: "Mood & Focus", icon: "brain" },
-  { label: "Metabolism & Weight Management", icon: "scale" },
-  { label: "Overall Wellness & Vitality", icon: "flower" },
+  { label: "Midlife Weight Changes", icon: "scale" },
+  { label: "Cycle Changes", icon: "flower" },
 ] as const;
 
 export default function HeroFlyer() {
@@ -108,13 +117,24 @@ export default function HeroFlyer() {
                 <div className="h-px flex-1 bg-bark/20" />
               </div>
 
-              {/* BHRT benefits — right after headline */}
+              {/*
+                The canonical entity statement, verbatim — the same sentence as
+                /llms.txt, the MedicalBusiness schema and the GBP description.
+                The homepage previously never named Kim Yadon in visible text at
+                all (only in image alt), so the page Google Business Profile
+                links to said nothing about who provides the care.
+              */}
+              <p className="text-bark text-lg leading-relaxed mb-6">
+                {SITE.entityStatement}
+              </p>
+
+              {/* Care areas — right after the entity statement */}
               <div className="mb-6">
                 <p className="text-xs font-semibold tracking-[0.15em] text-bark/75 uppercase mb-4">
-                  BHRT May Help With:
+                  Care for women experiencing:
                 </p>
                 <div className="grid grid-cols-5 gap-2 md:gap-3">
-                  {BHRT_BENEFITS.map(({ label, icon }) => (
+                  {CARE_AREAS.map(({ label, icon }) => (
                     <div key={label} className="flex flex-col items-center gap-1.5 text-center">
                       <div className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-bark/20 bg-white flex items-center justify-center shrink-0">
                         <Icon name={icon} className="size-4 md:size-5 text-forest" />
@@ -128,10 +148,18 @@ export default function HeroFlyer() {
               <p className="font-semibold text-bark text-lg mb-3">
                 Support your body. Reclaim your life.
               </p>
+              {/*
+                Previously: "BHRT can help … relieve symptoms … so you can feel
+                like yourself again" — an outcome promise addressed to the
+                reader. This says what BHRT is and where it sits, which is both
+                compliant and the more quotable sentence.
+              */}
               <p className="text-clay-text leading-relaxed mb-4">
-                Bioidentical Hormone Replacement Therapy (BHRT) can help restore balance
-                and relieve symptoms related to hormonal changes, so you can feel like
-                yourself again.
+                Bioidentical hormones are molecularly identical to the hormones
+                the body makes. For women in perimenopause and menopause, hormone
+                therapy is one option for symptoms like hot flashes, night sweats
+                and disrupted sleep — considered alongside sleep, nutrition and
+                stress, and only after testing.
               </p>
               <p className="text-clay-text text-sm italic leading-relaxed">
                 Empowering mature women to reclaim health, vitality, and purpose through

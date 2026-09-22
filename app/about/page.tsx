@@ -40,10 +40,17 @@ export default function AboutPage() {
       {/* Hero Banner */}
       <section className="bg-forest pt-32 pb-20 md:pt-40 md:pb-28">
         <div className="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
+          {/*
+            Full name and credential in the H1. "Meet Kim" alone gave the page
+            that most needs to identify her an H1 matching thousands of Kims.
+          */}
           <h1 className="font-heading text-4xl font-semibold text-white sm:text-5xl md:text-6xl">
-            Meet Kim
+            Meet {SITE.provider.fullName}
           </h1>
-          <p className="mt-6 text-lg text-white/80 max-w-2xl mx-auto leading-relaxed">
+          <p className="mt-6 text-lg text-white/85 max-w-2xl mx-auto leading-relaxed">
+            {SITE.entityStatement}
+          </p>
+          <p className="mt-4 text-base text-white/75 max-w-2xl mx-auto leading-relaxed">
             The woman behind the mission — and the reason this practice exists.
           </p>
         </div>
@@ -174,6 +181,96 @@ export default function AboutPage() {
                 </div>
               ))}
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/*
+        Licensure & verification. The NPI and licence number were published
+        only in JSON-LD until 2026-09-22 — schema describing content the page
+        did not show, and nothing for a patient to click. On a health site the
+        ability to check a provider independently is the trust signal, for
+        people and for search systems alike.
+
+        Wording note: APRN is the licence CATEGORY and appears here only as
+        such. It is never a post-nominal on her name — see lib/site.ts.
+      */}
+      <section id="verify" className="bg-white py-20 md:py-24 scroll-mt-24">
+        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+          <div className="animate-on-scroll">
+            <h2 className="font-heading text-3xl font-semibold text-bark sm:text-4xl mb-4 text-center">
+              How can I verify Kim&apos;s license?
+            </h2>
+            <p className="text-clay-text text-lg leading-relaxed text-center mb-10">
+              Kim&apos;s license and National Provider Identifier are public
+              records. Both can be checked directly with the agencies that issue
+              them — no need to take this website&apos;s word for it.
+            </p>
+            <dl className="divide-y divide-stone rounded-2xl bg-mist px-6">
+              <div className="py-5 sm:grid sm:grid-cols-3 sm:gap-4">
+                <dt className="font-medium text-bark">Board certification</dt>
+                <dd className="mt-1 text-clay-text sm:col-span-2 sm:mt-0">
+                  Family Nurse Practitioner — Certified ({SITE.provider.postNominal})
+                </dd>
+              </div>
+              <div className="py-5 sm:grid sm:grid-cols-3 sm:gap-4">
+                <dt className="font-medium text-bark">
+                  {SITE.provider.licenseState} license
+                </dt>
+                <dd className="mt-1 text-clay-text sm:col-span-2 sm:mt-0">
+                  Advanced practice registered nurse,{" "}
+                  <span className="whitespace-nowrap">#{SITE.provider.licenseNumber}</span>.{" "}
+                  <a
+                    href={SITE.provider.licenseLookupUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-forest underline underline-offset-4 hover:text-moss transition-colors"
+                  >
+                    Search the Utah license lookup
+                  </a>
+                </dd>
+              </div>
+              <div className="py-5 sm:grid sm:grid-cols-3 sm:gap-4">
+                <dt className="font-medium text-bark">NPI</dt>
+                <dd className="mt-1 text-clay-text sm:col-span-2 sm:mt-0">
+                  {SITE.provider.npi}.{" "}
+                  <a
+                    href={SITE.provider.npiRegistryUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-forest underline underline-offset-4 hover:text-moss transition-colors"
+                  >
+                    View the record in the national NPI registry
+                  </a>
+                </dd>
+              </div>
+              <div className="py-5 sm:grid sm:grid-cols-3 sm:gap-4">
+                <dt className="font-medium text-bark">Where Kim practices</dt>
+                <dd className="mt-1 text-clay-text sm:col-span-2 sm:mt-0">
+                  Based in {SITE.contact.city}, {SITE.contact.state}. Every visit
+                  is virtual, and the {SITE.provider.licenseState} license covers
+                  patients anywhere in the state.{" "}
+                  <Link
+                    href="/service-areas"
+                    className="text-forest underline underline-offset-4 hover:text-moss transition-colors"
+                  >
+                    Areas served
+                  </Link>
+                </dd>
+              </div>
+              <div className="py-5 sm:grid sm:grid-cols-3 sm:gap-4">
+                <dt className="font-medium text-bark">Payment</dt>
+                <dd className="mt-1 text-clay-text sm:col-span-2 sm:mt-0">
+                  {SITE.contact.insurance}{" "}
+                  <Link
+                    href="/services#pricing"
+                    className="text-forest underline underline-offset-4 hover:text-moss transition-colors"
+                  >
+                    Published pricing
+                  </Link>
+                </dd>
+              </div>
+            </dl>
           </div>
         </div>
       </section>

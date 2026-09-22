@@ -9,6 +9,7 @@
  */
 
 const HEALTHIE_PROVIDER_ID = "4099018";
+const NPI = "1316718968";
 const BRAND_COLOR = "4A9625";
 
 /**
@@ -168,10 +169,23 @@ export const SITE = {
      * rendered as one. "Kim Yadon, FNP-C" remains the only authorized form —
      * `npm run verify` fails the build if APRN ever attaches to her name.
      */
-    npi: "1316718968",
+    npi: NPI,
     licenseState: "Utah",
     licenseType: "APRN",
     licenseNumber: "308855-4405",
+
+    /**
+     * Where each identifier can be checked. Both verified to resolve
+     * 2026-09-22; the NPPES record returns Kim's name, licence number and a
+     * Family nurse practitioner taxonomy.
+     *
+     * These render VISIBLY on /about#verify. Until 2026-09-22 the NPI and
+     * licence existed only inside JSON-LD — which is structured data describing
+     * content the page does not show, and gave a patient checking her out
+     * nothing to click.
+     */
+    npiRegistryUrl: `https://npiregistry.cms.hhs.gov/provider-view/${NPI}`,
+    licenseLookupUrl: "https://secure.utah.gov/llv/search/index.html",
   },
 
   /**

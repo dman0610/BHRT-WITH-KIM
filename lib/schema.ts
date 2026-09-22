@@ -141,7 +141,7 @@ export function personSchema() {
       and it is the strongest entity-disambiguation signal available here.
     */
     sameAs: [
-      `https://npiregistry.cms.hhs.gov/provider-view/${SITE.provider.npi}`,
+      SITE.provider.npiRegistryUrl,
       SITE.social.facebook,
       SITE.social.instagram,
     ],
@@ -330,11 +330,16 @@ export function localServiceSchema({
 }
 
 /**
- * MedicalWebPage for educational content.
+ * MedicalWebPage for educational content — symptom, guide and city pages.
  *
- * `author`/`reviewedBy` point at the sitewide `#kim` Person rather than
- * repeating it, which is what links the content to a named, credentialed
- * entity — the signal both Google's quality systems and AI citation weight.
+ * `author` is the PRACTICE and `reviewedBy` is Kim, exactly as on `Article`.
+ * Until 2026-09-22 this builder set `author` to Kim, which claimed she wrote
+ * 18 pages that were drafted with AI assistance and that she reviewed — the
+ * same misattribution `articleSchema()` below was written to avoid, on the
+ * pages where it mattered more. Review and authorship are different claims.
+ *
+ * Both point at sitewide `@id`s rather than repeating the entities, which is
+ * what links the content to a named, credentialed reviewer.
  */
 export function medicalWebPageSchema({
   name,
@@ -352,10 +357,10 @@ export function medicalWebPageSchema({
     description,
     url: `${SITE.url}${path}`,
     inLanguage: "en-US",
-    author: { "@id": ID.person },
+    author: { "@id": ID.practice },
+    publisher: { "@id": ID.practice },
     /*
-      Kim personally read and corrected this content on the date in
-      SITE.contentReviewedOn. `reviewedBy` pointing at a named, credentialed
+      Kim personally read this content on the date in SITE.contentReviewedOn. `reviewedBy` pointing at a named, credentialed
       clinician is the single strongest E-E-A-T signal a health page can carry.
       It is also a claim — only move the date when she has actually re-read.
     */
