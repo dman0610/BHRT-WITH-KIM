@@ -1,5 +1,5 @@
 import type { GeoPage } from "../types";
-import { OFFERINGS, usd } from "@/lib/site";
+import { COSTS, OFFERINGS, usd } from "@/lib/site";
 
 /**
  * The anchor page. South Jordan is where the practice is based and the only
@@ -49,7 +49,7 @@ export const southJordan: GeoPage = {
       heading: "Where do South Jordan patients get lab work done?",
       paragraphs: [
         "Lab work runs through LabCorp, and the patient picks the location that suits them.",
-        "After the order is placed, an email arrives with the details, the patient schedules with LabCorp directly, and the draw happens at a LabCorp patient service center. LabCorp operates locations across the Salt Lake Valley, so this is generally a short errand rather than a project. Lab fees are billed by the laboratory, not by the practice, and they vary depending on which panels are ordered.",
+        `After the order is placed, an email arrives with the details, the patient schedules with LabCorp directly, and the draw happens at a LabCorp patient service center. LabCorp operates locations across the Salt Lake Valley, so this is generally a short errand rather than a project. Lab fees are billed by the laboratory, not by the practice, and usually fall between ${usd(COSTS.labs.low)} to ${usd(COSTS.labs.high)} depending on which panels are ordered.`,
       ],
     },
     {

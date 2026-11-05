@@ -1,5 +1,5 @@
 import type { GeoPage } from "../types";
-import { OFFERINGS, usd } from "@/lib/site";
+import { COSTS, OFFERINGS, usd } from "@/lib/site";
 
 /**
  * Draper sits at the south end of Salt Lake County at Point of the Mountain,
@@ -50,7 +50,7 @@ export const draper: GeoPage = {
       heading: "Where do Draper patients get lab work done?",
       paragraphs: [
         "At a LabCorp patient service center of their own choosing.",
-        "The lab order arrives by email, the patient books directly with LabCorp, and the draw happens at whichever location works — near home, near the office, or somewhere along the route between them. Lab fees are billed by the laboratory rather than by the practice and vary depending on which panels are ordered, which is why no figure is published for them.",
+        `The lab order arrives by email, the patient books directly with LabCorp, and the draw happens at whichever location works — near home, near the office, or somewhere along the route between them. Lab fees are billed by the laboratory rather than by the practice and typically run ${usd(COSTS.labs.low)} to ${usd(COSTS.labs.high)}, depending on the tests ordered.`,
       ],
     },
     {

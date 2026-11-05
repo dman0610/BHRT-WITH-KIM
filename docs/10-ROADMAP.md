@@ -1,6 +1,6 @@
 # 10 — Roadmap
 
-Last updated: 2026-09-22 · Owner: Dallin
+Last updated: 2026-11-05 · Owner: Dallin
 
 **Where things stand and what comes next.** Keep this short. The full phase
 history of the August build (Phases 0–13, every decision and measurement) is in
@@ -12,7 +12,7 @@ is in [archive/2026-08-launch-runbook.md](archive/2026-08-launch-runbook.md).
 ## Where things stand — 2026-09-22
 
 Live at `https://bhrtwithkim.com` since 2026-08-16. 39 sitemap URLs.
-`npm run verify` runs 24 guard sections and is green.
+`npm run verify` runs 25 guard sections and is green.
 
 ### Search Console, last 3 months (data through 2026-09-20)
 
@@ -87,6 +87,27 @@ the day *before* it, so it is not the cause.
 
 ---
 
+## Shipped 2026-11-05
+
+**Search Console going in** (3 months to ~2026-11-03): 21 clicks, 1.49K impressions,
+position 37.8, 234 queries; 22 indexed / 21 not. 41 impressions in Google's
+AI features (homepage 25, South Jordan 14). `/about` was **Crawled – currently
+not indexed** since 2026-09-22 — the credentials page Google read and declined.
+
+- **Kim's new pricing** — free call → $300 New Patient Package → $100 follow-ups; $200 / $950 / $75 retired, old booking URLs 308 to the package. Lab range and medication estimates published (Kim reversed the no-figures rule)
+- **Prices render only from `lib/site.ts`** — verify fails on a hardcoded `$N` anywhere else, or on any retired figure
+- **Full credentials** — education, CDCES, dated hormone training; `alumniOf` + degree/certification/license credentials in schema; "Worldlink" → "WorldLink" (verify enforces)
+- **/about rebuilt** as a clinician profile; values grid removed; tic density 22.9 → 7.1
+- **Phase 2 style rewrite** of the not-indexed pages: the five articles, `/bhrt-vs-hrt`, `/find-a-hormone-provider`, Lehi, vaginal dryness, `/symptoms`, `/book`. Substance unchanged except claims that broke the content standards, which were removed: a relief timeline ("within four to twelve weeks"), "It is treatable", "estrogen dominance", seed-oil and mattress-brand claims, a misdescribed KEEPS trial (citation dropped)
+- **Stale "no lab figure is published" sentences** corrected on all five city pages
+- **verify** gained "Editorial style" (rewritten pages ≤ 12 tics/1k words) — 25 sections
+
+**Why not every page:** indexed pages earning impressions were left alone. And the
+measurement does not support "AI slop blocks indexing" for the 16 *Discovered*
+pages: Google has never fetched them, and before the rewrite the indexed pages
+were *more* formulaic (median 17.6/1k) than the unindexed ones (15.5/1k). What
+moves those is domain trust — directory listings, mentions, reviews.
+
 ## Shipped 2026-09-22
 
 Branch `seo-pass-2026-09-22`.
@@ -120,6 +141,17 @@ Branch `seo-pass-2026-09-22`.
 | 6 | **NPPES practice location** | Kim | The federal NPI record lists her practice location as **Riverton** (mailing: South Jordan), last updated 2024-01-12. GBP says South Jordan. If Riverton is stale, Kim updates it at nppes.cms.hhs.gov — it is the government record `sameAs` points at |
 | 7 | ✅ "How did you hear about Kim?" added to the Healthie intake form | Kim | Done 2026-09-22 (per Dallin). Pool its answers with the contact form's when reviewing sources |
 | 8 | Re-check "Discovered – currently not indexed" | Dallin | ~2026-10-05. See [13-INDEXING.md](13-INDEXING.md#if-the-number-has-not-moved) |
+
+### Next — from 2026-11-05
+
+| # | What | Who |
+|---|---|---|
+| A | **WorldLink provider directory listing** — $49.99/yr, the direct fix for AI not confirming her training. Steps in [12-CITATIONS.md](12-CITATIONS.md#2b-worldlink-medical-provider-directory--the-fix-for-ai-cant-find-her-training) | Dallin |
+| B | **Healthie:** create the New Patient Package offering ($300) and send its id → set `OFFERINGS.newPatient.id`; set follow-up offering 258962 to $100; retire 258961 and 258966 | Kim |
+| C | **After the weekend of 2026-11-07:** set WorldLink Part III `completed: true` in `lib/site.ts`, then build → stamp → build | Dallin / Claude |
+| D | **GBP services:** if "Initial Consultation — $200" was added, change it to "New Patient Package — Fixed $300" and add "Follow-Up Visit — Fixed $100" | Dallin |
+| E | **Request indexing** for `/about`, `/services`, `/bhrt-cost-utah`, `/book/new-patient-package` once deployed (full URLs) | Dallin |
+| F | Ask Kim whether `Welcome50` / `ComprehensivePackage500` should be retired — both reference offerings that no longer exist | Dallin |
 
 ### Decisions waiting on data
 

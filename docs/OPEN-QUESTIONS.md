@@ -1,6 +1,6 @@
 # Open Questions
 
-Last updated: 2026-09-22 · Owner: Dallin
+Last updated: 2026-11-05 · Owner: Dallin
 
 Every unknown that affects what the site can say. **Nothing here gets guessed** —
 see the never-invent-a-fact rule in [00-BUSINESS-FACTS.md](00-BUSINESS-FACTS.md).
@@ -25,6 +25,15 @@ fact in `00-BUSINESS-FACTS.md` and `lib/site.ts`, then delete it here.
 >    offer — just not tied to reviewing. Instead, ask every patient for a review
 >    after their visit, with nothing attached. *(Raised 2026-09-22.)*
 > *(Healthie "How did you hear about Kim?" — ✅ done 2026-09-22.)*
+
+> 4. **Healthie, for the new pricing:** could you create a "New Patient Package"
+>    offering at $300 and send me its offering ID, change the follow-up visit to
+>    $100, and retire the old $200 initial consultation and $950 package?
+>    Until the new offering exists, the website sends package bookings through
+>    the free call.
+> 5. **Your private discount codes** — Welcome50 (50% off initial consult) and
+>    ComprehensivePackage500 ($500 off) refer to offerings that no longer exist.
+>    Retire them, or replace them?
 
 **Do not ask for:** years in practice (unnecessary; if ever published it must be
 exact), or anything about the 12-Week Vitality Reset Program (she has said it

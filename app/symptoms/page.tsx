@@ -30,7 +30,7 @@ const HUB_FAQS = [
   {
     question: "How does someone know if symptoms are hormone-related?",
     answer:
-      "Not from a symptom list alone. Fatigue, low mood, weight change and disrupted sleep all have several possible causes, and thyroid dysfunction in particular overlaps heavily with perimenopause. That is why an evaluation covers history plus testing across hormones and thyroid function rather than assuming hormones from symptoms.",
+      "Not from a symptom list alone. Fatigue, low mood, weight change and disrupted sleep each have several possible causes, and thyroid disease in particular shares many symptoms with perimenopause. An evaluation therefore combines a full history with testing of hormones and thyroid function, instead of assuming a hormonal cause.",
   },
   {
     question: "What does hormone testing actually cover?",
@@ -40,7 +40,7 @@ const HUB_FAQS = [
   {
     question: "Is it normal to have several of these symptoms at once?",
     answer:
-      "It is very common, and the overlap is part of the picture rather than a complication. Disrupted sleep worsens mood and concentration, night sweats disrupt sleep, and fatigue affects everything else. Because they compound, an evaluation looks at the pattern as a whole instead of treating each symptom as a separate problem.",
+      "Yes, it is very common. The symptoms feed one another: night sweats break up sleep, poor sleep worsens mood and concentration, and fatigue affects everything else. Because they compound, an evaluation looks at the whole pattern instead of treating each symptom as a separate problem.",
   },
   {
     question: "Which symptoms need prompt medical attention?",
@@ -77,9 +77,9 @@ export default function SymptomsIndexPage() {
             Perimenopause Symptoms, Explained
           </h1>
           <p className="mt-6 text-lg text-white/85 leading-relaxed">
-            Plain-language explanations of what many women experience during the
-            menopause transition, what hormones have to do with each, and what
-            else is worth ruling out. Educational only — not a diagnosis.
+            Plain-language explanations of the symptoms common in the menopause
+            transition: the role hormones play in each, and what else should be
+            ruled out. These pages are educational and are not a diagnosis.
           </p>
         </div>
       </section>
@@ -147,7 +147,7 @@ export default function SymptomsIndexPage() {
           </div>
 
           <p className="text-center text-clay-text">
-            {SYMPTOM_PAGES.length} topics, and more are being added.{" "}
+            {SYMPTOM_PAGES.length} topics are covered here.{" "}
             <Link
               href="/quiz"
               className="text-forest underline underline-offset-4 hover:text-moss transition-colors font-medium"

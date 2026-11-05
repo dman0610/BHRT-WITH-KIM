@@ -66,7 +66,7 @@ Nothing invisible to users, nothing served differently to crawlers, no keyword s
 
 ## Stack
 
-Next.js 16.2.2 (App Router) · React 19.2.4 · TypeScript · Tailwind CSS v4 (**CSS-first — no `tailwind.config.js`**; tokens are in `app/globals.css`) · shadcn "base-nova" on `@base-ui/react`.
+Next.js 16.2.12 (App Router) · React 19.2.4 · TypeScript · Tailwind CSS v4 (**CSS-first — no `tailwind.config.js`**; tokens are in `app/globals.css`) · shadcn "base-nova" on `@base-ui/react`.
 
 ## Conventions
 

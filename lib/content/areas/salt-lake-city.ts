@@ -1,5 +1,5 @@
 import type { GeoPage } from "../types";
-import { OFFERINGS, usd } from "@/lib/site";
+import { COSTS, OFFERINGS, usd } from "@/lib/site";
 
 /**
  * Highest search volume of the five, weakest map-pack realism — Salt Lake City
@@ -56,7 +56,7 @@ export const saltLakeCity: GeoPage = {
       heading: "Where do Salt Lake City patients get lab work done?",
       paragraphs: [
         "Lab testing runs through LabCorp, at whichever patient service center the patient prefers.",
-        "The process is the same regardless of city: the lab order arrives by email, the patient schedules with LabCorp, and the draw happens at a LabCorp location. Lab fees are billed by the laboratory, not the practice, and they vary depending on which panels are ordered. No dollar figure is published for that reason.",
+        `The process is the same regardless of city: the lab order arrives by email, the patient schedules with LabCorp, and the draw happens at a LabCorp location. Lab fees are billed by the laboratory, not the practice, and typically cost ${usd(COSTS.labs.low)} to ${usd(COSTS.labs.high)} depending on which tests are ordered.`,
       ],
     },
     {

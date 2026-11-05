@@ -1,5 +1,5 @@
 import type { GeoPage } from "../types";
-import { OFFERINGS, usd } from "@/lib/site";
+import { COSTS, OFFERINGS, usd } from "@/lib/site";
 
 /**
  * Sandy — east-side Salt Lake County, close enough to the South Jordan anchor
@@ -59,7 +59,7 @@ export const sandy: GeoPage = {
       heading: "Where do Sandy patients get lab work done?",
       paragraphs: [
         "At a LabCorp patient service center the patient selects.",
-        "The order arrives by email, the patient schedules directly with LabCorp, and the draw takes place at whichever location is convenient. LabCorp operates locations throughout the Salt Lake Valley. Lab fees are billed by the laboratory rather than the practice and vary depending on which panels are ordered, so no figure is published for them.",
+        `The order arrives by email, the patient schedules directly with LabCorp, and the draw takes place at whichever location is convenient. LabCorp operates locations throughout the Salt Lake Valley. Lab fees are billed by the laboratory rather than the practice; a typical panel runs ${usd(COSTS.labs.low)} to ${usd(COSTS.labs.high)}, depending on the tests.`,
       ],
     },
     {

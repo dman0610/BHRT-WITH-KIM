@@ -49,7 +49,7 @@ export default function BookPage() {
             See docs/00-BUSINESS-FACTS.md.
           */}
           <p className="mt-6 text-lg text-white/85 max-w-2xl mx-auto leading-relaxed">
-            A short phone call with Kim Yadon, FNP-C — no cost, no obligation.
+            A short phone call with Kim Yadon, FNP-C, at no cost and with no obligation.
             Virtual visits throughout Utah.
           </p>
         </div>
@@ -88,9 +88,9 @@ export default function BookPage() {
             */}
             <p className="mt-6 rounded-xl bg-mist px-4 py-3 text-sm text-clay-text leading-relaxed">
               <span className="font-medium text-bark">Good to know:</span> this
-              is a short introductory call rather than a full appointment. The full
-              evaluation — history, symptoms, and a care plan — is the{" "}
-              {OFFERINGS.newPatient.durationMinutes}-minute first visit in the{" "}
+              is a short introductory call, not a full appointment. The full
+              evaluation of history, symptoms and a care plan happens in the{" "}
+              {OFFERINGS.newPatient.durationMinutes}-minute first visit of the{" "}
               <Link
                 href={`/book/${OFFERINGS.newPatient.slug}`}
                 className="text-forest underline underline-offset-4 hover:text-moss transition-colors font-medium"
@@ -119,7 +119,7 @@ export default function BookPage() {
           <BookingEmbed
             offering="freeConsult"
             title="Choose a Time"
-            description="Select a time that works for you — secure online booking."
+            description="Select a time that works for you. Booking is secure and online."
           />
         </div>
       </section>

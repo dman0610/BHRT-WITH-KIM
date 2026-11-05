@@ -37,7 +37,7 @@ export interface ArticleData {
 export const ARTICLES: Record<string, ArticleData> = {
   "understanding-bhrt": {
     title:
-      "Understanding Bioidentical Hormones: What They Are and Why They Matter",
+      "Understanding Bioidentical Hormones: What They Are and How They Differ",
     titleSegment: "Understanding Bioidentical Hormones",
     metaDescription:
       "Bioidentical hormones are molecularly identical to the hormones the body produces naturally. What that means, and how it differs from conventional HRT.",
@@ -45,34 +45,32 @@ export const ARTICLES: Record<string, ArticleData> = {
     date: "2026-03-15",
     readTime: "6 min read",
     intro:
-      "Bioidentical hormones are molecularly identical to the hormones your body produces naturally. Here's what that means for your health — and why it's different from conventional HRT.",
+      "Bioidentical hormones have the same molecular structure as the hormones the body produces. This article explains what that means, how it differs from older forms of hormone therapy, and what responsible prescribing involves.",
     image: "/images/articles/understanding-bhrt.webp",
     content: `
-<h2>What Makes a Hormone "Bioidentical"?</h2>
-<p>The term <em>bioidentical</em> refers to the molecular structure of a hormone, not where it comes from. A bioidentical estradiol molecule has the exact same three-dimensional shape as the estradiol your ovaries produce. This matters because hormones work like keys fitting into locks — your cell receptors are shaped to receive specific molecular structures, and a precise fit affects how the hormone signals and how your body metabolizes it.</p>
-<p>Conventional hormone replacement therapy (HRT), by contrast, has historically used hormones that are structurally different from your own. Conjugated equine estrogens (derived from pregnant mare urine) and medroxyprogesterone acetate are functional analogs, not molecular matches. They bind to your receptors but trigger slightly different downstream effects.</p>
+<h2>What makes a hormone "bioidentical"?</h2>
+<p>The term <em>bioidentical</em> describes a hormone's molecular structure, not its source. Bioidentical estradiol has the same three-dimensional shape as the estradiol the ovaries produce. Structure matters because hormones act on receptors shaped to receive particular molecules, and the fit influences both how a hormone signals and how the body metabolizes it.</p>
+<p>Conventional hormone replacement therapy (HRT) has historically relied on hormones that differ in structure from the body's own. Conjugated equine estrogens, derived from the urine of pregnant mares, and medroxyprogesterone acetate are functional analogs, not molecular matches. They bind the same receptors but produce somewhat different downstream effects.</p>
 
-<blockquote>A qualified practitioner tailors bioidentical therapy to your specific hormone levels, symptoms, and health history — not to a one-size-fits-all protocol.</blockquote>
+<blockquote>Bioidentical therapy is prescribed to the individual: hormone levels, symptoms and health history determine the plan, not a standard protocol.</blockquote>
 
-<h2>How Bioidentical Progesterone Differs from Synthetic Progestins</h2>
-<p>One of the most clinically meaningful distinctions is between micronized progesterone and synthetic progestins. The Women's Health Initiative (WHI) trial, which raised alarm about HRT in 2002, used a combination of conjugated equine estrogen and medroxyprogesterone acetate. Subsequent re-analyses of the data and separate European studies found that when bioidentical progesterone is used alongside bioidentical estradiol, the breast tissue and cardiovascular risk profile appears more favorable.</p>
-<p>The KEEPS trial (Kronos Early Estrogen Prevention Study) and the E3N cohort study from France both found different risk associations for bioidentical progesterone compared to synthetic progestins — a distinction the original WHI data could not make because it did not use bioidentical hormones.</p>
+<h2>How does bioidentical progesterone differ from synthetic progestins?</h2>
+<p>The distinction with the most clinical weight is between micronized progesterone and synthetic progestins. The Women's Health Initiative (WHI), whose 2002 results raised widespread concern about hormone therapy, studied conjugated equine estrogens combined with medroxyprogesterone acetate. It did not test bioidentical hormones.</p>
+<p>Later observational research, including the French E3N cohort, found different breast cancer risk associations for estrogen combined with micronized progesterone than for estrogen combined with synthetic progestins. Observational findings cannot establish cause, and The Menopause Society's 2022 position statement remains the most complete summary of how the evidence is weighed today.</p>
 
-<h2>Who May Benefit</h2>
-<p>Bioidentical hormone therapy is most commonly used to address symptoms of peri-menopause and post-menopause, including:</p>
+<h2>What is bioidentical hormone therapy used for?</h2>
+<p>Bioidentical hormone therapy is most often used for symptoms of perimenopause and postmenopause, including:</p>
 <ul>
-  <li>Vasomotor symptoms (hot flashes, night sweats)</li>
-  <li>Sleep disruption</li>
-  <li>Mood instability and anxiety</li>
-  <li>Brain fog and memory changes</li>
-  <li>Vaginal dryness and urogenital changes</li>
-  <li>Loss of bone density</li>
+  <li>Vasomotor symptoms (hot flashes and night sweats)</li>
+  <li>Sleep disrupted by night sweats</li>
+  <li>Vaginal dryness and other genitourinary changes</li>
+  <li>Prevention of bone loss</li>
 </ul>
-<p>Candidacy depends on individual health history, and bioidentical hormone therapy is not appropriate for everyone. A thorough intake, baseline labs, and an ongoing monitoring plan are essential components of responsible BHRT practice, and whether it is a fit for you is a decision to make with a provider who knows your full picture.</p>
+<p>It is not appropriate for everyone, and candidacy depends on the individual's medical history. A thorough intake, baseline labs and an ongoing monitoring plan are the core of responsible prescribing, and the decision belongs with a provider who knows the whole picture.</p>
 
-<h2>What to Expect from a Well-Managed Protocol</h2>
-<p>A properly managed bioidentical hormone protocol begins with comprehensive baseline labs — typically including estradiol, progesterone, testosterone, DHEA-S, and thyroid markers. Dosing is individualized based on lab values and symptom patterns, and levels are re-checked at regular intervals to ensure you are within a therapeutic range, not just on a standard dose.</p>
-<p>Symptom improvement is gradual. Most patients begin to notice meaningful changes within four to twelve weeks as hormone levels stabilize. The goal is not to restore the hormone levels of a 25-year-old — it is to find a level where your symptoms resolve and your long-term health markers (bone density, cardiovascular indicators, cognitive function) are supported.</p>
+<h2>What does careful management look like?</h2>
+<p>Management begins with baseline labs, typically including estradiol, progesterone, testosterone, DHEA-S and thyroid markers. Doses are individualized from lab values and symptom patterns, and levels are rechecked at intervals so that treatment is adjusted to the person, not left at a standard dose.</p>
+<p>Response varies from person to person, which is why follow-up visits are part of the plan from the start. The aim is not to restore the hormone levels of a 25-year-old. It is to find the level at which symptoms are manageable while long-term health markers, such as bone density and cardiovascular indicators, are monitored.</p>
     `.trim(),
     sources: [
       {
@@ -93,12 +91,6 @@ export const ARTICLES: Record<string, ArticleData> = {
         journal: "International Journal of Cancer, 2005",
         url: "https://pubmed.ncbi.nlm.nih.gov/16220452/",
       },
-      {
-        title:
-          "Kronos Early Estrogen Prevention Study (KEEPS): a randomized, double-blind, placebo-controlled trial",
-        journal: "Climacteric, 2012",
-        url: "https://pubmed.ncbi.nlm.nih.gov/23030218/",
-      },
     ],
   },
 
@@ -111,35 +103,33 @@ export const ARTICLES: Record<string, ArticleData> = {
     date: "2026-03-08",
     readTime: "5 min read",
     intro:
-      "What you eat directly impacts your hormone levels. Learn which foods support balance and which ones may be making your symptoms worse.",
+      "Diet influences how the body processes hormones. This article covers which foods have evidence behind them during perimenopause, and which may make symptoms harder to manage.",
     image: "/images/articles/anti-inflammatory-eating.webp",
     content: `
-<h2>The Gut-Hormone Connection</h2>
-<p>Your digestive system does more than absorb nutrients — it plays a direct role in how your body processes and excretes hormones. The gut microbiome contains a collection of bacteria called the estrobolome, which produces an enzyme (beta-glucuronidase) that affects estrogen recirculation. When the microbiome is disrupted — by antibiotic use, poor diet, or chronic stress — estrogen metabolism becomes imbalanced, contributing to conditions like estrogen dominance.</p>
-<p>Feeding your microbiome with diverse plant fibers, fermented foods, and prebiotics helps regulate how your body handles its own hormones. This is not a supplement protocol — it is a dietary foundation.</p>
+<h2>How does the gut affect hormones?</h2>
+<p>The digestive system does more than absorb nutrients; it also helps process and excrete hormones. Part of the gut microbiome, sometimes called the estrobolome, produces an enzyme, beta-glucuronidase, that affects how much estrogen is recirculated instead of excreted. When the microbiome is disrupted by antibiotics, a poor diet or chronic stress, estrogen metabolism can change. This is an active area of research.</p>
+<p>A diet with varied plant fiber, fermented foods and prebiotics supports a diverse microbiome. That is a dietary foundation, not a supplement protocol.</p>
 
-<h2>Foods That Support Hormonal Balance</h2>
-<p><strong>Cruciferous vegetables</strong> (broccoli, cauliflower, Brussels sprouts, kale) contain indole-3-carbinol (I3C) and diindylmethane (DIM), compounds that support the liver's Phase I and Phase II detoxification pathways responsible for estrogen clearance. Research from the National Cancer Institute has documented their role in shifting estrogen metabolism toward less proliferative metabolites.</p>
-<p><strong>Flaxseed</strong> contains lignans — phytoestrogens that bind weakly to estrogen receptors and appear to have a modulating effect, potentially competing with stronger estrogens at receptor sites. A tablespoon of ground flaxseed daily is a simple, evidence-supported addition.</p>
-<p><strong>Fatty fish</strong> (salmon, sardines, mackerel) provide omega-3 fatty acids that reduce systemic inflammation. Since inflammation disrupts the HPA axis and affects cortisol output, anti-inflammatory eating has a downstream effect on multiple hormone systems.</p>
-<p><strong>Fiber-rich legumes</strong> help bind excess estrogen in the digestive tract for excretion rather than reabsorption.</p>
+<h2>Which foods have evidence behind them?</h2>
+<p><strong>Cruciferous vegetables</strong> (broccoli, cauliflower, Brussels sprouts, kale) contain indole-3-carbinol and diindolylmethane (DIM), compounds the National Cancer Institute has described for their effects on estrogen metabolism.</p>
+<p><strong>Flaxseed</strong> contains lignans, plant compounds that bind weakly to estrogen receptors and may compete with stronger estrogens. A tablespoon of ground flaxseed a day is a common, inexpensive way to include them.</p>
+<p><strong>Fatty fish</strong> (salmon, sardines, mackerel) supply omega-3 fatty acids, which are associated with lower markers of systemic inflammation.</p>
+<p><strong>Fiber-rich legumes</strong> help bind estrogen in the digestive tract so that more is excreted and less is reabsorbed.</p>
 
-<h2>Blood Sugar Is a Hormone Issue</h2>
-<p>Insulin is a hormone, and blood sugar dysregulation is one of the most underappreciated drivers of hormonal symptoms. When blood sugar spikes repeatedly — from refined carbohydrates, sugary drinks, or erratic meal timing — insulin spikes with it. Over time, elevated insulin suppresses sex hormone-binding globulin (SHBG), which causes more free estrogen and testosterone to circulate unbound. In peri-menopause, this amplifies the hormonal volatility that is already underway.</p>
-<blockquote>Stabilizing blood sugar is one of the highest-leverage things you can do for hormonal symptoms — often before any other intervention is needed.</blockquote>
-<p>Practical strategies: eat protein and fat with every meal, avoid eating carbohydrates alone, do not skip breakfast, and consider walking for 10–15 minutes after meals. These habits blunt post-meal glucose spikes and reduce insulin demand.</p>
+<h2>Why does blood sugar matter for hormones?</h2>
+<p>Insulin is itself a hormone. Repeated spikes in blood sugar, from refined carbohydrates, sugary drinks or irregular meals, bring repeated spikes in insulin. Over time, high insulin lowers sex hormone-binding globulin (SHBG), leaving more estrogen and testosterone circulating unbound, which adds to the hormonal variability already present in perimenopause.</p>
+<p>Several habits blunt post-meal glucose spikes and reduce demand for insulin: eating protein and fat with each meal, not eating carbohydrates on their own, not skipping breakfast, and walking for 10 to 15 minutes after meals.</p>
 
-<h2>Foods That Worsen Hormonal Symptoms</h2>
+<h2>Which foods can make symptoms harder to manage?</h2>
 <ul>
-  <li><strong>Alcohol:</strong> Directly impairs the liver's ability to metabolize estrogen and raises estrogen levels. Even moderate consumption is linked to elevated circulating estradiol in post-menopausal women.</li>
-  <li><strong>Refined sugar and flour:</strong> Drive insulin spikes, promote systemic inflammation, and feed pathogenic gut bacteria that disrupt the microbiome.</li>
-  <li><strong>Conventionally farmed meat and dairy:</strong> May carry residual hormones and antibiotics that affect the microbiome and contribute to endocrine load.</li>
-  <li><strong>Trans fats and seed oils:</strong> Promote inflammatory signaling that interferes with the body's sensitivity to its own hormones.</li>
+  <li><strong>Alcohol:</strong> impairs the liver's metabolism of estrogen. Even moderate drinking is linked to higher circulating estradiol in postmenopausal women.</li>
+  <li><strong>Refined sugar and flour:</strong> drive the glucose and insulin spikes described above.</li>
+  <li><strong>Trans fats:</strong> promote inflammation and are best avoided.</li>
 </ul>
 
-<h2>Building the Plate</h2>
-<p>A practical framework for a hormone-supportive meal: fill half the plate with non-starchy vegetables (especially cruciferous), a quarter with quality protein (wild fish, pasture-raised poultry, legumes), and a quarter with complex carbohydrates (sweet potato, quinoa, lentils). Add a tablespoon of healthy fat — olive oil, avocado, or ground flaxseed. Eat within a consistent window and minimize grazing, which keeps insulin elevated throughout the day.</p>
-<p>This is not a restrictive diet. It is a nutritional structure that supports the systems your hormones depend on.</p>
+<h2>What does a hormone-supportive plate look like?</h2>
+<p>A practical guide: half the plate non-starchy vegetables, especially cruciferous ones; a quarter protein, such as fish, poultry or legumes; and a quarter complex carbohydrates, such as sweet potato, quinoa or lentils. Add a tablespoon of olive oil, avocado or ground flaxseed. Eating at consistent times, with less grazing between meals, keeps insulin from staying elevated all day.</p>
+<p>This is not a restrictive diet. It is a structure that supports the systems hormones depend on.</p>
     `.trim(),
     sources: [
       {
@@ -170,7 +160,8 @@ export const ARTICLES: Record<string, ArticleData> = {
   },
 
   "sleep-hormones": {
-    title: "Why Sleep Is the Most Underrated Hormone Therapy",
+    title:
+      "Sleep and Hormones in Midlife: How Each Affects the Other",
     titleSegment: "Sleep and Hormone Health",
     metaDescription:
       "During deep sleep the body produces and regulates key hormones. Why disrupted sleep undermines other efforts to support hormone health in midlife.",
@@ -178,33 +169,33 @@ export const ARTICLES: Record<string, ArticleData> = {
     date: "2026-02-28",
     readTime: "7 min read",
     intro:
-      "During deep sleep, your body produces and regulates key hormones. If you're not sleeping well, everything else you're doing for your health is fighting an uphill battle.",
+      "Several key hormones are produced and regulated during deep sleep, and the hormonal changes of perimenopause can in turn disrupt sleep. This article explains the connection and the habits with evidence behind them.",
     image: "/images/articles/sleep-hormones.webp",
     content: `
-<h2>Sleep Is When Hormonal Repair Happens</h2>
-<p>Sleep is not rest in a passive sense — it is active biological maintenance. Multiple hormone systems operate on a sleep-dependent cycle, and disrupting that cycle has measurable downstream effects on everything from cortisol to thyroid function to reproductive hormones.</p>
-<p>Growth hormone (GH) is secreted in its largest daily pulse during the first ninety minutes of deep, slow-wave sleep. GH is not just about muscle mass — it supports tissue repair, fat metabolism, immune function, and cognitive restoration. Poor sleep suppresses GH release, and this effect accumulates over time.</p>
+<h2>What happens to hormones during sleep?</h2>
+<p>Sleep is active biological maintenance. Several hormone systems run on a sleep-dependent cycle, and disrupted sleep has measurable effects on hormones ranging from thyroid hormones to reproductive hormones.</p>
+<p>Growth hormone is released in its largest daily pulse during the first period of deep, slow-wave sleep. It supports tissue repair, fat metabolism, immune function and recovery, and poor sleep reduces its release.</p>
 
-<blockquote>In peri-menopause, when the body is already under additional strain from fluctuating ovarian hormones, disrupted sleep accelerates the hormonal dysregulation that is already underway.</blockquote>
+<blockquote>In perimenopause, when hormone levels are already fluctuating, poor sleep compounds the strain.</blockquote>
 
-<h2>Estrogen, Progesterone, and Sleep Architecture</h2>
-<p>Estrogen and progesterone have direct neurological effects on sleep quality. Progesterone is a natural GABA-agonist — it promotes calm, reduces anxiety, and supports sleep onset. As progesterone declines in peri-menopause (often before estrogen does), many women notice increasing difficulty falling asleep, waking in the night, and lighter, less restorative sleep — even before hot flashes begin.</p>
-<p>Estrogen regulates the serotonin system and modulates the density of certain sleep-related receptors. Low estrogen is associated with reduced REM sleep, which is the phase involved in emotional processing and memory consolidation. Night sweats — which are a symptom of low estrogen — fragment sleep architecture even in women who fall asleep easily.</p>
+<h2>How do estrogen and progesterone affect sleep?</h2>
+<p>Progesterone acts on the brain's GABA system, which promotes calm and helps with falling asleep. Progesterone often declines before estrogen in perimenopause, and many women notice more trouble falling asleep, more waking during the night and lighter sleep, sometimes before hot flashes begin.</p>
+<p>Estrogen influences the serotonin system and other pathways involved in sleep. Night sweats, which follow falling estrogen, break up sleep even in women who fall asleep easily.</p>
 
-<h2>Melatonin: More Than a Sleep Aid</h2>
-<p>Melatonin is primarily known as a sleep signal, but it is also an antioxidant with roles in immune regulation and reproductive health. Melatonin production naturally declines with age, and this decline is accelerated by light exposure at night (particularly blue-spectrum light from screens), irregular sleep schedules, and chronic stress.</p>
+<h2>What role does melatonin play?</h2>
+<p>Melatonin is best known as the body's signal for sleep, and it also acts as an antioxidant with roles in immune and reproductive health. Production declines with age, and the decline is hastened by light at night, particularly from screens, by irregular sleep schedules and by chronic stress.</p>
 
-<h2>Practical Sleep Hygiene for Hormonal Health</h2>
+<h2>Which sleep habits have evidence behind them?</h2>
 <ul>
-  <li><strong>Consistent sleep and wake times</strong> — even on weekends — are the single most powerful circadian anchor. Irregular schedules are a primary driver of circadian rhythm disruption.</li>
-  <li><strong>Light exposure in the first hour of the day</strong> (natural sunlight, or a 10,000-lux light box in winter) anchors the body clock and primes melatonin production 14–16 hours later.</li>
-  <li><strong>Eliminate blue light 90 minutes before bed.</strong> Screens suppress melatonin onset even at low brightness.</li>
-  <li><strong>Cool sleeping environment.</strong> Core body temperature must drop to initiate and maintain deep sleep. Women experiencing hot flashes may benefit from cooling mattress technology (such as Chili Sleep or Ooler systems, which have clinical data supporting their use in menopause-related sleep disruption).</li>
-  <li><strong>Alcohol and sleep:</strong> Alcohol induces sleep onset but fragments the second half of the night by suppressing REM sleep and elevating body temperature. It is not a sleep aid for women with hormonal sleep disruption.</li>
+  <li><strong>Consistent sleep and wake times,</strong> including weekends, are the strongest anchor for the body clock.</li>
+  <li><strong>Light in the first hour of the day,</strong> from daylight or a 10,000-lux light box in winter, sets the body clock and times melatonin release for the evening.</li>
+  <li><strong>Less screen time before bed.</strong> Screen light delays melatonin release, even at low brightness.</li>
+  <li><strong>A cool bedroom.</strong> Core body temperature has to fall for deep sleep to begin and continue, which matters more for women with night sweats.</li>
+  <li><strong>Less alcohol in the evening.</strong> Alcohol helps with falling asleep but fragments the second half of the night by suppressing REM sleep and raising body temperature.</li>
 </ul>
 
-<h2>When Sleep Problems Persist Despite Good Hygiene</h2>
-<p>If sleep problems persist despite consistent sleep hygiene, this is often a signal that the underlying hormonal cause needs to be addressed directly. Progesterone deficiency, untreated thyroid dysfunction, and blood sugar instability at night are all treatable conditions that sleep hygiene alone will not resolve. Comprehensive lab testing that includes a thyroid panel and reproductive hormones is a reasonable starting point when sleep disruption is significant and chronic.</p>
+<h2>What if sleep problems persist?</h2>
+<p>Sleep that stays poor despite consistent habits deserves evaluation. Night sweats, thyroid dysfunction and nighttime swings in blood sugar are among the contributors an evaluation looks for, and testing that includes a thyroid panel and reproductive hormones is a reasonable place to start when disrupted sleep is significant and long-standing.</p>
     `.trim(),
     sources: [
       {
@@ -235,7 +226,8 @@ export const ARTICLES: Record<string, ArticleData> = {
   },
 
   "endocrine-disruptors": {
-    title: "Hidden Hormone Disruptors in Your Home (And Simple Swaps)",
+    title:
+      "Endocrine Disruptors at Home: What They Are and Simple Swaps",
     titleSegment: "Hormone Disruptors at Home",
     metaDescription:
       "From plastics to cleaning products, everyday household items can interfere with the endocrine system. The biggest culprits, and simple replacements.",
@@ -243,34 +235,34 @@ export const ARTICLES: Record<string, ArticleData> = {
     date: "2026-02-20",
     readTime: "4 min read",
     intro:
-      "From plastics to cleaning products, everyday items can interfere with your endocrine system. Here are the biggest culprits and easy replacements.",
+      "Some chemicals in plastics, cosmetics and household products can interfere with the endocrine system. This article covers the best-studied examples and practical ways to reduce exposure.",
     image: "/images/articles/endocrine-disruptors.webp",
     content: `
-<h2>What Is an Endocrine Disruptor?</h2>
-<p>An endocrine disruptor is a chemical that interferes with the body's hormone signaling — either by mimicking a hormone (particularly estrogen), blocking hormone receptors, or disrupting how hormones are synthesized and metabolized. The Endocrine Society defines them as "exogenous chemicals, or mixtures of chemicals, that interfere with any aspect of hormone action."</p>
-<p>These compounds are not rare industrial pollutants — they are present in everyday consumer products at levels that have raised concern among endocrinologists and toxicologists. For women already navigating the hormonal changes of peri- and post-menopause, reducing unnecessary endocrine load is a reasonable, practical strategy.</p>
+<h2>What is an endocrine disruptor?</h2>
+<p>An endocrine disruptor is a chemical that interferes with the body's hormone signaling, by mimicking a hormone (most often estrogen), blocking hormone receptors, or altering how hormones are made and broken down. The Endocrine Society defines them as "exogenous chemicals, or mixtures of chemicals, that interfere with any aspect of hormone action."</p>
+<p>They are not confined to industrial sites. Many are present in everyday consumer products at levels that endocrinologists and toxicologists have flagged as a concern. For women going through the hormonal changes of perimenopause and menopause, reducing avoidable exposure is a reasonable, practical step.</p>
 
-<h2>BPA and BPA Substitutes</h2>
-<p>Bisphenol A (BPA) is a synthetic estrogen used to harden plastics and line food and beverage cans. It leaches into food and drink, particularly when heated. BPA binds to estrogen receptors and has been detected in the urine of over 90% of adults tested in U.S. biomonitoring studies (National Health and Nutrition Examination Survey).</p>
-<p>Many products now labeled "BPA-free" use BPS (bisphenol S) or BPF, which appear to have similar estrogenic activity. The precautionary principle here is to reduce plastic contact with food overall, rather than simply switching to alternative bisphenols.</p>
-<p><strong>Simple swaps:</strong> Glass, stainless steel, or ceramic food storage containers. Avoid microwaving in plastic. Choose jarred or fresh foods over canned goods when practical.</p>
+<h2>What are BPA and its substitutes?</h2>
+<p>Bisphenol A (BPA) is a synthetic estrogen used to harden plastics and to line food and drink cans. It leaches into food and drink, especially when heated, and binds to estrogen receptors. U.S. biomonitoring through the National Health and Nutrition Examination Survey has detected BPA in the urine of more than 90% of adults tested.</p>
+<p>Many "BPA-free" products use bisphenol S or bisphenol F instead, which appear to have similar estrogenic activity. Reducing plastic contact with food overall is more effective than switching to a different bisphenol.</p>
+<p><strong>Swaps:</strong> glass, stainless steel or ceramic food storage; no microwaving in plastic; fresh or jarred food in place of canned where practical.</p>
 
-<h2>Phthalates</h2>
-<p>Phthalates are plasticizers used to make PVC flexible and to carry fragrance in personal care products. They are anti-androgenic — meaning they interfere with testosterone and other androgen signaling. They are found in: vinyl flooring, food packaging films, nail polish, hair spray, synthetic fragrances, and conventionally manufactured personal care products.</p>
-<p>The NIH National Institute of Environmental Health Sciences (NIEHS) classifies phthalates as endocrine-disrupting compounds and notes ongoing research into their effects on reproductive hormones and developmental health.</p>
-<p><strong>Simple swaps:</strong> Choose fragrance-free or naturally scented personal care products. Look for "phthalate-free" labels. Opt for solid wood or tile flooring over vinyl where possible. Prioritize glass or stainless steel over plastic food wraps.</p>
+<h2>What are phthalates?</h2>
+<p>Phthalates are chemicals that make PVC flexible and carry fragrance in personal care products. They are anti-androgenic, interfering with testosterone and related hormone signaling. Common sources include vinyl flooring, food packaging film, nail polish, hair spray and synthetic fragrance.</p>
+<p>The National Institute of Environmental Health Sciences classifies phthalates as endocrine-disrupting compounds, and research into their effects on reproductive hormones continues.</p>
+<p><strong>Swaps:</strong> fragrance-free personal care products; products labeled phthalate-free; wood or tile flooring in place of vinyl where possible; glass or stainless steel in place of plastic wrap.</p>
 
-<h2>Parabens</h2>
-<p>Parabens (methylparaben, ethylparaben, propylparaben, butylparaben) are preservatives used in cosmetics, lotions, and some food products. They are weak estrogenic compounds that are readily absorbed through the skin. Intact parabens have been detected in breast tissue samples in published research, raising questions about their relevance to estrogen-sensitive conditions.</p>
-<p><strong>Simple swaps:</strong> Review your cosmetics and personal care labels. Many clean-beauty brands now formulate without parabens. The EWG Skin Deep database is a searchable resource for evaluating product ingredients.</p>
+<h2>What are parabens?</h2>
+<p>Parabens (methylparaben, ethylparaben, propylparaben and butylparaben) are preservatives used in cosmetics, lotions and some foods. They are weakly estrogenic and absorbed through the skin. Published research has detected intact parabens in samples of breast tissue; that finding raised questions about their relevance to estrogen-sensitive conditions but did not show that they cause disease.</p>
+<p><strong>Swaps:</strong> check cosmetic and personal care labels, since many brands now make paraben-free products. The Environmental Working Group's Skin Deep database lets products be searched by ingredient.</p>
 
-<h2>Pesticides and Xenoestrogens</h2>
-<p>Organochlorine pesticides (including DDT and its metabolites, lindane, and chlordane) are persistent environmental pollutants classified as xenoestrogens — chemicals that behave like estrogen in the body. Though many have been banned in the U.S., they persist in soil, water, and fat tissue due to their lipophilic (fat-binding) nature.</p>
-<p>Current-use pesticides, including certain fungicides (vinclozolin) and herbicides (atrazine), also have documented endocrine-disrupting activity. Washing produce thoroughly and choosing organic for the highest-pesticide crops (the EWG Dirty Dozen list) reduces dietary exposure.</p>
+<h2>Which pesticides act like estrogen?</h2>
+<p>Organochlorine pesticides, including DDT and its breakdown products, lindane and chlordane, are persistent pollutants classed as xenoestrogens: chemicals that behave like estrogen in the body. Many are banned in the United States but remain in soil, water and body fat because they bind to fat.</p>
+<p>Some pesticides in current use, including the fungicide vinclozolin and the herbicide atrazine, also have documented endocrine-disrupting activity. Washing produce thoroughly reduces dietary exposure, as does choosing organic versions of the crops with the highest residues, which the Environmental Working Group lists each year.</p>
 
-<h2>A Realistic Approach</h2>
-<blockquote>Reducing endocrine disruptor exposure is not about achieving a toxin-free life — it is about reducing overall burden incrementally, in the places that matter most.</blockquote>
-<p>Start with the items you use daily and that have the most direct contact with your body: food storage, drinking containers, skincare, and cleaning products. Small, consistent changes add up over months. No single swap will transform your hormonal health, but reducing total endocrine load supports the effectiveness of other hormonal interventions.</p>
+<h2>Where is the best place to start?</h2>
+<blockquote>The aim is not a chemical-free life. It is a lower overall exposure, reduced step by step where it matters most.</blockquote>
+<p>Start with items used daily that have the most direct contact with the body: food storage, drinking containers, skin care and cleaning products. Small, consistent changes add up over months.</p>
     `.trim(),
     sources: [
       {
@@ -300,7 +292,8 @@ export const ARTICLES: Record<string, ArticleData> = {
   },
 
   "perimenopause-signs": {
-    title: "7 Early Signs of Peri-Menopause You Shouldn't Ignore",
+    title:
+      "Early Signs of Perimenopause: Seven Common Changes",
     titleSegment: "7 Early Signs of Perimenopause",
     metaDescription:
       "Perimenopause can begin years before periods stop. The subtle signals the body sends when hormones start shifting, and what is worth doing about them.",
@@ -308,38 +301,38 @@ export const ARTICLES: Record<string, ArticleData> = {
     date: "2026-02-12",
     readTime: "5 min read",
     intro:
-      "Peri-menopause can start years before your periods stop. These are the subtle signals your body sends when hormones begin shifting — and what to do about them.",
+      "Perimenopause can begin years before periods stop. This article describes seven of the most common early changes, what drives each, and when an evaluation makes sense.",
     image: "/images/articles/perimenopause-signs.webp",
     content: `
-<h2>The Peri-Menopause Window</h2>
-<p>Peri-menopause — the transitional phase leading up to menopause — typically begins in a woman's mid-to-late forties, though it can start as early as the late thirties. Menopause is defined clinically as 12 consecutive months without a menstrual period; everything before that final period, while hormones are fluctuating, is peri-menopause.</p>
-<p>The STRAW+10 (Stages of Reproductive Aging Workshop) staging framework, developed by leading reproductive endocrinologists and endorsed by major medical societies, describes the hormonal and cycle-based changes that characterize this transition. One of its key findings: hormonal changes begin years before cycles become irregular, making symptoms the earliest meaningful signal.</p>
+<h2>When does perimenopause begin?</h2>
+<p>Perimenopause, the transition leading up to menopause, usually begins in a woman's mid-to-late forties and can start in the late thirties. Menopause is defined clinically as 12 consecutive months without a menstrual period; the years of fluctuating hormones before that final period are perimenopause.</p>
+<p>The STRAW+10 staging system (Stages of Reproductive Aging Workshop), developed by reproductive specialists and endorsed by major medical societies, describes the stages of this transition, based mainly on changes in the menstrual cycle and supported by hormone measurements.</p>
 
-<h2>1. Changes in Your Menstrual Cycle</h2>
-<p>The first measurable change in peri-menopause is typically a shortening of the cycle by two to seven days. This is driven by declining ovarian reserve and earlier follicular development — cycles that were previously 28 days may shorten to 21–25 days. Over time, cycles become more variable: some short, some long, occasional skips. Heavier bleeding is also common as the balance between estrogen and progesterone becomes erratic. Any significant change in cycle pattern that persists for more than two to three months warrants evaluation.</p>
+<h2>1. How do menstrual cycles change?</h2>
+<p>Cycles often shorten first, as ovarian reserve declines and follicles develop earlier; a cycle that was 28 days may become 21 to 25 days. Over time cycles become more variable, some short, some long, some skipped. STRAW+10 marks the early menopausal transition by a persistent difference of seven days or more between consecutive cycles. Heavier bleeding is also common as the balance between estrogen and progesterone becomes erratic. A significant change in cycle pattern that lasts more than two to three months warrants evaluation; the red flags are covered on the irregular periods page.</p>
 
-<h2>2. Sleep Disruption</h2>
-<p>Many women notice sleep problems as the first significant quality-of-life symptom — often before vasomotor symptoms (hot flashes) begin. As progesterone declines, its calming, GABA-agonist effect on the nervous system diminishes. The result is difficulty falling asleep, waking between 2–4 AM, and lighter sleep overall. This is not anxiety — it is a neurological change tied directly to progesterone levels.</p>
+<h2>2. Why does sleep change?</h2>
+<p>For many women, disrupted sleep is the first change that noticeably affects daily life, often before hot flashes begin. Progesterone has a calming effect on the nervous system through the brain's GABA system, and as it declines, that effect weakens. The result can be trouble falling asleep, waking in the early hours, and lighter sleep overall.</p>
 
-<h2>3. Mood Instability and Increased Anxiety</h2>
-<p>Estrogen modulates serotonin, dopamine, and GABA systems — all of which affect mood stability. During peri-menopause, estrogen levels fluctuate erratically (not simply declining in a straight line), causing corresponding fluctuations in mood. Many women describe feeling more reactive, tearful, or anxious in ways that feel unlike their baseline. Women with a history of PMS or post-partum mood changes appear more sensitive to these hormonal fluctuations, as the same neurological vulnerability is triggered.</p>
+<h2>3. Why do mood and anxiety change?</h2>
+<p>Estrogen influences the serotonin, dopamine and GABA systems, all of which affect mood. In perimenopause estrogen does not fall in a straight line; it fluctuates erratically, and mood can fluctuate with it. Many women describe feeling more reactive, tearful or anxious than usual. Women with a history of premenstrual or postpartum mood changes appear more sensitive to these fluctuations. Persistent low mood or anxiety warrants care in its own right.</p>
 
-<h2>4. Brain Fog and Memory Changes</h2>
-<p>Cognitive symptoms — word-finding difficulty, short-term memory gaps, trouble concentrating — are reported by up to 60% of women during the peri-menopause transition, according to research from the Study of Women's Health Across the Nation (SWAN). Estrogen supports cerebral blood flow and glucose metabolism in the brain. During peri-menopause, this support becomes inconsistent as estrogen fluctuates. Most research suggests cognitive function largely stabilizes after the transition is complete.</p>
-<blockquote>Brain fog during peri-menopause is not a sign of cognitive decline — it is a symptom of hormonal transition. It is treatable.</blockquote>
+<h2>4. What causes brain fog?</h2>
+<p>Word-finding difficulty, short-term memory lapses and trouble concentrating are reported by up to 60% of women during the transition, according to the Study of Women's Health Across the Nation (SWAN). Estrogen supports blood flow and glucose use in the brain, and that support becomes inconsistent as levels fluctuate. Most research suggests cognitive function largely stabilizes once the transition is complete.</p>
+<blockquote>Brain fog during perimenopause is a feature of the hormonal transition, and research to date does not link it to long-term cognitive decline.</blockquote>
 
-<h2>5. Vasomotor Symptoms (Hot Flashes and Night Sweats)</h2>
-<p>Hot flashes are the most recognized symptom of menopause, but they often begin in peri-menopause, well before periods stop. They are caused by a narrowing of the thermoneutral zone in the hypothalamus — triggered by declining estrogen — that makes the body overly sensitive to small temperature changes. Up to 75% of women in Western populations experience vasomotor symptoms; they can persist for a median of 7–10 years, per SWAN longitudinal data.</p>
+<h2>5. When do hot flashes start?</h2>
+<p>Hot flashes are the best-known symptom of menopause, but they often begin in perimenopause, well before periods stop. Falling estrogen narrows the temperature range the hypothalamus tolerates, so small changes in body temperature trigger a flush. Up to 75% of women in Western populations experience hot flashes or night sweats, and in SWAN they lasted a median of more than seven years.</p>
 
-<h2>6. Changes in Libido and Vaginal Comfort</h2>
-<p>Declining estrogen and testosterone (which also falls significantly in the years around menopause) reduce sexual desire, arousal, and vaginal lubrication. Vaginal tissue becomes thinner and less elastic — a condition now termed Genitourinary Syndrome of Menopause (GSM). Unlike hot flashes, which often resolve over time, GSM is progressive without treatment. It responds well to local estrogen therapy, which is considered low-risk even for women who are not candidates for systemic hormone therapy.</p>
+<h2>6. How do libido and vaginal comfort change?</h2>
+<p>Declining estrogen and testosterone, which also falls considerably in the years around menopause, can reduce sexual desire, arousal and vaginal lubrication. Vaginal tissue becomes thinner and less elastic, part of what is now called genitourinary syndrome of menopause (GSM). Unlike hot flashes, which often ease with time, GSM tends to persist or progress without treatment; the options are covered on the vaginal dryness page.</p>
 
-<h2>7. Joint Pain and Increased Inflammation</h2>
-<p>Estrogen has anti-inflammatory effects throughout the body, including in joint tissue. As estrogen declines, many women notice new or worsening joint pain — particularly in the hands, knees, and hips — that does not have a clear musculoskeletal cause. Increased inflammatory markers have been documented in women during the peri-menopausal transition. This is distinct from osteoarthritis, though the two can overlap. Anti-inflammatory diet, resistance training, and omega-3 supplementation are all evidence-supported adjuncts.</p>
+<h2>7. Is joint pain related?</h2>
+<p>It can be. Estrogen has anti-inflammatory effects throughout the body, including in joints, and many women notice new or worsening aches in the hands, knees and hips around the transition. Higher inflammatory markers have been documented during perimenopause. Much midlife joint pain has other causes, including osteoarthritis, and the two can overlap, so persistent joint pain deserves its own evaluation.</p>
 
-<h2>When to Seek Evaluation</h2>
-<p>If you are experiencing two or more of the above symptoms — particularly if they are affecting your sleep, mood, or daily function — a hormone evaluation is a reasonable first step. A comprehensive panel including estradiol, progesterone, testosterone, DHEA-S, FSH, and thyroid markers will give a clearer picture of where you are in the transition and what, if any, intervention is appropriate.</p>
-<p>Peri-menopause is not a disease. But it is a biological transition that benefits from attention, not just endurance.</p>
+<h2>When is an evaluation worthwhile?</h2>
+<p>When two or more of these changes are affecting sleep, mood or daily life, a hormone evaluation is a reasonable first step. A panel that may include estradiol, progesterone, testosterone, DHEA-S, FSH and thyroid markers gives a clearer picture of where someone is in the transition and whether any treatment is appropriate.</p>
+<p>Perimenopause is not a disease. It is a biological transition, and it deserves attention, not just endurance.</p>
     `.trim(),
     sources: [
       {

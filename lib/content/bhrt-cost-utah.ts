@@ -26,7 +26,7 @@ const labs = `${usd(COSTS.labs.low)} to ${usd(COSTS.labs.high)}`;
 const firstYear = usd((pkg.price ?? 0) + 3 * (fu.price ?? 0));
 
 const meds = COSTS.medications.items
-  .map((m) => `${m.name} — about ${usd(m.estimate)}`)
+  .map((m) => `${m.name}, about ${usd(m.estimate)}`)
   .join("; ");
 
 export const bhrtCostUtah: ContentPage = {
@@ -44,16 +44,16 @@ export const bhrtCostUtah: ContentPage = {
         `The first two visits are sold together because hormone care depends on follow-through: the initial visit sets a plan, and the follow-up about 12 weeks later is where results and labs are reviewed and the plan is adjusted. Pricing them as one package removes the decision about whether to come back.`,
       ],
       bullets: [
-        `${free.label} — free, about ${free.durationMinutes} minutes by phone`,
-        `${pkg.label} — ${pkgPrice}: a ${pkg.durationMinutes}-minute initial visit, a follow-up about 12 weeks later, and messaging through the secure patient portal between them`,
-        `${fu.label}s after that — ${fuPrice} each, typically ${SITE.process.followUpCadence}`,
+        `${free.label}: free, about ${free.durationMinutes} minutes by phone`,
+        `${pkg.label}: ${pkgPrice} for a ${pkg.durationMinutes}-minute initial visit, a follow-up about 12 weeks later, and messaging through the secure patient portal between them`,
+        `${fu.label}s after that: ${fuPrice} each, typically ${SITE.process.followUpCadence}`,
       ],
     },
     {
       heading: "What does a typical first year cost?",
       paragraphs: [
         `At the usual cadence, a first year of visit fees comes to about ${firstYear}: the ${pkg.label} at ${pkgPrice}, then three follow-ups at ${fuPrice} each.`,
-        `That figure covers visits only. Labs and medications are added on top, and the number of follow-ups can be higher or lower depending on how a plan is going — some people need an earlier check-in, and the cadence is a guide rather than a contract.`,
+        `That figure covers visits only. Labs and medications are added on top, and the number of follow-ups can be higher or lower depending on how a plan is going. Some people need an earlier check-in; the cadence is a guide, not a contract.`,
       ],
     },
     {
@@ -67,8 +67,8 @@ export const bhrtCostUtah: ContentPage = {
     {
       heading: "Why does BHRT usually cost more than a regular office visit?",
       paragraphs: [
-        "Hormone visits run longer and involve more testing than a standard primary care appointment, and that is most of the difference.",
-        `The initial visit here is about ${pkg.durationMinutes} minutes. It covers a full history, current symptoms and goals, and a care plan — in place of the ten to fifteen minutes a typical primary care slot allows. Hormone panels also cost more than routine bloodwork, since they cover thyroid function alongside sex hormones.`,
+        "Hormone visits run longer and involve more testing than a standard primary care appointment, which accounts for most of the difference.",
+        `The initial visit here is about ${pkg.durationMinutes} minutes. It covers a full history, current symptoms and goals, and a care plan, compared with the ten to fifteen minutes a typical primary care slot allows. Hormone panels also cost more than routine bloodwork, since they cover thyroid function alongside sex hormones.`,
       ],
     },
     {
@@ -82,7 +82,7 @@ export const bhrtCostUtah: ContentPage = {
       heading: "How can someone find out the cost before committing?",
       paragraphs: [
         `The free ${free.durationMinutes}-minute phone consultation is the place to ask, and it carries no cost or obligation.`,
-        `It is a short introductory call rather than a full appointment — time to ask which tests are likely and which plan fits. If testing makes sense, Kim can provide a lab order at no charge on that call. The lab fees themselves are still billed separately by ${SITE.process.labProvider}.`,
+        `The call is a short introduction, not a full appointment: time to ask which tests are likely and which plan fits. If testing makes sense, Kim can provide a lab order at no charge on that call. The lab fees themselves are still billed separately by ${SITE.process.labProvider}.`,
       ],
     },
   ],
@@ -106,7 +106,7 @@ export const bhrtCostUtah: ContentPage = {
     },
     {
       question: "Do prices differ depending on where in Utah someone lives?",
-      answer: `No. All visits are virtual, so pricing is identical across Utah — whether someone is in Salt Lake County, Utah County, or a rural part of the state. The only cost that varies by location is laboratory testing, which is billed by ${SITE.process.labProvider} and can differ slightly between patient service centers.`,
+      answer: `No. All visits are virtual, so pricing is identical across Utah, whether someone is in Salt Lake County, Utah County, or a rural part of the state. The only cost that varies by location is laboratory testing, which is billed by ${SITE.process.labProvider} and can differ slightly between patient service centers.`,
     },
     {
       question: "How often would someone pay for a follow-up?",

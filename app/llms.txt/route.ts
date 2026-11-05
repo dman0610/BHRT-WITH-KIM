@@ -104,7 +104,7 @@ not author.
 - Lab testing runs through ${SITE.process.labProvider}. The patient receives an
   email with the lab order, schedules an appointment with ${SITE.process.labProvider},
   and visits a ${SITE.process.labProvider} patient service center for the draw.
-- Lab costs vary by panel and are billed by the laboratory, not the practice.
+- ${SITE.labDisclosure}
 - Prescriptions are filled at ${SITE.process.pharmacy}. Patients are not tied
   to a pharmacy chosen by the practice.
 - Follow-up visits are typically ${SITE.process.followUpCadence}.

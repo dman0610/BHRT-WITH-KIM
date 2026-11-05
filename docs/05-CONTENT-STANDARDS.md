@@ -1,6 +1,6 @@
 # 05 — Content Standards
 
-Last updated: 2026-09-22 · Owner: Dallin
+Last updated: 2026-11-05 · Owner: Dallin
 
 **This file is loaded into every Claude session via [CLAUDE.md](../CLAUDE.md). Nothing gets published that violates it.**
 
@@ -10,7 +10,7 @@ Last updated: 2026-09-22 · Owner: Dallin
 
 **Accuracy is the marketing strategy, not a constraint on it.**
 
-This is not a compliance tax grudgingly paid. Google's quality systems and AI retrieval both reward verifiable specificity and punish unverifiable puffery. "An initial consultation is $200 for about 60 minutes" outperforms "compassionate, expert care" on every channel in this plan, because the first can be quoted and checked and the second cannot.
+This is not a compliance tax grudgingly paid. Google's quality systems and AI retrieval both reward verifiable specificity and punish unverifiable puffery. "The New Patient Package is $300 and includes a 60-minute initial visit" outperforms "compassionate, expert care" on every channel in this plan, because the first can be quoted and checked and the second cannot.
 
 Where a fact is missing, **write around the gap** rather than filling it. "Kim provides bioidentical hormone replacement therapy through virtual consultations across Utah" is publishable today. A guessed credential, a made-up consult duration, or an invented success rate is not.
 
@@ -96,6 +96,28 @@ Like Yourself Again") are aspirational rather than clinical, and `QUIZ_DISCLAIME
 says plainly that the quiz is "not a medical diagnosis".
 
 ---
+
+## Editorial register — added 2026-11-05
+
+Google read `/about` on 2026-09-22 and declined to index it. It was the second
+most formulaic page on the site: 22.9 machine-writing habits per 1,000 words.
+The pages rewritten on 2026-11-05 came down to 4–10, and `npm run verify`
+("Editorial style") now holds them at ≤ 12.
+
+Write like a clinical reference (Mayo Clinic, Harvard Health Publishing,
+MedlinePlus), not like a marketing page and not like a chatbot:
+
+- **Short declarative sentences.** One idea each. Open every section with the answer.
+- **No throat-clearing:** "It is worth noting", "the honest answer", "this is a bigger deal than it sounds", "genuinely", "straightforward".
+- **Em-dashes sparingly.** One per paragraph at most; use a period or a colon.
+- **"Rather than" → "instead of", or restructure.** It is the single most frequent tic on this site.
+- **Numbers carry their source** in the same sentence ("in SWAN, the median was…").
+- **Third person** on educational pages; second person only where the standards above allow it.
+- Borrow the *discipline* of those publications, never their name: do not imply affiliation with Harvard, Mayo or anyone else.
+
+**Style rewrites must not change substance.** Kim reviewed this content; a
+rewrite that adds a clinical claim invalidates that review. Rewrites may only
+keep, narrow or remove claims.
 
 ## Paid ad copy — stricter than the website
 

@@ -2,7 +2,7 @@
 
 **This file is the single source of truth for every fact published about this business.**
 
-Last verified: 2026-09-22 · Owner: Dallin
+Last verified: 2026-11-05 · Owner: Dallin
 Source of record: Kim Yadon's emails (2026-08-06 → 2026-08-15), Dallin's confirmations, and the NPPES registry
 
 ---
@@ -51,12 +51,57 @@ The one-sentence identity used verbatim in `/llms.txt`, `MedicalBusiness` schema
 
 FNP-C is Family Nurse Practitioner–Certified (AANP board certification). Kim signs her own correspondence this way and it appears on her print flyer, so it is the authorized rendering.
 
-Publish exactly as written. These four strings are the complete, authorized set:
+### Education — supplied by Kim 2026-11-05
 
-1. `Board Certified Nurse Practitioner`
-2. `Trained in BHRT through Worldlink Medical`
-3. `Trained in Functional Medicine`
-4. `Certified Diabetes Care and Education Specialist (CDCES)`
+| Degree | Institution | Year |
+|---|---|---|
+| Master of Science in Nursing, Family Nurse Practitioner | Indiana State University | 2023 |
+| Bachelor's degree in Nursing | Brigham Young University–Idaho | 2017 |
+| Associate degree in Nursing | Salt Lake Community College | 2015 |
+| Bachelor of Science in Parks, Recreation and Tourism, emphasis in Therapeutic Recreation | University of Utah | 1999 |
+
+Kim wrote "Bachelors of Nursing" and "Associates in Nursing"; the site renders
+them as "Bachelor's degree in Nursing" and "Associate degree in Nursing" and
+does **not** expand them to a specific degree title (e.g. BSN) she didn't state.
+
+### Certifications
+
+| Certification | Issuer | Since |
+|---|---|---|
+| Family Nurse Practitioner — Certified (FNP-C) | national board certification | — |
+| Certified Diabetes Care and Education Specialist (CDCES) | Certification Board for Diabetes Care and Education | 2024 |
+
+CDCES is publicly verifiable at <https://www.cbdce.org/verify> (linked from `/about#verify`).
+
+### Hormone and menopause training — supplied by Kim 2026-11-05
+
+Titles exactly as Kim gave them. **These are continuing education, not
+certifications.** WorldLink Medical offers a separate certification exam that
+Kim has not taken, so the site must never say "WorldLink certified".
+
+| Date | Provider | Course |
+|---|---|---|
+| May 2026 | WorldLink Medical | Optimal Medicine Training: Building the BHRT Foundation |
+| October 2026 | WorldLink Medical | Optimal Medicine Training: Navigate Hormone Complexities |
+| November 2026 | WorldLink Medical | Optimal Medicine Training: Resolve Chronic Disease — **completes the weekend of 2026-11-07; set `completed: true` in `lib/site.ts` then** |
+| September 2026 | Rachel Rubin, MD | Hormone Therapy Summer Series |
+| October 2025 | American Association of Nurse Practitioners | Hormones for Vasomotor Symptoms of Menopause: A Primer for the Primary Care Providers |
+| October 2025 | The Elite Nurse Practitioner | Beyond Medication: Hashimoto's Through the Lens of Functional Medicine |
+| September 2025 | American Academy of Anti-Aging Medicine (A4M) | Endocrine Balance & BHRT Symposium |
+
+**Spelling:** the company is **WorldLink Medical** (capital L). The site had
+"Worldlink" in four places until 2026-11-05; `npm run verify` now fails on it.
+WorldLink's own course listing names Parts I–III "Mastering the Foundations of
+BHRT", "Navigating Hormone Complexities" and "Advancing Chronic Disease Care";
+the site uses Kim's titles as given.
+
+### Headline credentials (short lists, directories)
+
+1. `Board Certified Family Nurse Practitioner (FNP-C)`
+2. `Master of Science in Nursing, Family Nurse Practitioner — Indiana State University`
+3. `Certified Diabetes Care and Education Specialist (CDCES)`
+4. `Trained in BHRT through WorldLink Medical`
+5. `Trained in Functional Medicine`
 
 These live in `SITE.provider.credentials` in [lib/site.ts](../lib/site.ts) (moved out of JSX in Phase 1), so `/about`, `Person` schema, `/llms.txt`, and page bylines all read the same array. Edit them there and nowhere else.
 
@@ -153,16 +198,15 @@ Tracked in [OPEN-QUESTIONS.md](OPEN-QUESTIONS.md).
 
 Platform: **Healthie**. Provider/dietitian ID: **`4099018`**. Brand color param: **`4A9625`**.
 
-### Offerings (packages) — supplied by Kim 2026-08-06
+### Offerings — restructured by Kim 2026-11-05
 
-These use Healthie's **offering** mechanism (`require_offering=true` + `offering_id`), which is a different system from the `appt_type_ids` the site used previously. The old appointment-type embed is retired.
-
-| Offering ID | What it is |
-|---|---|
-| `258963` | **Free phone consultation with lab order** |
-| `258961` | Initial consultation |
-| `258962` | Follow-up visit |
-| `258966` | Comprehensive package |
+| Offering | Healthie id | Price | Status |
+|---|---|---|---|
+| Free Phone Consultation | `258963` | free | ✅ live — still the front door (Dallin, 2026-11-05) |
+| **New Patient Package** | **none yet** | **$300** | ⚠️ needs a Healthie offering; until then its page routes booking through the free call |
+| Follow-Up Visit | `258962` | **$100** | ✅ — **Kim must set the Healthie price to $100** |
+| ~~Initial consultation~~ | `258961` | ~~$200~~ | retired 2026-11-05 — URL 308s to `/book/new-patient-package` |
+| ~~Comprehensive package~~ | `258966` | ~~$950~~ | retired 2026-11-05 — URL 308s to `/book/new-patient-package` |
 
 Embed pattern:
 ```
@@ -215,33 +259,44 @@ Nine services, defined in `SERVICES` in [lib/constants.ts](../lib/constants.ts).
 
 ## Pricing
 
-**Corrected by Kim 2026-08-06.** The previous version of this page advertised labs as *included* in both options. They are not. That was a live misstatement of what a buyer receives and was the highest-priority fix in Phase 1.
+**Restructured by Kim 2026-11-05.** Her words: *"Getting started with BHRT,
+simply and transparently. Hormone care works best with follow-through, so I
+offer a starter package that covers your first two visits for one clear price."*
 
-**Option 1 — Per Visit**
-- $200 per visit, BHRT-focused
-- Consultation with Kim Yadon, FNP-C — WorldLink trained provider
-- Health & mindset coaching available as an add-on, $75/session
-- **Medications and lab fees not included**
+| Step | What | Price |
+|---|---|---|
+| 1 | Free phone consultation, about 15 minutes; a lab order can be provided at no charge | free |
+| 2 | **New Patient Package**: initial virtual visit (~60 min: history, symptoms, goals, personalized care plan) + follow-up virtual visit ~12 weeks later (response, labs, adjustments) + messaging through the secure patient portal between visits | **$300** |
+| 3 | Ongoing follow-up visits — "shorter and priced to make staying on track easy" | **$100** each |
 
-**Option 2 — Comprehensive Package**
-- **$950** · 5 visits, one every 3 months, BHRT-focused
-  - ⚠️ **Was $1,500 until 2026-08-16.** Kim caught the error herself: *"5 visits at $200 is $1000. The comprehensive package should be a better deal, but it's $1500."* The package was priced above buying the visits individually.
-  - À-la-carte value is $1,300 — 5 visits ($1,000) plus 4 coaching sessions ($300). At $950 that is a 27% discount, and it survives the 25% promo stack at $712.
-  - **`npm run verify` fails the build if `$1,500` reappears anywhere.** The figure lived in eight files; a stale one is a published price the practice does not honour.
-- Everything in Option 1, plus:
-- 2 personal coaching sessions (nutrition & exercise)
-- 2 mindset coaching sessions
-- **Medications and lab fees not included**
+**Retired 2026-11-05, every trace removed:** the $200 single visit, the $950
+Comprehensive Package (5 visits + 4 coaching sessions), and the $75 coaching
+add-on. `npm run verify` fails the build if any of those figures, or the words
+"comprehensive package" or "coaching add-on", reappear on a page.
 
-### Lab costs
+**Every price renders from `OFFERINGS` / `COSTS` / `usd()` in `lib/site.ts`.**
+Until 2026-11-05 prices were typed into ~15 content files, which is why each
+change meant a hunt. `npm run verify` now fails on any hardcoded `$N` in a
+source file outside `lib/site.ts`.
 
-**Not included in any package. Do not publish dollar figures.** Kim: costs vary greatly by panel/product. The prior `$250 initial / $150 follow-up` figures are withdrawn and must not appear anywhere on the site, in schema, or in `/llms.txt`.
+### Lab and medication costs — ⚠️ rule reversed 2026-11-05
 
-Approved standing line beneath both pricing options:
+The August rule was "no lab dollar figures — they vary greatly by panel".
+**Kim reversed it**, supplying a range and medication estimates, and confirmed
+via Dallin that the figures are her own.
 
-> Lab costs are not included and vary depending on which panels are ordered.
+- **Labs:** typically **$100 to $150**, depending on the lab and the tests ordered. Billed by the lab.
+- **Medications** (estimated 90-day cost; billed by the pharmacy):
 
-This is a deliberate trade. Published pricing normally earns AI citations and pre-empts objections — but a wrong number is worse than no number, and Kim says the figures aren't stable.
+| Medication | Estimate |
+|---|---|
+| Estradiol 1 mg (compounded) | about $100 |
+| Progesterone 200 mg (compounded) | about $125 |
+| Testosterone 20 mg (compounded) | about $59 |
+
+Always accompanied by: *"These are estimates. Actual cost depends on the
+prescription, the dose, and the pharmacy used."* Present them as costs *if a
+prescription is part of the plan* — never as what a patient will be prescribed.
 
 ### 12-Week Vitality Reset Program — removed
 
@@ -271,6 +326,9 @@ Single source of truth is `lib/promo.ts`; `<PromoBanner />` reads it and **self-
 | `Welcome50` | 50% off initial consult | 20 | Email sequence |
 | `ComprehensivePackage500` | $500 off | 10 | Post-consult follow-up |
 | `Followup50` | 50% off follow-up | 10 | Existing patients, direct |
+
+⚠️ **Stale since 2026-11-05:** `Welcome50` and `ComprehensivePackage500`
+reference offerings that no longer exist. Ask Kim before any of these are used.
 
 Public codes get scraped by coupon aggregators, permanently reset the reference price, and burn limited quantities on people who would have paid full price. In email, redemption is attributable.
 
@@ -303,16 +361,16 @@ From `/about`. These are the "what actually happens" specifics that AI systems q
 | Question | Answer |
 |---|---|
 | **Free phone consultation length** | **About 15 minutes** |
-| **Paid initial consultation length** | **About 60 minutes** |
+| **Initial visit length** (first visit of the New Patient Package) | **About 60 minutes** |
 | **How does lab work happen?** | Through **LabCorp**. The patient receives an email, schedules an appointment with LabCorp, and goes to a LabCorp Patient Service Center for the draw. |
-| **What do labs cost?** | Varies by panel. Billed by the lab, not by the practice. No figures published. |
+| **What do labs cost?** | **Typically $100 to $150**, depending on the lab and tests (Kim, 2026-11-05). Billed by the lab, not by the practice. |
 | **How are prescriptions filled?** | At **any compounding pharmacy the patient chooses.** |
 | **How often are follow-ups?** | **Every 3 months**, or sooner if needed. |
 
 ### Why each of these matters
 
 - **The two durations do different jobs and the copy must not blur them.** The free 15-minute call is a short intro — a chance to ask questions, see whether it's a fit, and get a lab order started. The $200 visit is a full hour. **Someone who books the free call expecting an hour of medical guidance will have a bad first experience**, so on-site copy has to set the 15-minute expectation plainly rather than leaving it to be discovered.
-- **A full hour for $200 is the stronger value statement** and it is currently unstated anywhere on the site. Say it on `/services` and `/book/initial-consultation`.
+- **A full hour is the strongest value statement.** The initial visit runs about 60 minutes inside the $300 New Patient Package. State it wherever the package is described.
 - **LabCorp answers the implicit objection** for a virtual practice — "how do I do labs if she isn't local?" LabCorp operates patient service centers nationwide, so "you go to a LabCorp near you" is concrete and reassuring.
 - **Patient choice of compounding pharmacy is a real differentiator.** Many telehealth hormone companies route every prescription through a pharmacy they own. Say this plainly.
 - **A 3-month cadence sets an honest expectation** and matches the Comprehensive Package (5 visits, one every 3 months) — the two facts corroborate each other, which is exactly the internal consistency AI retrieval rewards.
@@ -323,7 +381,7 @@ From `/about`. These are the "what actually happens" specifics that AI systems q
 - **Never let "free consultation" appear without its length nearby.** Unqualified, it implies a full visit.
 - The free call is where a lab order can be *started*, not where a treatment plan is delivered.
 - Never imply Kim performs the blood draw; LabCorp does.
-- Never state or estimate a lab price.
+- State lab costs only as Kim's range — "typically $100 to $150, depending on the lab and the tests ordered" — read from `COSTS` in `lib/site.ts`. Never a single figure, never a different range.
 - "Every 3 months, or sooner if needed" — keep the second clause; dropping it overstates rigidity.
 
 ---

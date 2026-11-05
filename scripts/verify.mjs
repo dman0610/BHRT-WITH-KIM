@@ -469,6 +469,73 @@ section("Content depth");
   );
 }
 
+// ── 2cc. editorial style ───────────────────────────────────────────────────
+section("Editorial style");
+{
+  /*
+    Google read /about on 2026-09-22 and declined to index it. It was the
+    second most formulaic page on the site: 22.9 machine-writing tics per
+    1,000 words (em-dash asides, "it is worth", "the honest answer", "rather
+    than", "genuinely"…). The pages rewritten on 2026-11-05 in a clinical-
+    publication register came down to 4–9.
+
+    This holds those pages at that standard. The tic list is crude by design —
+    it counts habits, not quality — so the threshold is set well above where
+    the rewritten pages sit and well below where the originals sat. Pages that
+    were already indexed and earning impressions were deliberately not
+    rewritten, and are not held to it.
+  */
+  const TICS = [
+    /\bhonest(ly)?\b/gi,
+    /\bworth (saying|noting|knowing|discussing|evaluating|investigating)\b/gi,
+    /\brather than\b/gi,
+    /\bnot (just|only)\b/gi,
+    /—/g,
+    /\bIt is\b/g,
+    /\bplainly\b/gi,
+    /\bgenuine(ly)?\b/gi,
+    /\bstraightforward\b/gi,
+    /\bthat is\b/gi,
+    /\bwhich is why\b/gi,
+    /\bthe (useful|real|honest) (question|answer)\b/gi,
+  ];
+  const HELD = [
+    "/about",
+    "/services",
+    "/bhrt-cost-utah",
+    "/bhrt-vs-hrt",
+    "/find-a-hormone-provider",
+    "/service-areas/lehi",
+    "/symptoms",
+    "/symptoms/vaginal-dryness",
+    "/resources/anti-inflammatory-eating",
+    "/resources/endocrine-disruptors",
+    "/resources/perimenopause-signs",
+    "/resources/sleep-hormones",
+    "/resources/understanding-bhrt",
+  ];
+  const MAX = 12;
+  let worst = 0;
+  let worstRoute = "";
+  for (const route of HELD) {
+    const source = html.get(route);
+    if (!source) {
+      fail(route, "page missing from build");
+      continue;
+    }
+    const text = prose(source);
+    const words = text.split(/\s+/).filter(Boolean).length;
+    const hits = TICS.reduce((n, re) => n + (text.match(re) || []).length, 0);
+    const rate = (hits / words) * 1000;
+    if (rate > worst) {
+      worst = rate;
+      worstRoute = route;
+    }
+    if (rate > MAX) fail(route, `${rate.toFixed(1)} writing tics per 1,000 words (max ${MAX})`);
+  }
+  console.log(`  ${HELD.length} rewritten pages ≤ ${MAX} tics/1k words; highest ${worst.toFixed(1)} on ${worstRoute}`);
+}
+
 // ── 2d. sitemap dates ──────────────────────────────────────────────────────
 section("Sitemap date honesty");
 {

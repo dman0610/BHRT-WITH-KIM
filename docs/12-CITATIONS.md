@@ -78,14 +78,20 @@ system resolve all of them to one entity.
 
 > Kim Yadon, FNP-C provides bioidentical hormone replacement therapy by virtual visit to women across Utah. Free 15-minute phone consultation. Cash pay.
 
-### Credentials — these four, exactly, and no others
+### Credentials — use these, exactly
 
 ```
-Board Certified Nurse Practitioner
-Trained in BHRT through Worldlink Medical
+Board Certified Family Nurse Practitioner (FNP-C)
+Master of Science in Nursing, Family Nurse Practitioner — Indiana State University (2023)
+Certified Diabetes Care and Education Specialist (CDCES), since 2024
+Trained in BHRT through WorldLink Medical (Optimal Medicine Training, 2026)
 Trained in Functional Medicine
-Certified Diabetes Care and Education Specialist (CDCES)
 ```
+
+Education, where a directory asks: Indiana State University (MSN-FNP, 2023),
+Brigham Young University–Idaho (nursing, 2017), Salt Lake Community College
+(nursing, 2015), University of Utah (BS, 1999). Full list with dates in
+[00-BUSINESS-FACTS.md](00-BUSINESS-FACTS.md#credentials).
 
 **Do not add** "APRN", "DNP", "MD", "physician", "doctor", or any menopause
 certification. Kim does not hold a Menopause Society (MSCP/NCMP) credential —
@@ -192,6 +198,20 @@ duplicate, and duplicates are actively harmful.
 Use the NAP block, the verbatim description, and the four credentials. Specialty:
 **Family Nurse Practitioner**. Focus: **bioidentical hormone replacement therapy,
 perimenopause, postmenopause**.
+
+## 2b. WorldLink Medical provider directory — the fix for "AI can't find her training"
+
+**Highest-value single listing available, $49.99/year.** Found 2026-11-05:
+WorldLink runs a public provider directory, and **nine WorldLink-trained Utah
+providers are listed — Kim is not**, including Rosa Clinic in South Jordan and
+Digna Whole Health, a telemedicine perimenopause practice serving Utah. When an
+AI assistant checks "is she WorldLink-trained?", those nine have an independent
+source and Kim has only her own site.
+
+- Eligibility: a prescriber who has completed Part I of WorldLink's BHRT series (Kim, May 2026)
+- Sign up: <https://directory.worldlinkmedical.com/join> → Provider Listing → checkout. Listings are reviewed before going live
+- Use the NAP block and description above. Website: `https://bhrtwithkim.com`. City: South Jordan, Utah
+- Never describe her as "WorldLink certified" — certification is a separate exam she has not taken
 
 ## 3. Apple Business Connect
 
