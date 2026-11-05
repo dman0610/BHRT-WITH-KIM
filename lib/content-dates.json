@@ -1,158 +1,154 @@
 {
   "/": {
-    "hash": "6a4b5c4962c31289",
-    "date": "2026-09-22"
+    "hash": "5e43b0f2b7094df6",
+    "date": "2026-11-05"
   },
   "/about": {
-    "hash": "af1d5c58cfb0739a",
-    "date": "2026-09-22"
+    "hash": "f92bce1432aba776",
+    "date": "2026-11-05"
   },
   "/bhrt-cost-utah": {
-    "hash": "f3bc254f996a9030",
-    "date": "2026-09-22"
+    "hash": "fad4689c2ad89f1f",
+    "date": "2026-11-05"
   },
   "/bhrt-vs-hrt": {
-    "hash": "97adbe5d26b97e5f",
-    "date": "2026-09-22"
+    "hash": "839894cca504c762",
+    "date": "2026-11-05"
   },
   "/book": {
-    "hash": "0e1485eb6efbcb8c",
-    "date": "2026-08-28"
-  },
-  "/book/comprehensive-package": {
-    "hash": "0380024cd3bc4726",
-    "date": "2026-08-28"
+    "hash": "87ae143e51d5fa0b",
+    "date": "2026-11-05"
   },
   "/book/follow-up": {
-    "hash": "19887eb804264256",
-    "date": "2026-08-28"
+    "hash": "dda40079cea13e86",
+    "date": "2026-11-05"
   },
-  "/book/initial-consultation": {
-    "hash": "decb191dad400f94",
-    "date": "2026-08-28"
+  "/book/new-patient-package": {
+    "hash": "8d3c9c62e47ba35d",
+    "date": "2026-11-05"
   },
   "/contact": {
-    "hash": "ef81eb41f90af57c",
-    "date": "2026-08-28"
+    "hash": "af7ac9cdb0fa6a47",
+    "date": "2026-11-05"
   },
   "/disclaimer": {
-    "hash": "7e83d866b7f81633",
-    "date": "2026-08-28"
+    "hash": "763661f41b04e679",
+    "date": "2026-11-05"
   },
   "/faq": {
-    "hash": "850950ca4296af3b",
-    "date": "2026-08-28"
+    "hash": "0e75a13453a18be3",
+    "date": "2026-11-05"
   },
   "/find-a-hormone-provider": {
-    "hash": "f918523e5f7f71f0",
-    "date": "2026-09-22"
+    "hash": "b9a94295a892f11c",
+    "date": "2026-11-05"
   },
   "/privacy": {
-    "hash": "0e92b315f230ac44",
-    "date": "2026-08-28"
+    "hash": "0af5c138f5b58d08",
+    "date": "2026-11-05"
   },
   "/quiz": {
-    "hash": "a2dd06a8d6326e9e",
-    "date": "2026-09-22"
+    "hash": "ab3eaf3e5dffc7ce",
+    "date": "2026-11-05"
   },
   "/resources": {
-    "hash": "b5c264d409413e59",
-    "date": "2026-08-28"
+    "hash": "72bab3692f9abcab",
+    "date": "2026-11-05"
   },
   "/resources/anti-inflammatory-eating": {
-    "hash": "7b7b004baca8ea32",
-    "date": "2026-08-28"
+    "hash": "2f883e55a65c8331",
+    "date": "2026-11-05"
   },
   "/resources/endocrine-disruptors": {
-    "hash": "2a2fb36bef05cba8",
-    "date": "2026-08-28"
+    "hash": "f4427ecad8210820",
+    "date": "2026-11-05"
   },
   "/resources/perimenopause-signs": {
-    "hash": "9805bb6d42dfb53b",
-    "date": "2026-08-28"
+    "hash": "42a032c0e897abf2",
+    "date": "2026-11-05"
   },
   "/resources/sleep-hormones": {
-    "hash": "631bc2efe084f730",
-    "date": "2026-08-28"
+    "hash": "ffeb45e631a84bb7",
+    "date": "2026-11-05"
   },
   "/resources/understanding-bhrt": {
-    "hash": "c1bf1d366050d4a2",
-    "date": "2026-08-28"
+    "hash": "56496094a87c7728",
+    "date": "2026-11-05"
   },
   "/service-areas": {
-    "hash": "c0ccd7623cc670a2",
-    "date": "2026-08-28"
+    "hash": "71cfc988ef70378c",
+    "date": "2026-11-05"
   },
   "/service-areas/draper": {
-    "hash": "4c70b5bf687b06f4",
-    "date": "2026-09-22"
+    "hash": "5c97e0fcc087efa2",
+    "date": "2026-11-05"
   },
   "/service-areas/lehi": {
-    "hash": "0cdc8cbeef24f06c",
-    "date": "2026-09-22"
+    "hash": "a290cf4410962c07",
+    "date": "2026-11-05"
   },
   "/service-areas/salt-lake-city": {
-    "hash": "3b9cdb83a97a856e",
-    "date": "2026-09-22"
+    "hash": "b7cf198c049fd111",
+    "date": "2026-11-05"
   },
   "/service-areas/sandy": {
-    "hash": "0f3ebeafa2deef1d",
-    "date": "2026-09-22"
+    "hash": "e1c8961bbbc84457",
+    "date": "2026-11-05"
   },
   "/service-areas/south-jordan": {
-    "hash": "24d19afc1de52970",
-    "date": "2026-09-22"
+    "hash": "69177d0e6f280a1f",
+    "date": "2026-11-05"
   },
   "/services": {
-    "hash": "266cc4831c7e17ea",
-    "date": "2026-08-28"
+    "hash": "2074a162cacb721a",
+    "date": "2026-11-05"
   },
   "/symptoms": {
-    "hash": "ce4d83d795013110",
-    "date": "2026-08-28"
+    "hash": "6cc43a6b5a1d2f37",
+    "date": "2026-11-05"
   },
   "/symptoms/brain-fog-memory": {
-    "hash": "01a1bb64b60d7501",
-    "date": "2026-09-22"
+    "hash": "7a581693263c919c",
+    "date": "2026-11-05"
   },
   "/symptoms/hormonal-weight-gain": {
-    "hash": "b6227b92fdf669a2",
-    "date": "2026-09-22"
+    "hash": "e30d62cfa572b0ee",
+    "date": "2026-11-05"
   },
   "/symptoms/hot-flashes-night-sweats": {
-    "hash": "84aa8dd9b2e37e38",
-    "date": "2026-09-22"
+    "hash": "4781376d768cff5e",
+    "date": "2026-11-05"
   },
   "/symptoms/irregular-periods": {
-    "hash": "75f27c8f05c50d66",
-    "date": "2026-09-22"
+    "hash": "716704232bfda233",
+    "date": "2026-11-05"
   },
   "/symptoms/joint-pain": {
-    "hash": "d0e6f07d695447be",
-    "date": "2026-09-22"
+    "hash": "5359efcaba6bf165",
+    "date": "2026-11-05"
   },
   "/symptoms/low-libido": {
-    "hash": "dd96d46406a9006f",
-    "date": "2026-09-22"
+    "hash": "2f5135a121f7a538",
+    "date": "2026-11-05"
   },
   "/symptoms/menopause-fatigue": {
-    "hash": "2f871165efb4a372",
-    "date": "2026-09-22"
+    "hash": "393ff65e1ffb2730",
+    "date": "2026-11-05"
   },
   "/symptoms/mood-changes-anxiety": {
-    "hash": "91967ad6e836b836",
-    "date": "2026-09-22"
+    "hash": "8efdf3aec126b85d",
+    "date": "2026-11-05"
   },
   "/symptoms/sleep-insomnia": {
-    "hash": "74d163a98ac81201",
-    "date": "2026-09-22"
+    "hash": "2ce16e2f50381c5b",
+    "date": "2026-11-05"
   },
   "/symptoms/vaginal-dryness": {
-    "hash": "2940adb300435d5c",
-    "date": "2026-09-22"
+    "hash": "539ae7a9abf3f595",
+    "date": "2026-11-05"
   },
   "/testimonials": {
-    "hash": "913b61c3d2315148",
-    "date": "2026-08-28"
+    "hash": "3dd867a419040243",
+    "date": "2026-11-05"
   }
 }

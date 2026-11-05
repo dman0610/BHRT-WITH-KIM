@@ -118,11 +118,49 @@ export function personSchema() {
     image: `${SITE.url}/kim-portrait.jpg`,
     worksFor: { "@id": ID.practice },
     knowsAbout: SITE.provider.knowsAbout,
-    // Credential strings are the four verified in docs/00-BUSINESS-FACTS.md.
-    hasCredential: SITE.provider.credentials.map((name) => ({
-      "@type": "EducationalOccupationalCredential",
-      name,
+    /*
+      Education and credentials as structured entities, supplied by Kim
+      2026-11-05. Until then this was four free-text strings, two of which
+      ("Trained in…") are not credentials at all — so a search system had a
+      name and nothing it could resolve against a school or a board.
+
+      Training courses are deliberately NOT here. A continuing-education course
+      is not a credential, and marking one up as such would overstate it. They
+      are listed in visible text on /about instead.
+    */
+    alumniOf: SITE.provider.education.map((e) => ({
+      "@type": "CollegeOrUniversity",
+      name: e.institution,
     })),
+    hasCredential: [
+      {
+        "@type": "EducationalOccupationalCredential",
+        name: "Family Nurse Practitioner — Certified (FNP-C)",
+        credentialCategory: "certification",
+      },
+      ...SITE.provider.certifications.map((c) => ({
+        "@type": "EducationalOccupationalCredential",
+        name: c.name,
+        credentialCategory: "certification",
+        recognizedBy: { "@type": "Organization", name: c.issuer },
+      })),
+      {
+        "@type": "EducationalOccupationalCredential",
+        name: `${SITE.provider.licenseState} Advanced Practice Registered Nurse license`,
+        credentialCategory: "license",
+        identifier: SITE.provider.licenseNumber,
+        recognizedBy: {
+          "@type": "GovernmentOrganization",
+          name: "Utah Division of Professional Licensing",
+        },
+      },
+      ...SITE.provider.education.map((e) => ({
+        "@type": "EducationalOccupationalCredential",
+        name: e.credential,
+        credentialCategory: "degree",
+        recognizedBy: { "@type": "CollegeOrUniversity", name: e.institution },
+      })),
+    ],
     /*
       Public, checkable identifiers — NPI via NPPES, the licence via Utah DOPL.
       A verifiable identifier is worth more to entity trust than any adjective,

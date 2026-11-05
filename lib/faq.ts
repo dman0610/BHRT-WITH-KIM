@@ -1,4 +1,4 @@
-import { SITE, OFFERINGS } from "./site";
+import { COSTS, OFFERINGS, SITE, usd } from "./site";
 
 /**
  * FAQ content.
@@ -57,11 +57,11 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
       },
       {
         question: "How long is a consultation?",
-        answer: `The free introductory phone call runs about ${OFFERINGS.freeConsult.durationMinutes} minutes — enough time to ask questions and see whether working together is a fit. The paid initial consultation is longer, about ${OFFERINGS.initial.durationMinutes} minutes, and covers full history, current symptoms, and what testing makes sense. Follow-up visits are scheduled after that.`,
+        answer: `The free introductory phone call runs about ${OFFERINGS.freeConsult.durationMinutes} minutes — enough time to ask questions and see whether working together is a fit. The first paid visit, part of the ${OFFERINGS.newPatient.label}, is about ${OFFERINGS.newPatient.durationMinutes} minutes and covers full history, current symptoms, goals, and a care plan. Follow-up visits after that are shorter.`,
       },
       {
         question: "How does lab work happen if visits are virtual?",
-        answer: `Testing runs through ${SITE.process.labProvider}, which operates patient service centers across the country. The patient receives an email with the lab order, schedules an appointment with ${SITE.process.labProvider}, and goes to a nearby location for the draw. There is no need to travel to an office. Lab costs vary depending on which panels are ordered and are billed separately by the lab.`,
+        answer: `Testing runs through ${SITE.process.labProvider}, which operates patient service centers across the country. The patient receives an email with the lab order, schedules an appointment with ${SITE.process.labProvider}, and goes to a nearby location for the draw. There is no need to travel to an office. ${SITE.labDisclosure}`,
       },
       {
         question: "Where are prescriptions filled?",
@@ -69,7 +69,7 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
       },
       {
         question: "How often are follow-up visits?",
-        answer: `Follow-up visits are typically ${SITE.process.followUpCadence}. That cadence allows enough time to repeat lab work and see how a plan is working before adjusting it. The comprehensive package is built around this schedule, covering five visits over roughly twelve months.`,
+        answer: `Follow-up visits are typically ${SITE.process.followUpCadence}. That cadence allows enough time to repeat lab work and see how a plan is working before adjusting it. The ${OFFERINGS.newPatient.label} includes the first follow-up, about 12 weeks after the initial visit, and later follow-ups are ${usd(OFFERINGS.followUp.price ?? 0)} each.`,
       },
       {
         question: "What happens before a prescription is written?",
@@ -89,12 +89,12 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
         */
         question: "Do you take insurance?",
         answer:
-          "No. This is a cash-pay practice, so visits are paid for directly rather than billed to insurance. A single visit is $200 and the comprehensive package is $950. Laboratory fees are billed separately by the lab, and prescriptions are paid for at the pharmacy you choose. Some patients use an HSA or FSA — check with your plan administrator.",
+          `No. This is a cash-pay practice, so visits are paid for directly rather than billed to insurance. The ${OFFERINGS.newPatient.label} is ${usd(OFFERINGS.newPatient.price ?? 0)} for the first two visits, and follow-ups are ${usd(OFFERINGS.followUp.price ?? 0)} each. Laboratory fees are billed separately by the lab, and prescriptions are paid for at the pharmacy you choose. Some patients use an HSA or FSA — check with your plan administrator.`,
       },
       {
         question: "How much does it cost?",
         answer:
-          "A single visit is $200. The comprehensive package is $950 and covers five visits, one every three months, plus two nutrition and exercise coaching sessions and two mindset coaching sessions. Health and mindset coaching can also be added to a single visit for $75 per session. Medications and laboratory fees are not included in either option.",
+          `The first phone consultation is free and runs about ${OFFERINGS.freeConsult.durationMinutes} minutes. The ${OFFERINGS.newPatient.label} is ${usd(OFFERINGS.newPatient.price ?? 0)} and covers the first two visits: a ${OFFERINGS.newPatient.durationMinutes}-minute initial visit and a follow-up about 12 weeks later, plus messaging through the patient portal. Ongoing follow-up visits are ${usd(OFFERINGS.followUp.price ?? 0)} each. Medications and laboratory fees are billed separately.`,
       },
       {
         /*
@@ -105,12 +105,12 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
         */
         question: "What is not included in the price?",
         answer:
-          "Three things. Laboratory fees are billed separately by the laboratory — a lab order can be provided at no charge during a consultation, but the testing itself is paid to the lab and varies by panel. Medications are paid for at whichever compounding pharmacy you choose. Coaching sessions beyond those in the comprehensive package are $75 each.",
+          `Two things. Laboratory fees are billed separately by the laboratory and typically run ${usd(COSTS.labs.low)} to ${usd(COSTS.labs.high)}, depending on the tests ordered; the lab order itself can be provided at no charge. Medications are paid for at whichever compounding pharmacy you choose, and their cost depends on the prescription and dose. Neither is part of any visit fee.`,
       },
       {
         question: "Are medications included?",
         answer:
-          "No. Medications are not included in the visit fee or in the comprehensive package. If a prescription is part of a plan, it is filled at a compounding pharmacy of the patient's choosing and paid for separately, at whatever that pharmacy charges.",
+          `No. Medications are not included in any visit fee or in the ${OFFERINGS.newPatient.label}. If a prescription is part of a plan, it is filled at a compounding pharmacy of the patient's choosing and paid for separately. Estimated ${COSTS.medications.supplyDays}-day costs for common compounded hormones are listed on the Services page; the pharmacy's own price is what applies.`,
       },
       {
         question: "What areas does the practice serve?",
@@ -136,7 +136,7 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
       },
       {
         question: "How do I book an appointment?",
-        answer: `Appointments are booked online. The free ${OFFERINGS.freeConsult.durationMinutes}-minute phone consultation is the usual starting point and can be scheduled at bhrtwithkim.com/book. Initial consultations, follow-up visits, and the comprehensive package can each be booked directly if you already know what you need. Booking is handled through Healthie, a secure scheduling platform.`,
+        answer: `Appointments are booked online. The free ${OFFERINGS.freeConsult.durationMinutes}-minute phone consultation is the usual starting point and can be scheduled at bhrtwithkim.com/book. The ${OFFERINGS.newPatient.label} is usually arranged on that call, and existing patients can book follow-up visits directly. Booking is handled through Healthie, a secure scheduling platform.`,
       },
     ],
   },

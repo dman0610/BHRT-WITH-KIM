@@ -170,7 +170,7 @@ export default function HeroFlyer() {
           </div>
         </div>
 
-        {/* Worldlink Medical banner */}
+        {/* WorldLink Medical banner — the company's own spelling */}
         <div className="bg-forest py-7 px-4">
           <div className="mx-auto max-w-7xl sm:px-6 lg:px-8 flex items-center gap-4">
             <div className="shrink-0 w-12 h-12 rounded-full border-2 border-white/40 flex items-center justify-center">
@@ -181,7 +181,7 @@ export default function HeroFlyer() {
                 Kim is trained through
               </p>
               <p className="font-heading text-xl md:text-2xl font-semibold text-white leading-tight">
-                Worldlink Medical
+                WorldLink Medical
               </p>
               <p className="text-white/75 text-xs md:text-sm">Trusted Education. Personalized Care.</p>
             </div>

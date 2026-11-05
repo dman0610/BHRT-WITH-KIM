@@ -1,4 +1,5 @@
 import type { ContentPage } from "./types";
+import { OFFERINGS, usd } from "@/lib/site";
 
 /**
  * HIGHEST COMPLIANCE RISK PAGE.
@@ -100,7 +101,7 @@ export const hormonalWeightGain: ContentPage = {
     {
       question: "What does a first consultation cost?",
       answer:
-        "The introductory phone consultation with Kim Yadon, FNP-C is free and runs about 15 minutes. A full initial consultation is $200 and about 60 minutes. A comprehensive package covering five visits over roughly a year is $950. Medications and laboratory fees are billed separately and are not included in either option.",
+        `The introductory phone consultation with Kim Yadon, FNP-C is free and runs about 15 minutes. The ${OFFERINGS.newPatient.label} is ${usd(OFFERINGS.newPatient.price ?? 0)} and covers a 60-minute initial visit and a follow-up about 12 weeks later; ongoing follow-ups are ${usd(OFFERINGS.followUp.price ?? 0)}. Medications and laboratory fees are billed separately and are not included.`,
     },
   ],
 

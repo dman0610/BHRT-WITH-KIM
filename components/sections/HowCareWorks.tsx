@@ -35,7 +35,7 @@ export default function HowCareWorks({
               ))}
             </ol>
             <span className="mt-3 block text-sm">
-              {SITE.labDisclosure} Labs are billed separately by the lab.
+              {SITE.labDisclosure}
             </span>
           </dd>
         </div>

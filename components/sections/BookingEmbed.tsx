@@ -1,4 +1,5 @@
-import { healthieEmbedUrl, type OfferingKey } from "@/lib/site";
+import Link from "next/link";
+import { OFFERINGS, healthieEmbedUrl, type OfferingKey } from "@/lib/site";
 
 /**
  * Healthie booking embed for a single offering.
@@ -16,6 +17,7 @@ export default function BookingEmbed({
   title: string;
   description?: string;
 }) {
+  const src = healthieEmbedUrl(offering);
   return (
     <div>
       <div className="text-center mb-8">
@@ -29,12 +31,33 @@ export default function BookingEmbed({
         )}
       </div>
 
-      <iframe
-        src={healthieEmbedUrl(offering)}
-        style={{ width: "100%", minHeight: "600px", border: 0 }}
-        title={`Book: ${title}`}
-        loading="lazy"
-      />
+      {src ? (
+        <iframe
+          src={src}
+          style={{ width: "100%", minHeight: "600px", border: 0 }}
+          title={`Book: ${title}`}
+          loading="lazy"
+        />
+      ) : (
+        /*
+          No Healthie offering id yet (see OFFERINGS in lib/site.ts). Rather
+          than an empty iframe, route to the free call — which is where every
+          new patient starts anyway.
+        */
+        <div className="mx-auto max-w-xl rounded-3xl bg-white p-8 text-center shadow-sm">
+          <p className="text-clay-text leading-relaxed">
+            New patients start with the free{" "}
+            {OFFERINGS.freeConsult.durationMinutes}-minute phone call, and Kim
+            schedules the package with you from there.
+          </p>
+          <Link
+            href="/book"
+            className="mt-6 inline-block rounded-full bg-moss px-8 py-3 text-base font-medium text-white shadow-md transition-colors hover:bg-forest"
+          >
+            Book the free call
+          </Link>
+        </div>
+      )}
 
       <p className="mt-3 text-sm text-clay-text text-center">
         Booking provided by{" "}

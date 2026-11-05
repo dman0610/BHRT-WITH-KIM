@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { OFFERINGS, SITE } from "@/lib/site";
+import { OFFERINGS, SITE, usd } from "@/lib/site";
 import { SERVICE_AREA_PAGES, areaSlug } from "@/lib/content";
 import HowCareWorks from "@/components/sections/HowCareWorks";
 
@@ -19,7 +19,9 @@ import HowCareWorks from "@/components/sections/HowCareWorks";
  */
 export default function PracticeFacts() {
   const { provider, contact } = SITE;
-  const { freeConsult, initial, comprehensive } = OFFERINGS;
+  const { freeConsult, newPatient, followUp } = OFFERINGS;
+  const [msn] = provider.education;
+  const [cdces] = provider.certifications;
 
   return (
     <section id="how-it-works" className="bg-mist py-20 md:py-28">
@@ -43,7 +45,9 @@ export default function PracticeFacts() {
             </h3>
             <p className="text-clay-text leading-relaxed">
               {provider.fullName}, a board-certified family nurse practitioner
-              trained in BHRT through Worldlink Medical. Her {provider.licenseState}{" "}
+              with a Master of Science in Nursing from {msn.institution} (
+              {msn.year}). She is a {cdces.name} and has completed BHRT training
+              through WorldLink Medical. Her {provider.licenseState}{" "}
               license (<span className="whitespace-nowrap">#{provider.licenseNumber}</span>) and NPI ({provider.npi}) are
               public records anyone can check.
             </p>
@@ -61,13 +65,15 @@ export default function PracticeFacts() {
             </h3>
             <p className="text-clay-text leading-relaxed">
               The first step is a free phone consultation of about{" "}
-              {freeConsult.durationMinutes} minutes. An initial consultation is $
-              {initial.price} for about {initial.durationMinutes} minutes, and the
-              Comprehensive Package is ${comprehensive.price} for five visits over
-              roughly a year plus four coaching sessions.
+              {freeConsult.durationMinutes} minutes. The {newPatient.label} is{" "}
+              {usd(newPatient.price ?? 0)} and covers the first two visits: a{" "}
+              {newPatient.durationMinutes}-minute initial visit and a follow-up
+              about 12 weeks later. Ongoing follow-ups are{" "}
+              {usd(followUp.price ?? 0)} each.
             </p>
             <p className="mt-3 text-sm text-clay-text leading-relaxed">
-              {contact.insurance} Medications and lab fees are not included.
+              {contact.insurance} Medications and lab fees are not included;{" "}
+              {SITE.labDisclosure.charAt(0).toLowerCase() + SITE.labDisclosure.slice(1)}
             </p>
             <Link
               href="/bhrt-cost-utah"

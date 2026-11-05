@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { SITE, PAID_OFFERINGS, OFFERINGS } from "@/lib/site";
+import { SITE, PAID_OFFERINGS, OFFERINGS, usd } from "@/lib/site";
 import BookingEmbed from "@/components/sections/BookingEmbed";
 import HowCareWorks from "@/components/sections/HowCareWorks";
 import ScrollAnimator from "@/components/layout/ScrollAnimator";
@@ -88,15 +88,17 @@ export default function BookPage() {
             */}
             <p className="mt-6 rounded-xl bg-mist px-4 py-3 text-sm text-clay-text leading-relaxed">
               <span className="font-medium text-bark">Good to know:</span> this
-              is a short introductory call rather than a full appointment. A
-              complete visit — history, symptoms, and a plan — is the{" "}
+              is a short introductory call rather than a full appointment. The full
+              evaluation — history, symptoms, and a care plan — is the{" "}
+              {OFFERINGS.newPatient.durationMinutes}-minute first visit in the{" "}
               <Link
-                href="/book/initial-consultation"
+                href={`/book/${OFFERINGS.newPatient.slug}`}
                 className="text-forest underline underline-offset-4 hover:text-moss transition-colors font-medium"
               >
-                {OFFERINGS.initial.durationMinutes}-minute initial consultation
-              </Link>
-              . The call and the lab order are free; {SITE.labDisclosure}
+                {OFFERINGS.newPatient.label}
+              </Link>{" "}
+              ({usd(OFFERINGS.newPatient.price ?? 0)}). The call and the lab
+              order are free. {SITE.labDisclosure}
             </p>
           </div>
         </div>

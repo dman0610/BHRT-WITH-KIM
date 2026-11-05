@@ -49,8 +49,8 @@ export default function AuthorByline({
           </Link>
         </p>
         <p className="mt-0.5 text-clay-text">
-          {SITE.provider.jobTitle} · Virtual hormone care across{" "}
-          {SITE.contact.state}
+          {SITE.provider.jobTitle} · BHRT training through WorldLink Medical
+          · Virtual hormone care across {SITE.contact.state}
         </p>
         {reviewedOn && (
           <p className="mt-1 text-xs text-clay-text">

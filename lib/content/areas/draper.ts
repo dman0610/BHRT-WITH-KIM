@@ -1,4 +1,5 @@
 import type { GeoPage } from "../types";
+import { OFFERINGS, usd } from "@/lib/site";
 
 /**
  * Draper sits at the south end of Salt Lake County at Point of the Mountain,
@@ -27,7 +28,7 @@ export const draper: GeoPage = {
       heading: "How much time does hormone care actually take?",
       paragraphs: [
         "Across a first year, it is roughly five appointments — not an ongoing commitment of weekly visits.",
-        "The sequence is straightforward. A free phone consultation of about 15 minutes comes first. If testing makes sense, a lab order can be provided at no charge, and the patient schedules their own draw with LabCorp. A full initial consultation follows once results are back, running about 60 minutes at $200. After that, follow-up visits are typically every 3 months, or sooner if something needs attention.",
+        `The sequence is straightforward. A free phone consultation of about 15 minutes comes first. If testing makes sense, a lab order can be provided at no charge, and the patient schedules their own draw with LabCorp. The first full visit follows once results are back and runs about 60 minutes. After that, follow-up visits are typically every 3 months, or sooner if something needs attention.`,
         "Nothing in that sequence requires a drive except the lab visit. For someone already spending an hour a day in traffic, that is the difference between care that fits and care that keeps getting postponed.",
       ],
     },
@@ -55,8 +56,8 @@ export const draper: GeoPage = {
     {
       heading: "What does it cost?",
       paragraphs: [
-        "The introductory phone consultation is free. A full initial consultation is $200 for about 60 minutes, and a comprehensive package covering five visits over roughly a year is $950.",
-        "Coaching sessions are available as an add-on at $75 each. Medications and lab fees are not included in any option and are billed separately.",
+        `The introductory phone consultation is free. The ${OFFERINGS.newPatient.label} is ${usd(OFFERINGS.newPatient.price ?? 0)} and covers the first two visits: a 60-minute initial visit and a follow-up about 12 weeks later.`,
+        `Each follow-up after that is ${usd(OFFERINGS.followUp.price ?? 0)}. Medications and lab fees are not included in any option and are billed separately.`,
       ],
     },
   ],
@@ -65,7 +66,7 @@ export const draper: GeoPage = {
     {
       question: "How many appointments does a first year involve?",
       answer:
-        "About five. A free 15-minute phone consultation, a 60-minute initial consultation once lab results are back, and follow-up visits typically every 3 months after that. The comprehensive package is built around exactly that cadence — five visits across roughly a year for $950.",
+        `About five. A free 15-minute phone consultation, a 60-minute initial visit once lab results are back, and follow-up visits typically every 3 months after that. The ${OFFERINGS.newPatient.label} covers the initial visit and the first follow-up for ${usd(OFFERINGS.newPatient.price ?? 0)}, and each later follow-up is ${usd(OFFERINGS.followUp.price ?? 0)}.`,
     },
     {
       question: "What times are appointments available?",

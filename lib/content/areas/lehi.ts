@@ -1,4 +1,5 @@
 import type { GeoPage } from "../types";
+import { OFFERINGS, usd } from "@/lib/site";
 
 /**
  * The Utah County anchor. Chosen over Provo and Orem deliberately — those
@@ -49,14 +50,14 @@ export const lehi: GeoPage = {
       heading: "What does a first appointment involve?",
       paragraphs: [
         "A free phone consultation of about 15 minutes, booked directly online.",
-        "It is a short conversation to ask questions, describe what has been going on, and work out whether this is a fit — and Kim can provide a lab order at no charge if testing is the sensible next step. No treatment plan comes out of that call. The full initial consultation is a separate, longer appointment, about 60 minutes at $200, scheduled once results are back. Follow-up visits after that are typically every 3 months, or sooner if needed.",
+        `It is a short conversation to ask questions, describe what has been going on, and work out whether this is a fit — and Kim can provide a lab order at no charge if testing is the sensible next step. No treatment plan comes out of that call. The full initial visit is a separate, longer appointment of about 60 minutes, scheduled once results are back as the first half of the ${OFFERINGS.newPatient.label}. Follow-up visits after that are typically every 3 months, or sooner if needed.`,
       ],
     },
     {
       heading: "What does it cost?",
       paragraphs: [
-        "The introductory phone consultation is free. A full initial consultation is $200 for about 60 minutes, and a comprehensive package covering five visits over roughly a year is $950.",
-        "Health and mindset coaching is available as an add-on at $75 per session. Medications and lab fees are not included in any option and are billed separately.",
+        `The introductory phone consultation is free. The ${OFFERINGS.newPatient.label} costs ${usd(OFFERINGS.newPatient.price ?? 0)} and includes both the initial visit and a follow-up about 12 weeks later, with portal messaging in between.`,
+        `Follow-up visits after the package are ${usd(OFFERINGS.followUp.price ?? 0)} each. Medications and lab fees are not included in any option and are billed separately.`,
       ],
     },
   ],

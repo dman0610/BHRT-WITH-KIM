@@ -1,4 +1,5 @@
 import type { GeoPage } from "../types";
+import { OFFERINGS, usd } from "@/lib/site";
 
 /**
  * Highest search volume of the five, weakest map-pack realism — Salt Lake City
@@ -61,8 +62,8 @@ export const saltLakeCity: GeoPage = {
     {
       heading: "What does it cost?",
       paragraphs: [
-        "The introductory phone consultation is free and runs about 15 minutes. A full initial consultation is $200 for about 60 minutes, and a comprehensive package covering five visits over roughly a year is $950.",
-        "Coaching sessions are $75 each as an add-on. Medications and lab fees are not included in any option. Published pricing is deliberate — cost is the most common question before booking, and quoting it only after a consultation makes comparison harder than it needs to be.",
+        `The introductory phone consultation is free and runs about 15 minutes. The ${OFFERINGS.newPatient.label} is ${usd(OFFERINGS.newPatient.price ?? 0)} for the first two visits — a 60-minute initial visit and a 12-week follow-up — and later follow-ups are ${usd(OFFERINGS.followUp.price ?? 0)} each.`,
+        `Medications and lab fees are not included in any option. Published pricing is deliberate — cost is the most common question before booking, and quoting it only after a consultation makes comparison harder than it needs to be.`,
       ],
     },
   ],

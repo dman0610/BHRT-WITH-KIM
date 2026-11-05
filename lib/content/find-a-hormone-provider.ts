@@ -107,7 +107,7 @@ export const findAHormoneProvider: ContentPage = {
     {
       question: "What credentials does Kim Yadon hold?",
       answer:
-        "Kim Yadon, FNP-C is a board-certified family nurse practitioner licensed in Utah. Her published credentials are: Board Certified Nurse Practitioner; trained in BHRT through Worldlink Medical; trained in Functional Medicine; and Certified Diabetes Care and Education Specialist. She sees patients located in Utah, and all visits are virtual.",
+        "Kim Yadon, FNP-C is a board-certified family nurse practitioner licensed in Utah, with a Master of Science in Nursing from Indiana State University. She is a Certified Diabetes Care and Education Specialist and has completed bioidentical hormone therapy training through WorldLink Medical. Her license and National Provider Identifier are public records anyone can check. She sees patients located in Utah, and all visits are virtual.",
     },
     {
       question: "Is there a way to assess fit before paying?",

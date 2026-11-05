@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { SITE, OFFERINGS, PAID_OFFERINGS, type OfferingKey } from "@/lib/site";
+import { SITE, OFFERINGS, PAID_OFFERINGS, usd, type OfferingKey } from "@/lib/site";
 import BookingEmbed from "@/components/sections/BookingEmbed";
 import HowCareWorks from "@/components/sections/HowCareWorks";
 import ScrollAnimator from "@/components/layout/ScrollAnimator";
@@ -39,14 +39,17 @@ export default async function BookOfferingPage({ params }: Props) {
   if (!key) notFound();
 
   const { label, blurb, durationMinutes, price, slug, includes } = OFFERINGS[key];
+  // A package is two visits; "About 60 minutes" in its hero would describe
+  // only the first, so the duration line is for single visits.
+  const isPackage = key === "newPatient";
 
   return (
     <>
       {/*
-        `price` is null for the follow-up visit, which has no documented figure
-        — serviceSchema omits the Offer entirely rather than inferring one from
-        the $200 per-visit rate. A wrong price in schema gets quoted back by AI
-        assistants, which is worse than no price at all.
+        `price` can be null for an offering with no documented figure, in which
+        case serviceSchema omits the Offer entirely rather than inferring one.
+        A wrong price in schema gets quoted back by AI assistants, which is
+        worse than no price at all.
       */}
       <JsonLd
         schema={[
@@ -69,7 +72,7 @@ export default async function BookOfferingPage({ params }: Props) {
           <h1 className="font-heading text-4xl font-semibold text-white sm:text-5xl">
             {label}
           </h1>
-          {durationMinutes && (
+          {durationMinutes && !isPackage && (
             <p className="mt-4 text-sm font-medium tracking-[0.15em] uppercase text-white/70">
               About {durationMinutes} minutes
             </p>
@@ -90,7 +93,7 @@ export default async function BookOfferingPage({ params }: Props) {
         <div className="mx-auto max-w-3xl space-y-10 px-4 sm:px-6 lg:px-8">
           <div className="animate-on-scroll">
             <h2 className="mb-4 font-heading text-2xl font-semibold text-bark sm:text-3xl">
-              What this visit covers
+              {isPackage ? "What the package includes" : "What this visit covers"}
             </h2>
             <ul className="space-y-2">
               {includes.map((item) => (
@@ -103,15 +106,21 @@ export default async function BookOfferingPage({ params }: Props) {
             <p className="mt-5 leading-relaxed text-clay-text">
               {price !== null && (
                 <>
-                  This visit is{" "}
+                  {isPackage ? "The package is" : "This visit is"}{" "}
                   <span className="font-medium text-bark">
-                    {price === 0 ? "free" : `$${price.toLocaleString()}`}
+                    {price === 0 ? "free" : usd(price)}
                   </span>
                   .{" "}
                 </>
               )}
               {SITE.labDisclosure} Medications are paid for at the pharmacy you
-              choose. {SITE.contact.insurance}
+              choose. {SITE.contact.insurance}{" "}
+              <Link
+                href="/services#costs"
+                className="text-forest underline underline-offset-4 hover:text-moss transition-colors"
+              >
+                Estimated lab and medication costs
+              </Link>
             </p>
           </div>
 
@@ -129,7 +138,7 @@ export default async function BookOfferingPage({ params }: Props) {
             description="Select a time that works for you — secure online booking."
           />
           <p className="mt-6 text-center text-sm text-clay-text">
-            Medications and lab fees not included. {SITE.labDisclosure}
+            Medications are not included. {SITE.labDisclosure}
           </p>
         </div>
       </section>

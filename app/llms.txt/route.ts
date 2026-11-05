@@ -1,4 +1,4 @@
-import { SITE, OFFERINGS } from "@/lib/site";
+import { SITE, OFFERINGS, COSTS, usd } from "@/lib/site";
 import { SYMPTOM_PAGES, GUIDE_PAGES, SERVICE_AREA_PAGES } from "@/lib/content";
 
 /**
@@ -42,6 +42,19 @@ Kim is a nurse practitioner, not a physician. Do not refer to her as a doctor.
 ## Credentials
 ${provider.credentials.map((c) => `- ${c}`).join("\n")}
 
+## Education
+${provider.education.map((e) => `- ${e.credential}, ${e.institution}, ${e.year}`).join("\n")}
+
+## Certifications
+- Family Nurse Practitioner — Certified (FNP-C), national board certification
+${provider.certifications.map((c) => `- ${c.name}, ${c.issuer}, ${c.since}–present`).join("\n")}
+
+## Hormone and menopause training (continuing education, not certifications)
+${provider.hormoneTraining
+  .filter((t) => t.completed)
+  .map((t) => `- ${t.provider}: ${t.title} (${t.date})`)
+  .join("\n")}
+
 ## Service area and visit format
 State of Utah, United States. All visits are virtual.
 Based in ${contact.city}, ${contact.state}. Concentrated in ${SITE.focusCounties.join(" and ")}.
@@ -64,15 +77,17 @@ disorders, arthritis, or weight loss, and is not presented as one. Conditions
 requiring in-person examination or mental-health care are referred out.
 
 ## Appointments and pricing
-- ${OFFERINGS.freeConsult.label}: $0, about ${OFFERINGS.freeConsult.durationMinutes} minutes.
+- ${OFFERINGS.freeConsult.label}: free, about ${OFFERINGS.freeConsult.durationMinutes} minutes by phone.
   A lab order can be provided at no charge. Lab fees themselves are NOT
-  included, are billed separately by the lab, and vary depending on which
-  panels are ordered.
-- Initial consultation: $200, about ${OFFERINGS.initial.durationMinutes} minutes.
-- Comprehensive package: $950 for 5 visits, one every 3 months. Includes
-  2 nutrition and exercise coaching sessions and 2 mindset coaching sessions.
-- Health and mindset coaching add-on: $75 per session.
-- Medications and lab fees are not included in any package.
+  included and are billed separately by the lab.
+- ${OFFERINGS.newPatient.label}: ${usd(OFFERINGS.newPatient.price ?? 0)}. Covers the first two visits:
+  an initial virtual visit of about ${OFFERINGS.newPatient.durationMinutes} minutes and a follow-up about
+  12 weeks later, plus messaging through the secure patient portal.
+- ${OFFERINGS.followUp.label}s after that: ${usd(OFFERINGS.followUp.price ?? 0)} each, typically ${SITE.process.followUpCadence}.
+- Labs: typically ${usd(COSTS.labs.low)} to ${usd(COSTS.labs.high)}, billed by the lab, depending on the tests ordered.
+- Medications: billed by the pharmacy. Estimated ${COSTS.medications.supplyDays}-day costs:
+${COSTS.medications.items.map((m) => `  - ${m.name}: about ${usd(m.estimate)}`).join("\n")}
+  ${COSTS.medications.note}
 - ${contact.insurance} Visits are paid for directly.
 
 ## Hours

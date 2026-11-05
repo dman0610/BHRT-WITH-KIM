@@ -1,4 +1,5 @@
 import type { GeoPage } from "../types";
+import { OFFERINGS, usd } from "@/lib/site";
 
 /**
  * Sandy — east-side Salt Lake County, close enough to the South Jordan anchor
@@ -51,7 +52,7 @@ export const sandy: GeoPage = {
       heading: "What happens after that first conversation?",
       paragraphs: [
         "If testing makes sense, Kim can provide a lab order at no charge, and the paid evaluation happens once results are back.",
-        "The free call is short and does not produce a treatment plan — that is what the full initial consultation is for, about 60 minutes at $200. Splitting it this way means no one pays for an evaluation before knowing whether the fit is right, and no one sits through a lab discussion before there are labs to discuss. Follow-up visits after that are typically every 3 months, or sooner if needed.",
+        `The free call is short and does not produce a treatment plan — that is what the full initial visit in the ${OFFERINGS.newPatient.label} is for, about 60 minutes. Splitting it this way means no one pays for an evaluation before knowing whether the fit is right, and no one sits through a lab discussion before there are labs to discuss. Follow-up visits after that are typically every 3 months, or sooner if needed.`,
       ],
     },
     {
@@ -64,8 +65,8 @@ export const sandy: GeoPage = {
     {
       heading: "What does it cost?",
       paragraphs: [
-        "The introductory phone consultation is free. A full initial consultation is $200 for about 60 minutes, and a comprehensive package covering five visits over roughly a year is $950.",
-        "Health and mindset coaching is available as an add-on at $75 per session. Medications and lab fees are not included in any option.",
+        `The introductory phone consultation is free. Two visits make up the ${OFFERINGS.newPatient.label}, at ${usd(OFFERINGS.newPatient.price ?? 0)}, and each follow-up after that is ${usd(OFFERINGS.followUp.price ?? 0)}.`,
+        `Medications and lab fees are not included in any option.`,
       ],
     },
   ],

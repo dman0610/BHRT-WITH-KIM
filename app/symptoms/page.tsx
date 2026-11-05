@@ -5,7 +5,7 @@ import { breadcrumbSchema, faqSchema } from "@/lib/schema";
 import JsonLd from "@/components/seo/JsonLd";
 import ScrollAnimator from "@/components/layout/ScrollAnimator";
 import { Button } from "@/components/ui/button";
-import { OFFERINGS } from "@/lib/site";
+import { OFFERINGS, usd } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Perimenopause Symptoms Explained",
@@ -55,7 +55,7 @@ const HUB_FAQS = [
   {
     question: "What happens at a first consultation?",
     answer:
-      "It starts with a free phone call of about 15 minutes with Kim Yadon, FNP-C — a chance to ask questions and see whether working together fits, and a lab order can be provided at no charge. A full initial consultation is separate, about 60 minutes at $200, once results are back.",
+      `It starts with a free phone call of about 15 minutes with Kim Yadon, FNP-C — a chance to ask questions and see whether working together fits, and a lab order can be provided at no charge. The full initial visit, about 60 minutes, comes once results are back as part of the ${OFFERINGS.newPatient.label} (${usd(OFFERINGS.newPatient.price ?? 0)}).`,
   },
 ];
 

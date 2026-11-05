@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { VALUES } from "@/lib/constants";
 import { SITE } from "@/lib/site";
 import { breadcrumbSchema, profilePageSchema } from "@/lib/schema";
 import JsonLd from "@/components/seo/JsonLd";
-import Icon from "@/components/ui/Icon";
 import { Button } from "@/components/ui/button";
 import ScrollAnimator from "@/components/layout/ScrollAnimator";
 import { SeedMotif } from "@/components/ui/BotanicalDecor";
@@ -13,9 +11,24 @@ import { SeedMotif } from "@/components/ui/BotanicalDecor";
 export const metadata: Metadata = {
   title: "Meet Kim Yadon, FNP-C",
   description:
-    "Kim Yadon, FNP-C is a board-certified family nurse practitioner providing bioidentical hormone therapy by virtual visit to women across Utah.",
+    "Kim Yadon, FNP-C: board-certified family nurse practitioner (MSN), CDCES, with BHRT training through WorldLink Medical. Virtual hormone care across Utah.",
   alternates: { canonical: "/about" },
 };
+
+/** Completed training only — an unfinished course is not published. */
+const training = SITE.provider.hormoneTraining.filter((t) => t.completed);
+
+/** "the American Association of Nurse Practitioners, … and Rachel Rubin, MD" */
+const others = [...new Set(training.map((t) => t.provider))].filter(
+  (p) => p !== "WorldLink Medical"
+);
+const trainingProviders =
+  others.length > 1
+    ? `${others.slice(0, -1).join(", ")} and ${others[others.length - 1]}`
+    : others.join("");
+
+const [msn, bsn, adn] = SITE.provider.education;
+const [cdces] = SITE.provider.certifications;
 
 export default function AboutPage() {
   return (
@@ -115,10 +128,10 @@ export default function AboutPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="animate-on-scroll max-w-3xl mx-auto text-center mb-16">
             <h2 className="font-heading text-3xl font-semibold text-bark sm:text-4xl">
-              The Holistic Framework
+              How does Kim approach care?
             </h2>
             <p className="mt-4 text-clay-text text-lg">
-              My approach isn&apos;t just about hormones — it&apos;s about the whole you.
+              In three steps, and hormones are the last of them.
             </p>
           </div>
 
@@ -129,7 +142,7 @@ export default function AboutPage() {
                 Listen &amp; Test
               </h3>
               <p className="text-clay-text text-sm leading-relaxed">
-                We start by hearing your full story, then run comprehensive testing —
+                Care starts with a full history, followed by lab testing of
                 hormones and thyroid function.
               </p>
             </div>
@@ -139,8 +152,8 @@ export default function AboutPage() {
                 Lifestyle First
               </h3>
               <p className="text-clay-text text-sm leading-relaxed">
-                Before reaching for any prescription, we optimize the foundations —
-                sleep, nutrition, movement, stress management, and detox support.
+                Before any prescription, the plan addresses the foundations:
+                sleep, nutrition, movement, stress, and detox support.
               </p>
             </div>
             <div className="text-center p-8 rounded-2xl bg-peach/30">
@@ -149,38 +162,85 @@ export default function AboutPage() {
                 Targeted BHRT
               </h3>
               <p className="text-clay-text text-sm leading-relaxed">
-                When indicated, bioidentical hormones provide targeted support that
-                works with your body&apos;s chemistry — not against it. Monitored and
-                adjusted to your needs.
+                When hormone therapy is appropriate, Kim prescribes bioidentical
+                hormones, then monitors and adjusts the dose over time.
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Credentials */}
-      <section className="bg-mist py-20 md:py-28">
-        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
+      {/*
+        Training and education, supplied by Kim 2026-11-05 and rendered from
+        lib/site.ts. Before this the page carried four undated strings in a grid
+        — Google crawled /about on 2026-09-22 and declined to index it, and
+        assistants reported they could not find her WorldLink training. Dates,
+        institutions and providers are what make a credential checkable.
+
+        Headings are questions, and each section opens with a sentence that
+        answers it outright: the passage shape search and AI answers lift.
+      */}
+      <section id="training" className="bg-mist py-20 md:py-24 scroll-mt-24">
+        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
           <div className="animate-on-scroll">
-            <h2 className="font-heading text-3xl font-semibold text-bark sm:text-4xl mb-8">
-              Credentials &amp; Training
+            <h2 className="font-heading text-3xl font-semibold text-bark sm:text-4xl mb-4">
+              What training does Kim have in hormone therapy?
             </h2>
-            <p className="text-clay-text text-lg mb-8">
-              <span className="font-medium text-bark">
-                {SITE.provider.fullName}
-              </span>{" "}
-              — {SITE.provider.jobTitle}
+            <p className="text-clay-text text-lg leading-relaxed mb-8">
+              {SITE.provider.fullName} has completed bioidentical hormone therapy
+              training through WorldLink Medical&apos;s Optimal Medicine Training
+              series, along with menopause and hormone education from{" "}
+              {trainingProviders}. These are continuing-education programs,
+              completed on top of her national board certification as a family
+              nurse practitioner.
             </p>
-            <div className="grid gap-4 sm:grid-cols-2">
-              {SITE.provider.credentials.map((credential) => (
-                <div
-                  key={credential}
-                  className="p-4 rounded-xl bg-white text-bark font-medium"
-                >
-                  {credential}
-                </div>
+            <ul className="divide-y divide-stone rounded-2xl bg-white px-6">
+              {training.map((t) => (
+                <li key={t.title} className="py-4 sm:grid sm:grid-cols-4 sm:gap-4">
+                  <span className="text-sm font-medium text-forest">{t.date}</span>
+                  <span className="mt-1 block text-clay-text sm:col-span-3 sm:mt-0">
+                    <span className="font-medium text-bark">{t.title}</span>
+                    <span className="block text-sm">{t.provider}</span>
+                  </span>
+                </li>
               ))}
-            </div>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="education" className="bg-stone py-20 md:py-24 scroll-mt-24">
+        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+          <div className="animate-on-scroll">
+            <h2 className="font-heading text-3xl font-semibold text-bark sm:text-4xl mb-4">
+              Where did Kim study nursing?
+            </h2>
+            <p className="text-clay-text text-lg leading-relaxed mb-8">
+              Kim earned her Master of Science in Nursing as a family nurse
+              practitioner from {msn.institution} in {msn.year}, after nursing
+              degrees from {bsn.institution} and {adn.institution}. She has
+              also held the {cdces.name} credential since {cdces.since}.
+            </p>
+            <ul className="divide-y divide-bark/10 rounded-2xl bg-white px-6">
+              {SITE.provider.education.map((e) => (
+                <li key={e.credential} className="py-4 sm:grid sm:grid-cols-4 sm:gap-4">
+                  <span className="text-sm font-medium text-forest">{e.year}</span>
+                  <span className="mt-1 block text-clay-text sm:col-span-3 sm:mt-0">
+                    <span className="font-medium text-bark">{e.credential}</span>
+                    <span className="block text-sm">{e.institution}</span>
+                  </span>
+                </li>
+              ))}
+              {SITE.provider.certifications.map((c) => (
+                <li key={c.name} className="py-4 sm:grid sm:grid-cols-4 sm:gap-4">
+                  <span className="text-sm font-medium text-forest">{c.since}–present</span>
+                  <span className="mt-1 block text-clay-text sm:col-span-3 sm:mt-0">
+                    <span className="font-medium text-bark">{c.name}</span>
+                    <span className="block text-sm">{c.issuer}</span>
+                  </span>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </section>
@@ -244,6 +304,22 @@ export default function AboutPage() {
                   </a>
                 </dd>
               </div>
+              {SITE.provider.certifications.map((c) => (
+                <div key={c.name} className="py-5 sm:grid sm:grid-cols-3 sm:gap-4">
+                  <dt className="font-medium text-bark">CDCES</dt>
+                  <dd className="mt-1 text-clay-text sm:col-span-2 sm:mt-0">
+                    Certified since {c.since}.{" "}
+                    <a
+                      href={c.verifyUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-forest underline underline-offset-4 hover:text-moss transition-colors"
+                    >
+                      Verify with the certification board
+                    </a>
+                  </dd>
+                </div>
+              ))}
               <div className="py-5 sm:grid sm:grid-cols-3 sm:gap-4">
                 <dt className="font-medium text-bark">Where Kim practices</dt>
                 <dd className="mt-1 text-clay-text sm:col-span-2 sm:mt-0">
@@ -271,34 +347,6 @@ export default function AboutPage() {
                 </dd>
               </div>
             </dl>
-          </div>
-        </div>
-      </section>
-
-      {/* Values Grid */}
-      <section className="bg-stone py-20 md:py-28">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16 animate-on-scroll">
-            <h2 className="font-heading text-3xl font-semibold text-bark sm:text-4xl">
-              What I Stand For
-            </h2>
-          </div>
-
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {VALUES.map((value, index) => (
-              <div
-                key={value.title}
-                className={`animate-on-scroll stagger-${(index % 3) + 1} p-6 rounded-2xl bg-white shadow-sm hover:shadow-md transition-shadow duration-300`}
-              >
-                <div className="w-12 h-12 rounded-xl bg-lavender/50 flex items-center justify-center mb-4">
-                  <Icon name={value.icon} className="size-6 text-forest" />
-                </div>
-                <h3 className="font-heading text-xl font-medium text-bark mb-2">
-                  {value.title}
-                </h3>
-                <p className="text-clay-text text-sm leading-relaxed">{value.description}</p>
-              </div>
-            ))}
           </div>
         </div>
       </section>

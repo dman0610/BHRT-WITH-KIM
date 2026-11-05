@@ -12,34 +12,43 @@ const HEALTHIE_PROVIDER_ID = "4099018";
 const NPI = "1316718968";
 const BRAND_COLOR = "4A9625";
 
+/** "$300" — every price on the site is rendered through this. */
+export const usd = (n: number) => `$${n.toLocaleString("en-US")}`;
+
 /**
- * Healthie "offerings" (packages). Supplied by Kim 2026-08-06.
+ * Healthie "offerings" (packages).
  *
- * These use the offering mechanism (require_offering=true + offering_id),
- * which is a different system from the appt_type_ids the site used before.
- * The old appointment-type embed is retired.
+ * Restructured 2026-11-05 at Kim's request. The previous structure — $200 per
+ * visit, a $950 five-visit Comprehensive Package, and $75 coaching add-ons —
+ * is retired in full. What replaces it, in Kim's words: "Getting started with
+ * BHRT, simply and transparently. Hormone care works best with follow-through,
+ * so I offer a starter package that covers your first two visits for one clear
+ * price." The free 15-minute phone call stays as the front door (Dallin,
+ * 2026-11-05).
+ *
+ * The retired /book/initial-consultation and /book/comprehensive-package
+ * routes redirect to /book/new-patient-package — see next.config.ts.
+ *
+ * `id` is the Healthie offering id, or `null` when Kim has not yet created the
+ * offering in Healthie. A null id renders the package page without an embed
+ * and routes booking through the free call, which is the funnel anyway.
  */
 export const OFFERINGS = {
   freeConsult: {
-    id: "258963",
+    id: "258963" as string | null,
     slug: "", // lives at /book — the primary CTA target
     label: "Free Phone Consultation",
     /**
-     * Price in USD, or `null` where none is documented.
-     *
-     * `null` means NOT PUBLISHED, not free. The follow-up visit has no
-     * documented price in docs/00-BUSINESS-FACTS.md, so its page emits a
-     * Service with no Offer rather than an inferred figure — a wrong price in
-     * schema is quoted back by AI assistants and is worse than no price.
+     * Price in USD, or `null` where none is documented. `null` means NOT
+     * PUBLISHED, not free.
      */
-    price: 0,
+    price: 0 as number | null,
     /**
      * Always state the 15 minutes. Unqualified, "free consultation" reads as a
      * full visit, and someone arriving expecting an hour of medical guidance
      * has a bad first experience before they've paid anything.
      */
-    durationMinutes: 15,
-    /** What the visit covers. Documented facts only — see docs/00-BUSINESS-FACTS.md. */
+    durationMinutes: 15 as number | null,
     includes: [
       "About 15 minutes by phone with Kim Yadon, FNP-C",
       "A chance to ask questions and describe what has been going on",
@@ -51,73 +60,83 @@ export const OFFERINGS = {
     metaDescription:
       "Book a free 15-minute phone call with Kim Yadon, FNP-C. Virtual hormone care across Utah. A lab order can be provided at no charge; lab fees are separate.",
   },
-  initial: {
-    id: "258961",
-    slug: "initial-consultation",
-    label: "Initial Consultation",
-    price: 200,
-    durationMinutes: 60,
-    /** What the visit covers. Documented facts only — see docs/00-BUSINESS-FACTS.md. */
-    includes: ["A full hour with Kim Yadon, FNP-C","Your history, symptoms, and what has already been tried","A decision on what testing makes sense for your picture","Lab orders sent through LabCorp — you choose the location","Prescriptions, where appropriate, to any compounding pharmacy you choose"],
+  newPatient: {
+    // Not yet created in Healthie — ask Kim for the id. See OPEN-QUESTIONS.
+    id: null as string | null,
+    slug: "new-patient-package",
+    label: "New Patient Package",
+    price: 300 as number | null,
+    /** Length of the initial visit inside the package. */
+    durationMinutes: 60 as number | null,
+    includes: [
+      "An initial virtual visit of about 60 minutes: your history, symptoms, goals, and a personalized care plan",
+      "A follow-up virtual visit about 12 weeks later: a review of your response and your labs, and any adjustments to the plan",
+      "Messaging between visits through the secure patient portal, at no extra charge",
+    ],
     blurb:
-      "A full hour with Kim to go through your history, symptoms, and what testing makes sense.",
-    /*
-      Written per offering rather than composed from `blurb` plus a shared
-      suffix. The blurbs differ by 37 characters, so a single template put two
-      of the three pages outside the 140–155 meta-description window.
-    */
+      "Your first two visits for one price: a 60-minute initial visit and a follow-up about 12 weeks later, with portal messaging in between.",
     metaDescription:
-      "A full hour with Kim Yadon, FNP-C to go through your history, symptoms, and what testing makes sense. $200, by virtual visit, for women across Utah.",
+      "The New Patient Package with Kim Yadon, FNP-C: a 60-minute initial visit and a 12-week follow-up for $300, by virtual visit for women across Utah.",
   },
   followUp: {
-    id: "258962",
+    id: "258962" as string | null,
     slug: "follow-up",
     label: "Follow-Up Visit",
-    // No documented price — see the note on freeConsult.price.
-    price: null,
-    durationMinutes: null,
-    /** What the visit covers. Documented facts only — see docs/00-BUSINESS-FACTS.md. */
-    includes: ["Review of your lab results together, not sent without explanation","Adjustments to your plan based on results and how you feel","Typically every 3 months, or sooner if something needs attention"],
-    blurb: "Ongoing visits to review labs and adjust your plan.",
-    metaDescription:
-      "Ongoing visits with Kim Yadon, FNP-C to review lab results and adjust your plan. Typically every 3 months, by virtual visit for women across Utah.",
-  },
-  comprehensive: {
-    id: "258966",
-    slug: "comprehensive-package",
-    label: "Comprehensive Package",
-    price: 950,
-    durationMinutes: null,
-    /** What the visit covers. Documented facts only — see docs/00-BUSINESS-FACTS.md. */
-    includes: ["Five visits across roughly twelve months, one every three months","Two personal coaching sessions focused on nutrition and exercise","Two mindset coaching sessions","Everything included in a per-visit consultation","A better rate than booking five visits individually"],
+    price: 100 as number | null,
+    // Kim: follow-ups are "shorter". No figure given, so none is published.
+    durationMinutes: null as number | null,
+    includes: [
+      "Review of your lab results together, not sent without explanation",
+      "Adjustments to your plan based on results and how you feel",
+      "Typically every 3 months, or sooner if something needs attention",
+    ],
     blurb:
-      "Five visits over twelve months, one every three months, plus coaching sessions.",
+      "Ongoing visits once care has started. Follow-ups are shorter than the first visit and priced to make staying on track easy.",
     metaDescription:
-      "Five visits over twelve months, one every three months, plus coaching sessions. $950 with Kim Yadon, FNP-C, by virtual visit for women across Utah.",
+      "Follow-up visits with Kim Yadon, FNP-C are $100, typically every 3 months, to review labs and adjust your plan. Virtual visits for women across Utah.",
   },
-} as const;
+};
 
 export type OfferingKey = keyof typeof OFFERINGS;
 
-/** The paid offerings, each bookable at /book/<slug>. */
-export const PAID_OFFERINGS = [
-  OFFERINGS.initial,
-  OFFERINGS.followUp,
-  OFFERINGS.comprehensive,
-] as const;
+/** The paid offerings, each with a page at /book/<slug>. */
+export const PAID_OFFERINGS = [OFFERINGS.newPatient, OFFERINGS.followUp];
 
-/** Build a Healthie booking embed URL for a single offering. */
-export function healthieEmbedUrl(offering: OfferingKey): string {
+/** Build a Healthie booking embed URL, or null if the offering has no id yet. */
+export function healthieEmbedUrl(offering: OfferingKey): string | null {
+  const id = OFFERINGS[offering].id;
+  if (!id) return null;
   const params = new URLSearchParams({
     dietitian_id: HEALTHIE_PROVIDER_ID,
     require_offering: "true",
-    offering_id: OFFERINGS[offering].id,
+    offering_id: id,
     hide_package_images: "true",
     hide_embed_title: "false",
     primary_color: BRAND_COLOR,
   });
   return `https://secure.gethealthie.com/appointments/embed_appt?${params}`;
 }
+
+/**
+ * What labs and medications cost — supplied by Kim 2026-11-05 and confirmed
+ * by her as her own figures (via Dallin).
+ *
+ * This REVERSES the 2026-08-07 rule of publishing no lab figure at all ("costs
+ * vary greatly by panel"). Kim now gives a typical range. Both remain billed
+ * by the lab and the pharmacy, never by the practice.
+ */
+export const COSTS = {
+  labs: { low: 100, high: 150 },
+  medications: {
+    supplyDays: 90,
+    items: [
+      { name: "Estradiol 1 mg (compounded)", estimate: 100 },
+      { name: "Progesterone 200 mg (compounded)", estimate: 125 },
+      { name: "Testosterone 20 mg (compounded)", estimate: 59 },
+    ],
+    note: "These are estimates. Actual cost depends on the prescription, the dose, and the pharmacy used.",
+  },
+};
 
 export const SITE = {
   url: "https://bhrtwithkim.com",
@@ -140,12 +159,65 @@ export const SITE = {
     /** Rendered name for bylines and schema. */
     fullName: "Kim Yadon, FNP-C",
     jobTitle: "Board Certified Family Nurse Practitioner",
-    /** Verified 2026-08-07. Do not add post-nominals beyond FNP-C. */
+    /**
+     * Headline credentials, for short lists (/llms.txt, directory listings).
+     * Verified 2026-08-07; WorldLink's spelling corrected 2026-11-05 — the
+     * company writes "WorldLink Medical", and an inconsistent name is one
+     * reason a search system fails to connect a credential to its source.
+     * Do not add post-nominals beyond FNP-C.
+     */
     credentials: [
-      "Board Certified Nurse Practitioner",
-      "Trained in BHRT through Worldlink Medical",
-      "Trained in Functional Medicine",
+      "Board Certified Family Nurse Practitioner (FNP-C)",
+      "Master of Science in Nursing, Family Nurse Practitioner — Indiana State University",
       "Certified Diabetes Care and Education Specialist (CDCES)",
+      "Trained in BHRT through WorldLink Medical",
+      "Trained in Functional Medicine",
+    ],
+
+    /** Supplied by Kim 2026-11-05. Rendered on /about and as `alumniOf`. */
+    education: [
+      {
+        credential: "Master of Science in Nursing, Family Nurse Practitioner",
+        institution: "Indiana State University",
+        year: 2023,
+      },
+      { credential: "Bachelor's degree in Nursing", institution: "Brigham Young University–Idaho", year: 2017 },
+      { credential: "Associate degree in Nursing", institution: "Salt Lake Community College", year: 2015 },
+      {
+        credential:
+          "Bachelor of Science in Parks, Recreation and Tourism, emphasis in Therapeutic Recreation",
+        institution: "University of Utah",
+        year: 1999,
+      },
+    ],
+
+    /** Supplied by Kim 2026-11-05. */
+    certifications: [
+      {
+        name: "Certified Diabetes Care and Education Specialist (CDCES)",
+        issuer: "Certification Board for Diabetes Care and Education",
+        since: 2024,
+        verifyUrl: "https://www.cbdce.org/verify",
+      },
+    ],
+
+    /**
+     * Hormone and menopause continuing education, supplied by Kim 2026-11-05,
+     * titles as she gave them. These are TRAINING, not certifications —
+     * WorldLink's certification is a separate exam she has not taken, so the
+     * site must never say "WorldLink certified".
+     *
+     * `completed: false` items are not rendered. Part III finishes the weekend
+     * of 2026-11-07 — flip it then, and run `npm run stamp`.
+     */
+    hormoneTraining: [
+      { provider: "WorldLink Medical", title: "Optimal Medicine Training: Building the BHRT Foundation", date: "May 2026", completed: true },
+      { provider: "WorldLink Medical", title: "Optimal Medicine Training: Navigate Hormone Complexities", date: "October 2026", completed: true },
+      { provider: "WorldLink Medical", title: "Optimal Medicine Training: Resolve Chronic Disease", date: "November 2026", completed: false },
+      { provider: "Rachel Rubin, MD", title: "Hormone Therapy Summer Series", date: "September 2026", completed: true },
+      { provider: "American Association of Nurse Practitioners", title: "Hormones for Vasomotor Symptoms of Menopause: A Primer for the Primary Care Providers", date: "October 2025", completed: true },
+      { provider: "The Elite Nurse Practitioner", title: "Beyond Medication: Hashimoto's Through the Lens of Functional Medicine", date: "October 2025", completed: true },
+      { provider: "American Academy of Anti-Aging Medicine (A4M)", title: "Endocrine Balance & BHRT Symposium", date: "September 2025", completed: true },
     ],
     knowsAbout: [
       "Bioidentical hormone replacement therapy",
@@ -294,9 +366,9 @@ export const SITE = {
       "Kim can provide a lab order at no charge — lab fees are billed separately and vary.",
   },
 
-  /** Lab costs are not included in any package. No dollar figures: Kim says they vary by panel. */
+  /** Lab costs are never included in a visit fee. Range supplied by Kim 2026-11-05 — see COSTS. */
   labDisclosure:
-    "Lab costs are not included and vary depending on which panels are ordered.",
+    `Lab work is billed separately by the lab and typically costs ${usd(COSTS.labs.low)} to ${usd(COSTS.labs.high)}, depending on the lab and the tests ordered.`,
 
   /**
    * How care actually works. Verified with Kim 2026-08-10.

@@ -1,4 +1,5 @@
 import type { GeoPage } from "../types";
+import { OFFERINGS, usd } from "@/lib/site";
 
 /**
  * The anchor page. South Jordan is where the practice is based and the only
@@ -41,7 +42,7 @@ export const southJordan: GeoPage = {
       heading: "How does a first appointment work?",
       paragraphs: [
         "It starts with a free phone consultation of about 15 minutes.",
-        "That first call is short by design. It is a chance to ask questions, describe what has been going on, and find out whether working together makes sense — and Kim can provide a lab order at no charge if testing is the sensible next step. It is not a full evaluation and no treatment plan is delivered on that call. The full initial consultation is a separate appointment, about 60 minutes, at $200.",
+        `That first call is short by design. It is a chance to ask questions, describe what has been going on, and find out whether working together makes sense — and Kim can provide a lab order at no charge if testing is the sensible next step. It is not a full evaluation and no treatment plan is delivered on that call. The full initial visit is a separate appointment of about 60 minutes, the first of two in the ${OFFERINGS.newPatient.label}.`,
       ],
     },
     {
@@ -54,8 +55,8 @@ export const southJordan: GeoPage = {
     {
       heading: "What does hormone care cost here?",
       paragraphs: [
-        "The introductory phone consultation is free. A full initial consultation is $200, and a comprehensive package of five visits across roughly a year is $950.",
-        "Health and mindset coaching is available as an add-on at $75 per session. Medications and lab fees are not included in any option and are billed separately. Follow-up visits are typically every 3 months, or sooner if needed.",
+        `The introductory phone consultation is free. The ${OFFERINGS.newPatient.label}, at ${usd(OFFERINGS.newPatient.price ?? 0)}, pairs a 60-minute initial visit with a follow-up about 12 weeks later.`,
+        `Ongoing follow-ups are ${usd(OFFERINGS.followUp.price ?? 0)}. Medications and lab fees are not included in any option and are billed separately. Follow-up visits are typically every 3 months, or sooner if needed.`,
       ],
     },
   ],
@@ -79,7 +80,7 @@ export const southJordan: GeoPage = {
     {
       question: "How soon after labs is the follow-up?",
       answer:
-        "Follow-up happens once results are back from the laboratory, and turnaround depends on which panels were ordered. After treatment begins, visits are typically every 3 months, or sooner if something needs attention. The comprehensive package is built around that cadence, covering five visits across roughly a year.",
+        `Follow-up happens once results are back from the laboratory, and turnaround depends on which panels were ordered. After treatment begins, visits are typically every 3 months, or sooner if something needs attention. The ${OFFERINGS.newPatient.label} includes the first follow-up, about 12 weeks after the initial visit.`,
     },
     {
       question: "Which pharmacy fills the prescription?",

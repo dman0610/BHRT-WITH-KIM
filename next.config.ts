@@ -101,6 +101,26 @@ const securityHeaders = [
 const NON_CANONICAL_HOSTS = "(?<noncanonical>.*\.vercel\.app)";
 
 const nextConfig: NextConfig = {
+  /*
+   * Retired offerings (2026-11-05). Kim replaced the $200 single visit and the
+   * $950 Comprehensive Package with the New Patient Package. Both old URLs are
+   * known to Google ("Discovered – currently not indexed") and may be linked
+   * from elsewhere, so they redirect permanently rather than 404.
+   */
+  async redirects() {
+    return [
+      {
+        source: "/book/initial-consultation",
+        destination: "/book/new-patient-package",
+        permanent: true,
+      },
+      {
+        source: "/book/comprehensive-package",
+        destination: "/book/new-patient-package",
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [
       { source: "/:path*", headers: securityHeaders },

@@ -1,65 +1,88 @@
 import type { ContentPage } from "./types";
+import { COSTS, OFFERINGS, SITE, usd } from "@/lib/site";
 
 /**
- * The highest-value new page in the plan.
+ * What care costs — the page that owns cost queries.
  *
- * Every figure traces to docs/00-BUSINESS-FACTS.md. Most competitors hide
- * pricing, cost is the top objection before booking, and concrete checkable
- * numbers are exactly what AI assistants quote.
- *
- * Lab prices are deliberately absent — Kim reports they vary by panel, and a
- * wrong number quoted back by an AI assistant is worse than no number.
+ * Rewritten 2026-11-05 for Kim's new structure (free call → New Patient
+ * Package → flat-rate follow-ups) and for the lab and medication estimates she
+ * supplied the same day, which reverse the earlier rule of publishing no lab
+ * figure. Every number is read from lib/site.ts, so a price change is a
+ * one-line edit there rather than a hunt through prose.
  */
+
+const free = OFFERINGS.freeConsult;
+const pkg = OFFERINGS.newPatient;
+const fu = OFFERINGS.followUp;
+const pkgPrice = usd(pkg.price ?? 0);
+const fuPrice = usd(fu.price ?? 0);
+const labs = `${usd(COSTS.labs.low)} to ${usd(COSTS.labs.high)}`;
+
+/**
+ * A first year at the usual cadence: the package (initial visit + 12-week
+ * follow-up), then follow-ups every three months — weeks 24, 36 and 48. Pure
+ * arithmetic on published figures, and stated as "typical", never promised.
+ */
+const firstYear = usd((pkg.price ?? 0) + 3 * (fu.price ?? 0));
+
+const meds = COSTS.medications.items
+  .map((m) => `${m.name} — about ${usd(m.estimate)}`)
+  .join("; ");
+
 export const bhrtCostUtah: ContentPage = {
   slug: "bhrt-cost-utah",
   titleSegment: "What BHRT Costs in Utah",
-  description:
-    "What bioidentical hormone therapy costs with Kim Yadon, FNP-C in Utah: $200 per visit, $950 for the comprehensive package, and what labs add.",
+  description: `What BHRT costs with Kim Yadon, FNP-C in Utah: a free call, a ${pkgPrice} New Patient Package for two visits, ${fuPrice} follow-ups, labs and medications.`,
   h1: "What Does Bioidentical Hormone Therapy Cost in Utah?",
-  intro:
-    "At BHRT with Kim, a single visit is $200 and the comprehensive package is $950 for five visits over roughly twelve months. Laboratory testing and any medications are billed separately and are not included in either price. The first phone consultation is free.",
+  intro: `At BHRT with Kim, care starts with a free ${free.durationMinutes}-minute phone call. The ${pkg.label} is ${pkgPrice} and covers the first two visits, and each follow-up after that is ${fuPrice}. Lab work, which typically runs ${labs}, and any medications are billed separately by the lab and the pharmacy.`,
 
   sections: [
     {
       heading: "What are the actual prices?",
       paragraphs: [
-        "There are two ways to work with Kim Yadon, FNP-C, and both are published rather than quoted privately.",
-        "The per-visit option suits someone who wants to start without committing to a longer arrangement. The package suits someone who expects to be adjusting a plan over the course of a year, since hormone care is rarely a single appointment.",
+        `Every fee is published, and there are three of them.`,
+        `The first two visits are sold together because hormone care depends on follow-through: the initial visit sets a plan, and the follow-up about 12 weeks later is where results and labs are reviewed and the plan is adjusted. Pricing them as one package removes the decision about whether to come back.`,
       ],
       bullets: [
-        "Free phone consultation — $0, about 15 minutes",
-        "Initial consultation — $200, about 60 minutes",
-        "Comprehensive package — $950 for 5 visits, one every 3 months, including 2 nutrition and exercise coaching sessions and 2 mindset coaching sessions",
-        "Health and mindset coaching, added to a single visit — $75 per session",
+        `${free.label} — free, about ${free.durationMinutes} minutes by phone`,
+        `${pkg.label} — ${pkgPrice}: a ${pkg.durationMinutes}-minute initial visit, a follow-up about 12 weeks later, and messaging through the secure patient portal between them`,
+        `${fu.label}s after that — ${fuPrice} each, typically ${SITE.process.followUpCadence}`,
       ],
     },
     {
-      heading: "What is not included in that price?",
+      heading: "What does a typical first year cost?",
       paragraphs: [
-        "Laboratory fees and medications are separate from every package, and neither is billed by the practice.",
-        "Lab costs vary depending on which panels are ordered, so no figure is published here — an estimate that turned out to be wrong would be worse than none. Testing runs through LabCorp, which bills the patient directly. Prescriptions, if they become part of a plan, are filled at a compounding pharmacy the patient chooses and paid for at whatever that pharmacy charges.",
-        "The advantage of the practice not marking up labs or medications is that there is no financial reason to order more testing than a situation warrants.",
+        `At the usual cadence, a first year of visit fees comes to about ${firstYear}: the ${pkg.label} at ${pkgPrice}, then three follow-ups at ${fuPrice} each.`,
+        `That figure covers visits only. Labs and medications are added on top, and the number of follow-ups can be higher or lower depending on how a plan is going — some people need an earlier check-in, and the cadence is a guide rather than a contract.`,
+      ],
+    },
+    {
+      heading: "What do labs and medications cost?",
+      paragraphs: [
+        `Labs typically cost ${labs}, depending on the lab and the tests ordered. Testing runs through ${SITE.process.labProvider}, which bills the patient directly; the practice does not charge for lab work or mark it up.`,
+        `Medication costs depend on what is prescribed and at what dose, and only apply if a prescription is part of the plan. Most are prepared by a compounding pharmacy, and prescriptions can be filled at ${SITE.process.pharmacy}. Estimated ${COSTS.medications.supplyDays}-day costs: ${meds}. ${COSTS.medications.note}`,
+        "Because the practice does not sell labs or medications, there is no financial reason to order more testing or prescribe more than a situation warrants.",
       ],
     },
     {
       heading: "Why does BHRT usually cost more than a regular office visit?",
       paragraphs: [
-        "Hormone consultations tend to run longer and involve more testing than a standard primary care appointment, which is the main driver of the difference.",
-        "A first visit here is about an hour. That covers full history, current symptoms, and deciding what testing makes sense — rather than the ten to fifteen minutes a typical primary care slot allows. Comprehensive hormone panels also cost more than routine bloodwork, since they cover thyroid function alongside sex hormones.",
+        "Hormone visits run longer and involve more testing than a standard primary care appointment, and that is most of the difference.",
+        `The initial visit here is about ${pkg.durationMinutes} minutes. It covers a full history, current symptoms and goals, and a care plan — in place of the ten to fifteen minutes a typical primary care slot allows. Hormone panels also cost more than routine bloodwork, since they cover thyroid function alongside sex hormones.`,
       ],
     },
     {
       heading: "Is bioidentical hormone therapy covered by insurance?",
       paragraphs: [
-        "Coverage for hormone therapy varies significantly between plans, and whether this practice accepts insurance is a question worth asking directly on the free consultation.",
-        "Coverage generally depends on the specific plan, the medication prescribed, and whether compounded preparations are involved — compounded hormones are frequently treated differently from commercially manufactured ones. Anyone weighing cost should ask their own insurer about both the visit and the prescription, since those are often handled under separate benefits.",
+        `Not at this practice. ${SITE.contact.insurance} Visits are paid for directly, at the published prices.`,
+        "Insurance coverage for hormone therapy elsewhere varies by plan and by medication, and compounded preparations are often treated differently from commercially manufactured ones. Some patients pay visit and pharmacy costs from a health savings or flexible spending account; the plan administrator is the one to confirm eligibility.",
       ],
     },
     {
       heading: "How can someone find out the cost before committing?",
       paragraphs: [
-        "The free 15-minute phone consultation exists for this, and it carries no cost or obligation.",
-        "It is a short introductory call rather than a full appointment — a chance to ask what testing would likely be involved, roughly what that testing runs, and which option fits. If testing makes sense as a next step, Kim can provide a lab order at no charge during that call. The lab fees themselves are still billed separately by LabCorp.",
+        `The free ${free.durationMinutes}-minute phone consultation is the place to ask, and it carries no cost or obligation.`,
+        `It is a short introductory call rather than a full appointment — time to ask which tests are likely and which plan fits. If testing makes sense, Kim can provide a lab order at no charge on that call. The lab fees themselves are still billed separately by ${SITE.process.labProvider}.`,
       ],
     },
   ],
@@ -67,33 +90,27 @@ export const bhrtCostUtah: ContentPage = {
   faqs: [
     {
       question: "How much is a BHRT consultation in Utah?",
-      answer:
-        "At BHRT with Kim, a single visit is $200 and runs about 60 minutes. A comprehensive package covering five visits over roughly twelve months is $950 and includes four coaching sessions. A free 15-minute phone consultation is available first, at no cost and with no obligation. Medications and laboratory fees are separate from both options.",
+      answer: `At BHRT with Kim, the first phone call is free and lasts about ${free.durationMinutes} minutes. Care then begins with the ${pkg.label}: ${pkgPrice} for a ${pkg.durationMinutes}-minute initial visit and a follow-up about 12 weeks later, with portal messaging in between. Follow-up visits after that are ${fuPrice} each. Medications and laboratory fees are billed separately by the pharmacy and the lab.`,
     },
     {
       question: "Are lab costs included in the price?",
-      answer:
-        "No. Laboratory fees are not included in any package and are billed directly by the laboratory rather than by the practice. Costs vary depending on which panels are ordered, so no figure is published. A lab order can be provided at no charge during a consultation, but the testing itself is a separate expense paid to LabCorp.",
+      answer: `No. Laboratory fees are billed directly by the laboratory, not by the practice, and typically run ${labs} depending on the tests ordered. A lab order can be provided at no charge during a consultation, but the testing itself is a separate expense paid to ${SITE.process.labProvider}. No visit fee includes lab work.`,
     },
     {
       question: "Is the first consultation really free?",
-      answer:
-        "Yes. The introductory phone consultation with Kim Yadon, FNP-C costs nothing and carries no obligation. It runs about 15 minutes, which is enough time to ask questions and see whether working together is a fit. It is an introductory call rather than a full appointment, and a lab order can be started during it at no charge.",
+      answer: `Yes. The introductory phone consultation with Kim Yadon, FNP-C costs nothing and carries no obligation. It runs about ${free.durationMinutes} minutes, which is enough time to ask questions and see whether working together is a fit. It is an introductory call rather than a full appointment, and a lab order can be started during it at no charge.`,
     },
     {
-      question: "What is the difference between the per-visit and package pricing?",
-      answer:
-        "Per-visit is $200 each time, suiting someone who wants to start without a longer commitment. The $950 comprehensive package covers five visits scheduled every three months, plus two nutrition and exercise coaching sessions and two mindset coaching sessions. The package works out lower per visit and matches the follow-up rhythm hormone care usually needs.",
+      question: "Why are the first two visits sold as a package?",
+      answer: `Because hormone care depends on follow-through. The initial visit sets a plan, and the follow-up about 12 weeks later is where labs and results are reviewed and the plan is adjusted. Packaging both for ${pkgPrice} means the second visit is already in place, and portal messaging covers questions in between.`,
     },
     {
       question: "Do prices differ depending on where in Utah someone lives?",
-      answer:
-        "No. All visits are virtual, so pricing is identical across Utah — whether someone is in Salt Lake County, Utah County, or a rural part of the state. The only cost that varies by location is laboratory testing, which is billed by LabCorp and can differ slightly between patient service centers.",
+      answer: `No. All visits are virtual, so pricing is identical across Utah — whether someone is in Salt Lake County, Utah County, or a rural part of the state. The only cost that varies by location is laboratory testing, which is billed by ${SITE.process.labProvider} and can differ slightly between patient service centers.`,
     },
     {
       question: "How often would someone pay for a follow-up?",
-      answer:
-        "Follow-up visits are typically every three months, or sooner if something needs attention earlier. That cadence allows enough time to repeat lab work and see how a plan is working before adjusting it. The comprehensive package is built around this schedule, covering five visits across roughly a year.",
+      answer: `Follow-up visits are typically ${SITE.process.followUpCadence}, at ${fuPrice} each. The first follow-up is already part of the ${pkg.label}. That cadence leaves enough time to repeat lab work and see how a plan is working before adjusting it, which is why a typical first year comes to about ${firstYear} in visit fees.`,
     },
   ],
 

@@ -314,8 +314,11 @@ section("Compliance");
     /12[- ]week vitality/i,
     /\bkyadon300\b/i,
     /\bAPRN\b|\bDNP\b/,
-    // Lab prices were withdrawn by Kim — they vary by panel.
-    /labs? (cost|are|run)s? (about )?\$\d/i,
+    // The lab-price ban was lifted 2026-11-05: Kim now publishes a typical
+    // range. "Price consistency" below checks no OTHER figure creeps in.
+    // WorldLink Medical spells itself with a capital L; an inconsistent name
+    // is one reason a search system fails to connect a credential to its source.
+    /\bWorldlink\b/,
   ];
   for (const route of pages) {
     const text = prose(html.get(route));
@@ -546,20 +549,58 @@ section("Scope of practice");
 section("Price consistency");
 {
   /*
-    The package price lives in copy, Offer schema, the FAQ, /llms.txt and
-    bhrt-cost-utah. Kim caught the last error herself — 5 visits at $200 was
-    $1,000 while the package was priced at $1,500. A stale figure anywhere is a
-    published price the practice does not honour.
+    Prices change, and when they do the old figure tends to survive in some
+    paragraph nobody re-read. That happened twice: a $1,500 package that cost
+    more than buying the visits separately, and — after Kim's 2026-11-05
+    restructure — $200, $950 and $75 figures scattered across 15 files.
+
+    Two checks. Retired figures and offerings must not appear in any rendered
+    page or schema. And no source file outside lib/site.ts may type a price at
+    all: every figure renders through OFFERINGS / COSTS / usd(), so the next
+    price change is one edit, and this check is what keeps it that way.
   */
-  let mentions = 0;
+  const RETIRED = [
+    [/\$1,?500\b/, "$1,500 package"],
+    [/\$950\b/, "$950 Comprehensive Package"],
+    [/\$75\b/, "$75 coaching add-on"],
+    [/\$200\b/, "$200 single visit"],
+    [/comprehensive package/i, "the retired Comprehensive Package"],
+    [/coaching add-on/i, "the retired coaching add-on"],
+  ];
   for (const route of pages) {
     const text = prose(html.get(route));
-    if (/\$1,?500/.test(text)) fail(route, "stale $1,500 package price");
-    if (/\$950/.test(text)) mentions++;
+    const ld = jsonLd(html.get(route)).join(" ");
+    for (const [re, label] of RETIRED) {
+      if (re.test(text)) fail(route, `retired price/offering in page text: ${label}`);
+    }
+    if (/"price":\s*"(1500|950|200|75)"/.test(ld)) fail(route, "retired price in Offer schema");
   }
-  const home = html.get("/index") ?? html.get("/");
-  if (home && /"price":\s*"1500"/.test(home)) fail("/", "stale price in Offer schema");
-  console.log(`  no stale $1,500 anywhere; $950 stated on ${mentions} pages`);
+
+  const SRC_DIRS = ["app", "components", "lib"];
+  const sources = [];
+  const collect = (dir) => {
+    for (const ent of fs.readdirSync(dir, { withFileTypes: true })) {
+      const p = path.join(dir, ent.name);
+      if (ent.isDirectory()) collect(p);
+      else if (/\.(ts|tsx)$/.test(ent.name)) sources.push(p);
+    }
+  };
+  for (const d of SRC_DIRS) collect(path.join(ROOT, d));
+  let scanned = 0;
+  for (const file of sources) {
+    const rel = path.relative(ROOT, file).split(path.sep).join("/");
+    if (rel === "lib/site.ts") continue;
+    scanned++;
+    const code = fs
+      .readFileSync(file, "utf8")
+      .replace(/\/\*[\s\S]*?\*\//g, " ")
+      .replace(/^\s*\/\/.*$/gm, " ")
+      .replace(/\{\/\*[\s\S]*?\*\/\}/g, " ");
+    // "$" + digit, not preceded by "$" (so template `$${x}` passes).
+    const m = code.match(/(?<!\$)\$\d[\d,]*/);
+    if (m) fail(rel, `hardcoded price "${m[0]}" — read it from lib/site.ts`);
+  }
+  console.log(`  no retired price or offering on ${pages.length} pages; ${scanned} source files price-free outside lib/site.ts`);
 }
 
 // ── 6c. clinical titles ────────────────────────────────────────────────────
